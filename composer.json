@@ -1,7 +1,0 @@
-{
-    "name": "floyd/blog",
-    "description": "Blog - Project 5 Dev PHP/Sf OpenClassrooms",
-    "require": {
-        "twig/twig": "^2.4"
-    }
-}
