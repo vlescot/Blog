@@ -1,0 +1,73 @@
+{% extends 'layout.twig' %}
+
+{% block main_title %}Ajouter un Article - Administration{% endblock %}
+	
+{% block page_title %}Ajouter un Article{% endblock %}
+
+{% block content %}
+
+
+	<section class="container">
+		<a href="index.php?v=posts" role="button" class="btn btn-outline-dark btn-sm">
+			<i class="fas fa-undo"></i> Retour
+		</a>
+	</section>
+
+	<section class="container">
+		<form action="index.php?{% if not update %}v=addPost{% endif %}{% if update %}v=update-{{update.id}}{% endif %}" method="post" enctype="multipart/form-data">
+
+			<div class="form-row">
+				<div class="col-md-12">
+					<div class="form-row">
+						<div class="col-md-8">
+							<div class="form-row">
+								<div class="col-md-12 form-group">
+									<label for="title">Titre</label>
+									<input type="text" class="form-control" name="title" id="title"
+									{% if update.title %}
+										placeholder="{{ update.title }}"
+									{% endif %} required>
+								</div>
+								<div class="col-md-12 form-group">
+									<label for="lede">Châpo</label>
+									<input type="text" class="form-control" name="lede" id="lede" 
+									{% if update.lede %}
+										placeholder="{{ update.lede }}"
+									{% endif %} required>
+								</div>
+								<div class="col-md-12 form-group">
+									<label for="content">Contenu</label>
+									<textarea class="form-control" name="content" id="content" rows="5" {% if update.content %}placeholder="{{ update.content }}"{% endif %}></textarea>	
+								</div>
+
+							</div>
+						</div>
+						<aside class="offset-md-1 col-md-3">
+							<div class="form-group">
+							{% if update.img %}
+									<label for="file">Image :
+										<img class="rounded img-fluid" src="./../../../Public/img/{{ update.img }}" alt={{ update.img }}>
+									</label>
+							{% endif %}
+	                            <label name="file" for="file" class="label-file">
+	                            	Choisir une {% if update.img %}nouvelle {% endif %}image d'en-tête <small>(format : jpg ou png)</small> :
+								</label>
+								<input type="file" class="btn btn-light input-file" id="file" accept=".jpg, .jpeg, .png">
+                        	</div>
+								<div class="form-group">
+									<label for="tag">??? Tags ???</label>
+									<input type="text" class="form-control" name="tag" id="tag" placeholder="">
+								</div>
+						</aside>
+					</div>
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="col-md-12 text-center">
+					 <button type="submit" class="btn btn-add btn-sm">Enregistrer l'article</button>
+				</div>
+			</div>
+		</form>
+	</section>	
+
+{% endblock %}

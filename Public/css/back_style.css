@@ -255,6 +255,25 @@ form input[type="file"] {
     display: block;
 }
 
+#back-app .label-file {
+    cursor: pointer;
+}
+#back-app .label-file:hover {
+    color: #25a5c4;
+}
+
+#back-app .input-file {
+    display: none;
+}
+#date_filter {
+    /*position: block;*/
+    /*border: 1px solid black;*/
+    display: none;
+}
+#date_filter form {
+    margin: 20px 0px 0px 0px;
+}
+
 /* #FFC857;
 #E9725C;
 #481D24;

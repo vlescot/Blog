@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
   
-    <title>Blog</title>
+    <title>{% block main_title %}{% endblock %}</title>
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="./../../../Public/img/favicon.ico">
@@ -46,7 +46,7 @@
               <a class="nav-link js-scroll-trigger" href="index.php">Accueil</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="index.php?view=blog">Blog</a>
+              <a class="nav-link js-scroll-trigger" href="index.php?v=blog">Blog</a>
             </li>
             <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="index.php#contact">Contact</a>
@@ -59,7 +59,7 @@
       </div>
     </nav>
 
-<?= $content ?>
+{% block content %}{% endblock %}
 
     <footer>
         <div class="row" id="my-links">

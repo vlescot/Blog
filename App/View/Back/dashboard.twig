@@ -1,0 +1,38 @@
+{% extends 'layout.twig' %}
+
+{% block main_title %}Tableau de Bord - Administration{% endblock %}
+	
+{% block page_title %}Tableau de Bord{% endblock %}
+
+{% block content %}
+
+	<div style="height: 40px;"></div>
+	<!-- Dashboard -->
+	<section class="container text-center">
+		<div class="row justify-content-center">
+			<div class="col-md-6 col-sm-12">
+				<div class="jumbotron">
+				  <h3 class="">Article</h3>
+				  <hr>
+				  <p>Ajouter, modifier, supprimer des articles du blog.</p>
+				  <hr>
+				  <p class="lead">
+				    <a href="index.php?v=posts" class="btn btn-outline-primary btn-sm" role="button">Administrer</a>
+				  </p>
+				</div>
+			</div>
+			<div class="col-md-6 col-sm-12">
+				<div class="jumbotron">
+				  <h3 class="">Validation</h3>
+				  <hr>
+				  <p>Valider les nouveaux commentaires avant leurs publications.</p>
+				  <hr>
+				  <p class="lead">
+				    <a class="btn btn-outline-primary btn-sm" href="index.php?v=validation" role="button">Administrer</a>
+				  </p>
+				</div>
+			</div>
+		</div>		
+	</section>
+
+{% endblock %}

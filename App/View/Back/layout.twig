@@ -6,8 +6,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
-  
-    <title>Titre</title>
+    
+    <title>{% block main_title %}{% endblock %}</title>
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="./../../Public/img/favicon.ico">
@@ -29,7 +29,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-perso fixed-top" id="mainNav">
       <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="./../Front/index.php">Le Blog</a>
+        <a class="navbar-brand js-scroll-trigger" href="index.php">Espace ADMIN</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -42,14 +42,21 @@
               <a class="nav-link js-scroll-trigger" href="index.php?v=posts">Article</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="index.php?v=comments">Commentaires</a>
+              <a class="nav-link js-scroll-trigger" href="index.php?v=validation">Validation</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="./../Front/">Le Blog</a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
 
-<?= $content; ?>
+    <header>
+      <h1 class="text-center">{% block page_title %}{% endblock %}</h1>
+    </header>
+
+    {% block content %}{% endblock %}
 
     <footer>
         <div class="row" id="my-links">
@@ -62,7 +69,8 @@
     </footer>
     
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
+    <script  src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script>
@@ -73,6 +81,10 @@
             if (windowHeight - bodyHeight > 0) {
                 $("footer").css("margin-top", windowHeight - bodyHeight - 5)
             }
+
+          $("#filter").click(function(){
+              $("#date_filter").slideToggle();
+          });
         });
     </script>
   </body>

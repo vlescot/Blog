@@ -1,0 +1,142 @@
+{% extends 'layout.twig' %}
+
+{% block main_title %}Validation - Administration{% endblock %}
+	
+{% block page_title %}Validation{% endblock %}
+
+{% block content %}
+
+	<section>
+		<div class="container">
+			
+			<a href="index.php" role="button" class="btn btn-outline-dark btn-sm">
+				<i class="fas fa-undo"></i> Retour
+			</a>
+
+			<button style="width:100px;" class="btn btn-outline-secondary btn-sm float-right" id="filter">Filtrer</button>
+	    	<div class="text-center">
+				<div id="date_filter">
+					<form action="index.php?v=validation" method="post">
+						<label for="date_begin">Date début :</label>
+			            <div class="form-check form-check-inline">
+							<input id="date_begin" name="date_begin" min="2018-02-01" type='date' class="form-control"/>
+						</div>
+			            <label for="date_ending">Date fin :</label>
+			            <div class="form-check form-check-inline">
+							<input id="date_ending" name="date_ending" min="2018-02-01" type='date' class="form-control"/>
+			            </div>
+			            <label for="date_ending">Validé :</label>
+			            <div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="validation" id="validation0" value="1">
+							<label class="form-check-label" for="validation0"> Oui</label>
+						</div>
+			            <div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="validation" id="validation1" value="0">
+							<label class="form-check-label" for="validation1"> Non</label>
+						</div>
+			            <div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="validation" id="validation2" value="2">
+							<label class="form-check-label" for="validation2"> Les deux</label>
+						</div>
+			            <div class="form-check form-check-inline">
+							<button style="width: 50px;" type="submit" class="btn btn-outline-secondary btn-sm">Ok</button>
+			            </div>
+					</form>
+				</div>
+			</div>
+			{% if not comments %}
+				<p class="h2 text-center no-comment">Aucun nouveau commentaire n'est en attente de validation</p>
+			{% endif %}
+			{% if not members %}
+				<p class="h2 text-center no-comment">Aucun nouveau membre n'est en attente de validation</p>
+			{% endif %}
+		</div>
+	</section>
+
+	<section class="container get-comment">
+		
+		{% if comments %}
+			<p class="h2 text-center get-comment">Nouveaux commentaires ({{ comments|length }})</p>
+			<table id="comment-listing" class="table">
+			  <tr>
+			    <th>Date</th>
+			    <th>Auteur</th>
+			    <th style="min-width: 50%;">Commentaire</th>
+			    <th colspan="2">Rendre visible</th>
+			    <th></th> 
+			  </tr>
+			  {% for comment in comments %}
+			  <tr>
+			  	<td>
+			  		{{ comment.date_create |date("d/m/Y à h\\hm")}}
+			  	</td>
+			  	<td>
+			  		{{ comment.author }}
+			  	</td>
+			    <td>
+					{{ comment.content }}
+			    </td>
+			    <td>
+			    	<form action="check.php" method="post" enctype="multipart/form-data">
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="exampleRadios" id="visibilityOn" value="on" checked>
+							<label class="form-check-label" for="visibilityOn">Oui</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="exampleRadios" id="visibilityOff" value="off">
+							<label class="form-check-label" for="visibilityOff">Non</label>
+						</div>
+					</form>
+				</td> 
+			    <td><a href="" role="button" class="btn btn-delete btn-sm"><i class="far fa-trash-alt"></i> Supprimer</a></td>
+			  </tr>
+			  {% endfor %}
+			</table>
+
+		{% endif %}
+
+		{% if members %}
+			<p class="h2 text-center get-comment">Nouveaux Membres ({{ members|length }})</p>
+			<table id="comment-listing" class="table">
+			  <tr>
+			    <th>Date</th>
+			    <th>Pseudo</th>
+			    <th>Type</th>
+			    <th>Rendre visible</th>
+			    <th></th> 
+			  </tr>
+			  {% for member in members %}
+			  <tr>
+			  	<td>
+			  		{{ member.date_create |date("d/m/Y à h\\hm")}}
+			  	</td>
+			  	<td>
+			  		{{ member.login }}
+			  	</td>
+			  	<td>
+			  		{{ member.id_type }}
+			  	</td>
+			    <td>
+			    	<form action="check.php" method="post" enctype="multipart/form-data">
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="exampleRadios" id="visibilityOn" value="on" checked>
+							<label class="form-check-label" for="visibilityOn">Oui</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="exampleRadios" id="visibilityOff" value="off">
+							<label class="form-check-label" for="visibilityOff">Non</label>
+						</div>
+					</form>
+				</td> 
+			    <td><a href="" role="button" class="btn btn-delete btn-sm"><i class="far fa-trash-alt"></i> Supprimer</a></td>
+			  </tr>
+			  {% endfor %}
+			</table>
+		{% endif %}
+
+{# 		<div class="col-md-12 text-center">
+			 <button style="width: 100px;" type="submit" class="btn btn-add btn-sm"><i class="fas fa-check"></i> Valider</button>
+		</div> #}
+
+	</section>
+{% endblock %}
