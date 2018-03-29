@@ -18,9 +18,7 @@ use Model\PDOFactory;
 // 							getPost (int $id)
 // 							updatePost (array $vars)
 // 							countPosts ()
-// 							delete (int $id)
-// 							getValidation (int $date_begin, int $date_ending, int $validated)
-							
+// 							deletePost (int $id)
 
 class PostManager extends PDOFactory
 {
@@ -29,7 +27,6 @@ class PostManager extends PDOFactory
 		$sql = self::$connection->prepare("
 			INSERT INTO post (title, lede, content, img, id_member, date_create, date_update)
 			VALUES (?, ?, ?, ?, ?, NOW(), NOW())");
-
 		$sql->execute(array($vars['title'], $vars['lede'], $vars['content'], $vars['img'], $vars['id_member']));
 	}
 
@@ -41,16 +38,13 @@ class PostManager extends PDOFactory
 				JOIN member 
 				ON post.id_member = member.id
 				ORDER BY post.date_create DESC';
-
 		if ($begin != -1 || $limit != -1 && is_int($begin) && is_int($limit)) {
 			$query .= ' LIMIT :limit OFFSET :begin';
 		}
 		
 		$sql = self::$connection->prepare($query);
-
 		$sql->bindvalue(':limit', (int) $limit,\PDO::PARAM_INT);
 		$sql->bindvalue(':begin', (int) $begin,\PDO::PARAM_INT);
-
 		$sql->execute();
  		return $sql->fetchAll();
 	}
@@ -66,7 +60,6 @@ class PostManager extends PDOFactory
 			WHERE post.id = :id');
 
 		$sql->bindvalue(':id', (int) $id,\PDO::PARAM_INT);
-
 		$sql->execute();
 		return $sql->fetch();
 	}
@@ -85,7 +78,6 @@ class PostManager extends PDOFactory
 		$sql->bindvalue(':content', $vars['content'], \PDO::PARAM_STR);
 		$sql->bindvalue(':img', $vars['img'], \PDO::PARAM_STR);
 		$sql->bindvalue(':id_member', $vars['id_member'], \PDO::PARAM_INT);
-
 		$sql->execute();
 	}
 
@@ -93,44 +85,13 @@ class PostManager extends PDOFactory
 	function countPosts ()
 	{
 		$sql = self::$connection ->query("SELECT COUNT(*) AS nb FROM post");
-
 		$nb = $sql->fetch();
 		return $nb['nb'];
 	}
 
-
-	function getValidation (string $date_begin='2018-01-01', string $date_ending='', $validated=2){
-		$query = "SELECT * FROM post WHERE date_create BETWEEN :date_begin AND :date_ending";
-	
-		if ($date_ending === "") {
-			$date_ending = date('Y-m-d');
-		}
-		
-		if ($validated !== 2){
-			$query .= " AND validated=" . $validated . " ORDER BY date_create DESC" ;
-		}else {
-			$query .= " ORDER BY date_create DESC";
-		}
-
-		$sql = self::$connection->prepare($query);
-		
-		if ($date_begin !== '' && $date_ending !== '') {
-			$sql->bindvalue(':date_begin', (string) $date_begin, \PDO::PARAM_STR);
-			$sql->bindvalue(':date_ending', (string) $date_ending, \PDO::PARAM_STR);
-		}
-
-		$sql->execute();
-		return $sql->fetchAll();
-	}
-
-
-	function delete ($id)
+	function deletePost (int $id)
 	{
-		$sql = self::$connection->prepare('DELETE FROM post WHERE id = :id');
-
-		$sql->bindvalue(':id', (int) $id, \PDO::PARAM_INT);
-
-		$sql->execute();
+		return parent::delete('post', $id);
 	}
 }
 
