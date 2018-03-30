@@ -1,13 +1,13 @@
 <?php
-namespace Model;
+namespace Manager;
 
 // require_once './../../vendor/autoload.php';
-use Model\PDOFactory;
+use Manager\Manager;
 
 // -------------------------------------------------------------------
 // 
 // 							Class PostManager       => Database Queries
-// 							Extends of PDOFactory 	=> Connection with database
+// 							Extends of Manager 		=> Connection with database
 // 							
 // -------------------------------------------------------------------
 // -------------------------------------------------------------------
@@ -20,7 +20,7 @@ use Model\PDOFactory;
 // 							countPosts ()
 // 							deletePost (int $id)
 
-class PostManager extends PDOFactory
+class PostManager extends Manager
 {
 	function createPost(array $vars)
 	{

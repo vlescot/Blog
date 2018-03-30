@@ -1,13 +1,13 @@
 <?php
-namespace Model;
+namespace Manager;
 
 // require_once './../../vendor/autoload.php';
-use Model\PDOFactory;
+use Manager\Manager;
 
 // -------------------------------------------------------------------
 // 
 // 							Class CommentManager	=> Database Queries
-// 							Extends of PDOFactory 	=> Connection with database
+// 							Extends of Manager 		=> Connection with database
 // 							
 // -------------------------------------------------------------------
 // -------------------------------------------------------------------
@@ -20,7 +20,7 @@ use Model\PDOFactory;
 // 							getValidationComment (int $date_begin, int $date_ending, int $validated)
 // 							setValidationComment  (int $id, bool $set)
 							
-class CommentManager extends PDOFactory
+class CommentManager extends Manager
 {	
 	function createComment(array $vars)
 	{

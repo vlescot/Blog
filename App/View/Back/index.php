@@ -1,9 +1,16 @@
 <?php
 require './../../../vendor/autoload.php';
 	
-use Model\PostManager;
-use Model\CommentManager;
-use Model\MemberManager;
+// use Controller\PostController;
+// use Controller\CommentController;
+// use Controller\MemberController;
+// $PostController = new PostController;
+// $CommentController = new CommentController;
+// $MemberController = new MemberController;
+
+use Manager\PostManager;
+use Manager\CommentManager;
+use Manager\MemberManager;
 
 $PostManager = new PostManager;
 $CommentManager = new CommentManager;
@@ -30,7 +37,7 @@ if (isset($_GET["v"])) {
 					$_POST['date_ending'] = date('Y-m-d');
 				}
 				echo $twig->render('posts.twig', array(
-					'posts' => $PostManager->getValidation($_POST['date_begin'], $_POST['date_ending'], 2)));
+					'posts' => $PostManager->getPostsList()));
 			}
 			else {
 			echo $twig->render('posts.twig', array( 
@@ -54,13 +61,13 @@ if (isset($_GET["v"])) {
 				}
 
 				echo $twig->render('validation.twig', array(
-					'comments' => $CommentManager->getValidation($_POST['date_begin'], $_POST['date_ending'], $_POST['validation']),
-					'members' => $MemberManager->getValidation($_POST['date_begin'], $_POST['date_ending'], $_POST['validation'])));
+					'comments' => $CommentManager->getValidationComment($_POST['date_begin'], $_POST['date_ending'], $_POST['validation']),
+					'members' => $MemberManager->getValidationMember($_POST['date_begin'], $_POST['date_ending'], $_POST['validation'])));
 			}
 			else {
 				echo $twig->render('validation.twig', array(
-					'comments' =>$CommentManager->getValidation(),
-					'members' => $MemberManager->getValidation()));
+					'comments' =>$CommentManager->getValidationComment(),
+					'members' => $MemberManager->getValidationMember()));
 			}
 			break;
 

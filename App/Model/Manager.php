@@ -1,5 +1,5 @@
 <?php
-namespace Model;
+namespace Manager;
 
 use PDO;
 
@@ -17,7 +17,7 @@ use PDO;
 // 							getValidation (string $table, int $date_begin, int $date_ending, int $validated)
 // 							setValidation  (string $table, int $id, bool $set)
 							
-class PDOFactory
+class Manager
 {
 	private static $dbEncode =	"utf8";
 	protected static $connection	=	null; 
@@ -49,7 +49,7 @@ class PDOFactory
 	function delete (string $table, int $id)
 	{
 		$query = "DELETE * FROM " . $table . " WHERE id = :id";
-		$sql = self::$connection->prepare($query));
+		$sql = self::$connection->prepare($query);
 		$sql->bindvalue(':id', (int) $id, \PDO::PARAM_INT);
 		$sql->execute();
 	}

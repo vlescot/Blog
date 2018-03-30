@@ -1,8 +1,8 @@
 <?php
 require './../../../vendor/autoload.php';
 	
-use Model\PostManager;
-use Model\CommentManager;
+use Manager\PostManager;
+use Manager\CommentManager;
 
 $PostManager = new PostManager;
 $CommentManager = new CommentManager;

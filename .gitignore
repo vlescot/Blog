@@ -1,4 +1,5 @@
 /vendor/
+/App/Controller/
 /App/Model/DBAccess.json
 try.php
 /try/

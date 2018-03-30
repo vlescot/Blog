@@ -1,13 +1,13 @@
 <?php
-namespace Model;
+namespace Manager;
 
 // require_once './../../vendor/autoload.php';
-use Model\PDOFactory;
+use Manager\Manager;
 
 // -------------------------------------------------------------------
 // 
 // 							Class MemberManager     => Database Queries
-// 							Extends of PDOFactory 	=> Connection with database
+// 							Extends of Manager 		=> Connection with database
 // 							
 // -------------------------------------------------------------------
 // -------------------------------------------------------------------
@@ -19,7 +19,7 @@ use Model\PDOFactory;
 // 							getValidationMember (int $date_begin, int $date_ending, int $validated)
 // 							setValidationMember  (int $id, bool $set)
 							
-class MemberManager extends PDOFactory
+class MemberManager extends Manager
 {
 	function createMember (array $vars)
 	{
