@@ -1,0 +1,61 @@
+{% extends 'layout.twig' %}
+
+{% block main_title %}{{post.title}} - Blog{% endblock %}
+
+{% block content %}
+    <header class="masthead masthead-post text-center text-white d-flex" style="background-image: url(http://localhost/P5/Blog/Public/img/{{post.img}});">
+		<div class="cover">
+	      <div class="container my-auto">
+	        <div class="row">
+	          <div class="col-lg-10 mx-auto">
+	            <h1 class="text-uppercase">
+	              <strong>{{ post.title }}</strong>
+	            </h1>
+	            <hr>
+	          </div>
+	          <div class="col-lg-8 mx-auto">
+	            <p><strong>{{ post.lede }}</strong></p>
+	          </div>
+	        </div>
+	      </div>
+		</div>
+    </header>
+    <section id="post">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2 mx-auto">
+            <a href="http://localhost/P5/Blog/blog/" class="btn btn-back"><i class="fas fa-undo"></i> Retour</a>
+            <p class="post-text"> {{ post.content }} </p>
+            <p class="text-right infos"><strong>Par {{ post.login }}, le {{post.date_create|date('d-m-Y à h\\hm')}}</strong></p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <hr class="break-post">
+
+    <section id="comments">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 offset-md-4 col-lg-6 offset-lg-6 mx-auto">
+            <p class="h5">Commentaires pour cet article :</p>
+              {% for comment in comments %}
+                {% if comment.validated == 1 %}
+                  <div class="comment-content">
+                    <p class="comment">{{ comment.content }}</p>
+                    <p class="text-right infos"><strong>Par {{ comment.author }}, le {{ comment.date_create|date('d-m-Y à H\\hm') }}</strong></p>
+                  </div>
+                {% endif %}
+              {% endfor %}
+            <form action="#" method="post" class="form-inline">
+                <div class="form-group">
+                  <input type="text" placeholder="Votre nom" class="form-control col-3" required>
+                  <textarea class="form-control col-7" rows="1" placeholder="Écrire un commentaire..." required></textarea>
+                  <button type="submit" class="btn btn-primary col-2">Poster</button>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+{% endblock %}

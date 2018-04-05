@@ -1,3 +1,6 @@
 /vendor/
-/App/Model/Auth.php
+/App/Controller/
+/App/Services/
+/App/Model/DBAccess.json
 try.php
+/try/

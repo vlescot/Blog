@@ -1,0 +1,54 @@
+{% extends 'layout.twig' %}
+
+{% block main_title %}Nos Articles - Blog{% endblock %}
+
+{% block content %}
+    <header class="masthead text-center text-white d-flex">
+      <div class="container my-auto">
+        <div class="row">
+          <div class="col-lg-10 mx-auto">
+            <h1 class="text-uppercase">
+              <strong>Listes des Articles</strong>
+            </h1>
+            <hr>
+          </div>
+          <div class="col-lg-8 mx-auto">
+            <p class="text-faded mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section id="post-list">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+			<div class="row">
+				{% for post in posts %}
+					<div class="jumbotron jumbotron-fluid col-md-6 text-center">
+						<a class="portfolio-box" href="http://localhost/P5/Blog/blog/{{ post.id }}">
+						  <div class="container portfolio-box-caption">
+							<img class="img-fluid" src="http://localhost/P5/Blog/Public/img/{{ post.img }}" alt="{{ post.img }}">
+							<div class="portfolio-box-caption">
+								<div class="portfolio-box-caption-content">
+								    <h3 class="project-name">
+								    	{{ post.title }}
+								    </h3>
+								    <p class="project-category">
+										{{ post.content[:400] }}...
+								    </p>
+								</div>
+							</div>
+						    <span class="badge badge-info">Catégorie</span>
+						    <span class="badge badge-info">Catégorie</span>
+						    <p class="text-right describe"><small>Crée par {{ post.login }} le {{ post.date_created|date('d-m-Y') }}</small></p>
+						  </div>
+						</a>
+					</div>
+				{% endfor %}
+			</div>
+          </div>
+        </div>
+      </div>
+    </section>
+{% endblock %}

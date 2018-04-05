@@ -1,0 +1,62 @@
+{% extends 'layout.twig' %}
+
+{% block main_title %}Blog - Accueil{% endblock %}
+  
+
+{% block content %}
+    <section class="bg-primary" id="about">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto text-center">
+            <div class="row">
+              <div id="photo-container" class="col-lg-4">
+                <img class="img-fluid img-thumbnail text-center" id="self-photo" src="./Public/img/ma_photo.jpg" alt="vincent">
+              </div>
+              <div class="col-lg-8">
+                <h2 class="section-heading text-white">We've got what you need!</h2>
+                <hr class="light my-4">
+                <p class="text-faded mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio necessitatibus voluptas suscipit, exercitationem at accusantium quae quidem fugit veniam, dicta iure consequatur eius ducimus voluptatibus labore dolor. Similique, dolores, laboriosam.</p>
+                <a class="btn btn-light btn-xl js-scroll-trigger" href="./Public/files/CV.pdf">Télécharger mon CV</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+     <section id="contact">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 id="contact-form" class="section-heading">Contact</h2>
+            <hr class="my-4">
+            <div class="form-text">
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis nemo, nisi quae temporibus ad, molestiae! Dolorum laudantium perspiciatis, accusantium omnis, maiores aliquid praesentium unde, molestiae ipsa possimus vel, dolores voluptate.</p>
+            </div>
+            <form action="#" method="post">
+              <div class="form-row text-left">
+                <div class="form-group col-md-5">
+                  <label for="firstname">Nom :</label>
+                  <input class="form-control" type="text" id="firstname" name="name" required>
+                </div>
+                <div class="form-group offset-md-2 col-md-5">
+                  <label for="email">E-mail :</label>
+                  <input class="form-control"  type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group col-md-8">
+                  <label for="object">Objet :</label>
+                  <input class="form-control"  type="text" id="object" name="object">
+                </div>
+                <div class="form-group col-md-12">
+                  <label for="message">Message :</label>
+                  <textarea class="form-control"  id="message" name="message" rows="4" required></textarea>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary">Envoyer</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>  
+{% endblock %}

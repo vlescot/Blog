@@ -1,10 +1,3 @@
- #FFC857;
-#E9725C;
-#481D24;
-#C5283D;
-#255F85; 
-#236847*/
-
 /**
  * READING GUIDE :
  * This file is sorted by page and element. 
@@ -235,8 +228,8 @@ form input[type="file"] {
 }
 
 /**
- * ***       List of comments   ***
- * **
+ ****       List of comments   ***
+ ***
  */
 #back-app h2 {
     margin-top: 30px;
@@ -253,6 +246,35 @@ form input[type="file"] {
 }
 .get-comment {
     display: block;
+}
+
+#back-app .label-file {
+    cursor: pointer;
+}
+#back-app .label-file:hover {
+    color: #25a5c4;
+}
+
+#back-app .input-file {
+    display: none;
+}
+#date_filter {
+    display: none;
+}
+#date_filter form {
+    margin: 20px 0px 20px 0px;
+}
+
+/**
+ ****       Validation   ***
+ ***
+ */
+
+#back-app .validated {
+    color:#236847;
+}
+#back-app .not-validated {
+    color: #C5283D;
 }
 
 /* #FFC857;
