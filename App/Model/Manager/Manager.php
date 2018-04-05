@@ -14,8 +14,8 @@ use PDO;
 // -------------------------------------------------------------------
 // 							__contruct ()
 // 							delete (int $id)
-// 							getValidation (string $table, int $date_begin, int $date_ending, int $validated)
-// 							setValidation  (string $table, int $id, bool $set)
+// 							getvalidated (string $table, int $date_begin, int $date_ending, int $validated)
+// 							setvalidated  (string $table, int $id, bool $set)
 							
 class Manager
 {
@@ -55,7 +55,7 @@ class Manager
 
 
 
-	function getValidation (string $table, string $date_begin='2018-01-01', string $date_ending='', $validated=2){
+	function getValidated (string $table, string $date_begin='2018-01-01', string $date_ending='', $validated=2){
 		$query = "SELECT * FROM " . $table . " WHERE date_create BETWEEN :date_begin AND :date_ending";
 		if ($date_ending === "") {
 			$date_ending = date('Y-m-d');
@@ -77,15 +77,15 @@ class Manager
 	}
 
 
-	function setValidation (string $table, int $id, bool $validation)
+	function setValidated (string $table, int $id, bool $validated)
 	{
-		if 		($validation === true) $validation = 1;
-		elseif 	($validation === false) $validation = 0;
+		if 		($validated === true) $validated = 1;
+		elseif 	($validated === false) $validated = 0;
 		$querie = 'UPDATE ' . $table . ' SET validated= :validated WHERE id = :id';
 
 		$sql = self::$connection->prepare($querie);
 		$sql->bindvalue(':id', (int) $id, \PDO::PARAM_INT);
-		$sql->bindvalue(':validated', (int) $validation, \PDO::PARAM_INT);
+		$sql->bindvalue(':validated', (int) $validated, \PDO::PARAM_INT);
 		$sql->execute();
 	}
 }

@@ -16,8 +16,8 @@ use Manager\Manager;
 // 							createMember (array $vars)
 // 							getMember (string $login)
 // 							deleteMember (int $id)
-// 							getValidationMember (int $date_begin, int $date_ending, int $validated)
-// 							setValidationMember  (int $id, bool $set)
+// 							getValidatedMember (int $date_begin, int $date_ending, int $validated)
+// 							setValidatedMember  (int $id, bool $set)
 							
 class MemberManager extends Manager
 {
@@ -47,15 +47,15 @@ class MemberManager extends Manager
 	}
 
 
-	function getValidationMember (string $date_begin='2018-01-01', string $date_ending='', $validated=2)
+	function getValidatedMember (string $date_begin='2018-01-01', string $date_ending='', $validated=2)
 	{
-		return parent::getValidation('member', $date_begin, $date_ending, $validated);
+		return parent::getValidated('member', $date_begin, $date_ending, $validated);
 	}
 
 
-	function setValidationMember (int $id, bool $validation)
+	function setValidatedMember (int $id, bool $validated)
 	{
-		return parent::getValidation('member', $id, $validation);
+		return parent::getValidated('member', $id, $validated);
 	}
 }
 
@@ -91,14 +91,14 @@ class MemberManager extends Manager
 
 
 /*******************************
- * Test for getValidationMember (int $date_begin, int $date_ending)
+ * Test for getValidatedMember (int $date_begin, int $date_ending)
  * ****************************/
-// $validation = $MemberManager->getValidation($date_begin='', $date_ending='', 1);
-// var_dump($validation);
+// $Validated = $MemberManager->getValidated($date_begin='', $date_ending='', 1);
+// var_dump($Validated);
 
 
 
 /*******************************
- * Test for setValidationMember (int $id, bool $validation)
+ * Test for setValidatedMember (int $id, bool $Validated)
  * ****************************/
- // $MemberManager->setValidation(5, false);
+ // $MemberManager->setValidated(5, false);

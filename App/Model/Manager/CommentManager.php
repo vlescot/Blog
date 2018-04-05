@@ -17,8 +17,8 @@ use Manager\Manager;
 // 							getCommentList (int $id_post)
 // 							updateComment (array $vars)
 // 							deleteComment (int $id)
-// 							getValidationComment (int $date_begin, int $date_ending, int $validated)
-// 							setValidationComment  (int $id, bool $set)
+// 							getvalidatedComment (int $date_begin, int $date_ending, int $validated)
+// 							setvalidatedComment  (int $id, bool $set)
 							
 class CommentManager extends Manager
 {	
@@ -52,15 +52,15 @@ class CommentManager extends Manager
 	}
 
 
-	function getValidationComment (string $date_begin='2018-01-01', string $date_ending='', $validated=2)
+	function getValidatedComment (string $date_begin='2018-01-01', string $date_ending='', $validated=2)
 	{
-		return parent::getValidation('comment', $date_begin, $date_ending, $validated);
+		return parent::getValidated('comment', $date_begin, $date_ending, $validated);
 	}
 
 
-	function setValidationComment (int $id, bool $validation)
+	function setValidatedComment (int $id, bool $validated)
 	{
-		return parent::getValidation('comment', $id, $validation);
+		return parent::getValidated('comment', $id, $validated);
 	}
 }
 
@@ -95,14 +95,14 @@ class CommentManager extends Manager
 
 
 /*******************************
- * Test for getValidationComment(int $date_begin, int $date_ending)
+ * Test for getvalidatedComment(int $date_begin, int $date_ending)
  * ****************************/
-// $validation = $CommentManager->getValidation($date_begin='', $date_ending='', 1);
-// var_dump($validation);
+// $validated = $CommentManager->getvalidated($date_begin='', $date_ending='', 1);
+// var_dump($validated);
 
 
 
 /*******************************
- * Test for setValidationComment(int $id, bool $validation)
+ * Test for setvalidatedComment(int $id, bool $validated)
  * ****************************/
- // $CommentManager->setValidation(5, false);
+ // $CommentManager->setvalidated(5, false);

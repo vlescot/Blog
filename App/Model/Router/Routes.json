@@ -1,77 +1,82 @@
 [
 	{	
-	"path":"\/",
-	"callable":"Blog#home",
-	"method": "GET"
+		"path":"\/",
+		"callable":"Blog#home",
+		"method": "GET"
 	},
 	{
-	"path":"\/accueil",
-	"callable":"Blog#home",
-	"method": "GET"
+		"path":"\/accueil",
+		"callable":"Blog#home",
+		"method": "GET"
 	},
 	{
-	"path":"\/blog",
-	"callable":"Blog#article",
-	"method": "GET"
+		"path":"\/blog",
+		"callable":"Blog#article",
+		"method": "GET"
 	},
 	{
-	"path":"\/blog\/:id",
-	"callable":"Blog#article",
-	"method": "GET"
+		"path":"\/blog\/:id",
+		"callable":"Blog#article",
+		"method": "GET"
 	},
 	{
-	"path":"\/blog\/connexion",
-	"callable":"Blog#connection",
-	"method": "GET"
+		"path":"\/blog\/connexion",
+		"callable":"Blog#connection",
+		"method": "GET"
 	},
 	{
-	"path":"\/blog\/inscription",
-	"callable":"Blog#registration",
-	"method": "GET"
+		"path":"\/blog\/inscription",
+		"callable":"Blog#registration",
+		"method": "GET"
 	},
 	{
-	"path":"\/admin\/accueil",
-	"callable":"Admin#home",
-	"method": "GET"
+		"path":"\/admin\/accueil",
+		"callable":"Admin#home",
+		"method": "GET"
 	},
 	{
-	"path":"\/admin",
-	"callable":"Admin#home",
-	"method": "GET"
+		"path":"\/admin",
+		"callable":"Admin#home",
+		"method": "GET"
 	},
 	{
-	"path":"\/admin\/article",
-	"callable":"Admin#posts",
-	"method": "GET"
+		"path":"\/admin\/article",
+		"callable":"Admin#posts",
+		"method": "GET"
 	},
 	{
-	"path":"\/admin\/article\/creer",
-	"callable":"Admin#addPost",
-	"method": "GET"
+		"path":"\/admin\/article\/creer",
+		"callable":"Admin#addPost",
+		"method": "GET"
 	},
 	{
-	"path":"\/admin\/article\/:id",
-	"callable":"Admin#update",
-	"method": "GET"
+		"path":"\/admin\/article\/:id",
+		"callable":"Admin#update",
+		"method": "GET"
 	},
 	{
-	"path":"\/admin\/validation",
-	"callable":"Admin#validation",
-	"method": "GET"
+		"path":"\/admin\/validation",
+		"callable":"Admin#validation",
+		"method": "GET"
 	},
 	{
-	"path":"\/admin\/validation",
-	"callable":"Admin#validation",
-	"method": "POST"
+		"path":"\/admin\/validation",
+		"callable":"Admin#validation",
+		"method": "POST"
 	},
 	{
-	"path":"\/admin\/article\/creer",
-	"callable":"Admin#addPost",
-	"method": "POST"
+		"path":"\/admin\/article\/creer",
+		"callable":"Admin#createPost",
+		"method": "POST"
 	},
 	{
-	"path":"\/admin\/article\/:id",
-	"callable":"Admin#update",
-	"method": "POST"
+		"path":"\/admin\/article\/:id",
+		"callable":"Admin#update",
+		"method": "POST"
+	},
+	{
+		"path":"\/admin\/article",
+		"callable":"Admin#posts",
+		"method": "POST"
 	}
 ]

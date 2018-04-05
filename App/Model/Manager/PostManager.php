@@ -49,6 +49,11 @@ class PostManager extends Manager
  		return $sql->fetchAll();
 	}
 
+	function getValidatedPost (string $date_begin='2018-01-01', string $date_ending ='', $validated=2)
+	{
+		return parent::getValidated('post', $date_begin, $date_ending, $validated);
+	}
+
 	function getPost($id)
 	{
 		$sql = self::$connection->prepare('		
