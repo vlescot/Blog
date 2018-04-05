@@ -3,7 +3,7 @@
 {% block main_title %}{{post.title}} - Blog{% endblock %}
 
 {% block content %}
-    <header class="masthead masthead-post text-center text-white d-flex" style="background-image: url(./../../../Public/img/{{post.img}});">
+    <header class="masthead masthead-post text-center text-white d-flex" style="background-image: url(http://localhost/P5/Blog/Public/img/{{post.img}});">
 		<div class="cover">
 	      <div class="container my-auto">
 	        <div class="row">
@@ -24,7 +24,7 @@
       <div class="container">
         <div class="row">
           <div class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2 mx-auto">
-            <a href="index.php?v=blog" class="btn btn-back"><i class="fas fa-undo"></i> Retour</a>
+            <a href="http://localhost/P5/Blog/blog/" class="btn btn-back"><i class="fas fa-undo"></i> Retour</a>
             <p class="post-text"> {{ post.content }} </p>
             <p class="text-right infos"><strong>Par {{ post.login }}, le {{post.date_create|date('d-m-Y à h\\hm')}}</strong></p>
           </div>

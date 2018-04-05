@@ -75,7 +75,7 @@ if (isset($_GET["v"])) {
 			echo $twig->render('add_post.twig');
 			break;
 
-		case 'update-10':
+		case 'update-1':
 			echo $twig->render('add_post.twig', array(
 				'update' => $PostManager->getPost(1)));
 			break;

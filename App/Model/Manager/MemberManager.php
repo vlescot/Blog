@@ -26,7 +26,7 @@ class MemberManager extends Manager
 		$sql = self::$connection->prepare('
 			INSERT INTO member (login, password, validated, id_type, date_create)
 			VALUES (?, ?, ?, ?, NOW())');
-		$sql->execute(array($vars['login'], $vars['password'], $vars['validated'], $vars['id_type']));
+		$sql->execute(array($vars['login'], $vars['password'], 0, 2));
 	}
 
 
@@ -34,10 +34,10 @@ class MemberManager extends Manager
 	{
 		$sql = self::$connection->prepare('
 			SELECT * FROM member
-			WHERE login = :login');
+			WHERE BINARY login=:login');
 		$sql->bindvalue(':login', (string) $login, \PDO::PARAM_STR);
 		$sql->execute();
-		return $sql->fetchAll();
+		return $sql->fetch();
 	}
 
 

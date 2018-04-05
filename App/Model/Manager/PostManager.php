@@ -49,7 +49,6 @@ class PostManager extends Manager
  		return $sql->fetchAll();
 	}
 
-
 	function getPost($id)
 	{
 		$sql = self::$connection->prepare('		
@@ -57,7 +56,7 @@ class PostManager extends Manager
 			FROM post 
 			JOIN member 
 			ON post.id_member = member.id
-			WHERE post.id = :id');
+			WHERE post.id=:id');
 
 		$sql->bindvalue(':id', (int) $id,\PDO::PARAM_INT);
 		$sql->execute();
@@ -121,7 +120,7 @@ class PostManager extends Manager
 /*******************************
  * Test for getPost(int $id)
  * ****************************/
-// $post = $PostManager->getPost(1);
+// $post = $PostManager->getPost(2);
 // var_dump($post);
 
 

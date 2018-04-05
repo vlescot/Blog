@@ -1,0 +1,62 @@
+{% extends 'layout.twig' %}
+
+{% block main_title %}Liste des Articles - Administration{% endblock %}
+	
+{% block page_title %}Liste des Articles{% endblock %}
+
+{% block content %}
+
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<a href="http://localhost/P5/Blog/admin/accueil" role="button" class="btn btn-outline-dark btn-sm">
+						<i class="fas fa-undo"></i> Retour
+					</a>
+					<a href="http://localhost/P5/Blog/admin/article/creer" role="button" class="btn btn-add float-right btn-sm">
+						<i class="fas fa-plus-circle"></i> Ajouter un Article
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section>
+		<div class="container">
+			<table id="post-listing" class="table">
+			  <tr>
+			    <th>Voir</th>
+			    <th>Image</th>
+			    <th>Titre</th> 
+			    <th>Dernière Modification</th>
+			    <th>Auteur</th>
+			    <th>Action</th>
+			  </tr>
+
+		      {% for post in posts %}
+			  <tr>
+			  	<td>
+			  		<a href="http://localhost/P5/Blog/blog/{{ post.id }}" style="font-size:2em;"  target="_blank">
+	  					<i class="fas fa-share-square"></i>
+					</a>
+				</td>
+			    <td>
+			    	<div class="post-img">
+			    		<img src="http://localhost/P5/Blog/Public/img/{{ post.img }}" alt={{ post.img }}>
+			    	</div>
+			    </td>
+			    <td>{{ post.title }}<small class="form-text text-muted">{{ post.lede }}</small></td> 
+			    <td>{{ post.date_create | date ('d/m/Y à H\\hi') }}</td>
+			    <td>{{ post.login }}</td>
+			    <td>
+			    	<a href="http://localhost/P5/Blog/admin/article/{{ post.id }}" role="button" class="btn btn-update btn-sm"><i class="far fa-edit"></i> Modifier</a>
+			    	<a href="index.php?v=delete-{{ post.id }}" role="button" class="btn btn-delete btn-sm"><i class="far fa-trash-alt"></i> Supprimer</a>
+				</td>
+			  </tr>
+ 	         {% endfor %}
+
+			</table>
+		</div>
+	</section>
+
+{% endblock %}

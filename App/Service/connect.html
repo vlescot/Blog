@@ -7,27 +7,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
   
-    <title>{% block main_title %}{% endblock %}</title>
+    <title>Se connecter</title>
     
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="./../../../Public/img/favicon.ico">
+    <link rel="icon" type="image/png" href="./../../Public/img/favicon.ico">
   
     <!-- Bootstrap core CSS -->
-    <link href="./../../../Public/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./../../Public/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   
     <!-- Custom fonts for this template -->
-    <link href="./../../../Public/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="./../../Public/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
   
     <!-- Plugin CSS -->
-    <link href="./../../../Public/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
+    <link href="./../../Public/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
   
     <!-- Custom styles for this template -->
-    <link href="./../../../Public/css/creative.css" rel="stylesheet">
+    <link href="./../../Public/css/creative.css" rel="stylesheet">
 
     <!-- My styles -->
-    <link href="./../../../Public/css/front_style.css" rel="stylesheet">
+    <link href="./../../Public/css/front_style.css" rel="stylesheet">
   
   </head>
 
@@ -59,7 +59,56 @@
       </div>
     </nav>
 
-{% block content %}{% endblock %}
+
+
+
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12 offset-sm-1 col-sm-10 offset-md-2 col-md-8 offset-lg-4 col-lg-4">
+					<div class="text-center">
+						<form action="Connection.php" method="post">
+							<div class="form-group">
+								<label for="login">Votre identifiant :</label>
+								<input class="form-control" name="login" id="login" type="login" required>
+							</div>
+							<div class="form-group">
+								<label for="psw">Votre mot de passe :</label>
+								<input class="form-control" name="psw" id="psw" type="password" required>
+								<small class="text-muted">Entre 8 et 20 caractères.</small>	
+							</div>
+							<input class="btn btn-primary" type="submit" value="Se connecter">
+						</form>
+						<hr style="margin-top: 30px; border-width: 2px; height:30px; max-width: 80px;">
+						<div style="font-size: 0.85em;">
+							<p><strong>Ou connectez vous avec les comptes suivants :</strong></p>
+							<table class="table table-sm table-bordered">
+							  <thead>
+							    <tr>
+							      <th>Login</th>
+							      <th>Mot de passe</th>
+							      <th>Droits</th>
+							    </tr>
+							  </thead>
+							  <tbody>
+							    <tr>
+							      <td>root</td>
+							      <td>root</td>
+							      <td>Totals</td>
+							    </tr>
+							    <tr>
+							      <td>Visitor</td>
+							      <td>OpenClassrooms</td>
+							      <td>Partiels</td>
+							    </tr>
+							  </tbody>
+							</table>
+						</div>	
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 
     <footer>
         <div class="row" id="my-links">
@@ -74,15 +123,15 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="./../../../Public/vendor/jquery/jquery.min.js"></script>
-    <script src="./../../../Public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="./../../Public/vendor/jquery/jquery.min.js"></script>
+    <script src="./../../Public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Plugin JavaScript -->
-    <script src="./../../../Public/vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="./../../../Public/vendor/scrollreveal/scrollreveal.min.js"></script>
-    <script src="./../../../Public/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+    <script src="./../../Public/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="./../../Public/vendor/scrollreveal/scrollreveal.min.js"></script>
+    <script src="./../../Public/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
 
     <!-- Custom scripts for this template -->
-    <script src="./../../../Public/js/creative.js"></script>
+    <script src="./../../Public/js/creative.js"></script>
   </body>
 </html>

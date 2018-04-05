@@ -26,8 +26,7 @@ class Manager
 	{
 		if (self::$connection === null) 
 		{
-			$json = file_get_contents(__DIR__ . "\DBAccess.json");	// Private file to protect confidenfial data (Json)
-			$DBAccess = json_decode($json, true);
+			$DBAccess = json_decode( file_get_contents(__DIR__ . "\DBAccess.json"), true);	// Private file to protect confidenfial data (Json)
 
 			try
 			{

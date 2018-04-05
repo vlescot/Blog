@@ -9,10 +9,11 @@
     "psr-4": {
       "App\\"       :"App/",
       "Controller\\":"App/Controller",
-      "Router\\"     :"App/Model/Router",
+      "Router\\"    :"App/Model/Router",
       "Entity\\"    :"App/Model/Entity",
-      "Manager\\"     :"App/Model",
-      "View\\"      :"App/View"
+      "Manager\\"   :"App/Model/Manager",
+      "View\\"      :"App/View",
+      "Service\\"   :"App/Service"
     }
   }
 }
