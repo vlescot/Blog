@@ -1,7 +1,7 @@
 <?php
 namespace Manager;
 
-// require_once './../../vendor/autoload.php';
+// require_once $_SERVER['DOCUMENT_ROOT'] . '/P5/Blog/vendor/autoload.php';
 use Manager\Manager;
 
 // -------------------------------------------------------------------
@@ -16,9 +16,9 @@ use Manager\Manager;
 // 							createComment (array $vars)
 // 							getCommentList (int $id_post)
 // 							updateComment (array $vars)
-// 							deleteComment (int $id)
-// 							getValidationComment (int $date_begin, int $date_ending, int $validated)
-// 							setValidationComment  (int $id, bool $set)
+// 							deleteComment (int $id_post) => Foreign key from post
+// 							getvalidatedComment (int $date_begin, int $date_ending, int $validated)
+// 							setvalidatedComment  (int $id, bool $set)
 							
 class CommentManager extends Manager
 {	
@@ -34,38 +34,41 @@ class CommentManager extends Manager
 	function getCommentList(int $id)
 	{
 		$sql = self::$connection->prepare('	
-			SELECT comment.content, comment.date_create, comment.author, comment.validated
+			SELECT comment.content, comment.date_create, comment.author, comment.validated, post.title
 			FROM comment 
 			RIGHT JOIN post 
 			ON comment.id_post = post.id
 			WHERE post.id      = :id
-			ORDER BY comment.date_create DESC');
+			ORDER BY comment.date_create ASC');
 		$sql->bindvalue(':id', (int) $id, \PDO::PARAM_INT);
 		$sql->execute();
  		return $sql->fetchAll();
 	}
 
 
-	function deleteComment ($table, $id)
+	function deleteComment (int $id_post)
 	{
-		return parent::delete('comment', $id);
+		$query = "DELETE FROM comment WHERE id_post = :id_post";
+		$sql = self::$connection->prepare($query);
+		$sql->bindvalue(':id_post', (int) $id_post, \PDO::PARAM_INT);
+		$sql->execute();
 	}
 
 
-	function getValidationComment (string $date_begin='2018-01-01', string $date_ending='', $validated=2)
+	function getValidatedComment (string $date_begin='2018-01-01', string $date_ending='', $validated=2)
 	{
-		return parent::getValidation('comment', $date_begin, $date_ending, $validated);
+		return parent::getValidated('comment', $date_begin, $date_ending, $validated);
 	}
 
 
-	function setValidationComment (int $id, bool $validation)
+	function setValidatedComment (int $id, bool $validated)
 	{
-		return parent::getValidation('comment', $id, $validation);
+		return parent::setValidated('comment', $id, $validated);
 	}
 }
 
 
-// $CommentManager = new Manager;
+// $CommentManager = new CommentManager;
 
 
 /*******************************
@@ -95,14 +98,14 @@ class CommentManager extends Manager
 
 
 /*******************************
- * Test for getValidationComment(int $date_begin, int $date_ending)
+ * Test for getvalidatedComment(int $date_begin, int $date_ending)
  * ****************************/
-// $validation = $CommentManager->getValidation($date_begin='', $date_ending='', 1);
-// var_dump($validation);
+// $validated = $CommentManager->getvalidated($date_begin='', $date_ending='', 1);
+// var_dump($validated);
 
 
 
 /*******************************
- * Test for setValidationComment(int $id, bool $validation)
+ * Test for setvalidatedComment(int $id, bool $validated)
  * ****************************/
- // $CommentManager->setValidation(5, false);
+ // $CommentManager->setValidatedComment(5, true);

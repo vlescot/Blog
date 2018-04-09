@@ -9,14 +9,14 @@
 	<section>
 		<div class="container">
 			
-			<a href="http://localhost/P5/Blog/admin/validation" role="button" class="btn btn-outline-dark btn-sm">
+			<a href="http://localhost/P5/Blog/admin/accueil" role="button" class="btn btn-outline-dark btn-sm">
 				<i class="fas fa-undo"></i> Retour
 			</a>
 
 			<button style="width:100px;" class="btn btn-outline-secondary btn-sm float-right" id="filter">Filtrer</button>
 	    	<div class="text-center">
 				<div id="date_filter">
-					<form action="http://localhost/P5/Blog/admin/validation" method="post">
+					<form action="http://localhost/P5/Blog/admin/validation" method="get">
 						<label for="date_begin">Date début :</label>
 			            <div class="form-check form-check-inline">
 							<input id="date_begin" name="date_begin" min="2018-02-01" type='date' class="form-control"/>
@@ -36,7 +36,7 @@
 						</div>
 			            <div class="form-check form-check-inline">
 							<input class="form-check-input" type="radio" name="validated" id="validated2" value="2">
-							<label class="form-check-label" for="validation2"> Les deux</label>
+							<label class="form-check-label" for="validated2"> Les deux</label>
 						</div>
 			            <div class="form-check form-check-inline">
 							<button style="width: 50px;" type="submit" class="btn btn-outline-secondary btn-sm">Ok</button>
@@ -55,77 +55,89 @@
 
 	<section class="container get-comment">
 		
-		{% if comments %}
-			<p class="h2 text-center get-comment">Liste des commentaires</p>
-			<table id="comment-listing" class="table">
-			  <tr>
-			    <th>Date</th>
-			    <th>Auteur</th>
-			    <th style="min-width: 50%;">Commentaire</th>
-			    <th colspan="2">Rendre visible</th>
-			    <th></th> 
-			  </tr>
-			  {% for comment in comments %}
-			  <tr class="{% if comment.validated == 1 %}validated{% elseif comment.validated == 0 %}not-validated{% endif %}">
-			  	<td>{{ comment.date_create | date("d/m/Y à h\\hm") }}</td>
-			  	<td>{{ comment.author }}</td>
-			    <td>{{ comment.content }}</td>
-			    <td>
-			    	<form action="check.php" method="post" enctype="multipart/form-data">
-						<div class="form-check">
-							<input class="form-check-input" type="radio" name="exampleRadios" id="visibilityOn" value="on" checked>
-							<label class="form-check-label" for="visibilityOn">Oui</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="radio" name="exampleRadios" id="visibilityOff" value="off">
-							<label class="form-check-label" for="visibilityOff">Non</label>
-						</div>
-					</form>
-				</td> 
-			    <td><a href="" role="button" class="btn btn-delete btn-sm"><i class="far fa-trash-alt"></i> Supprimer</a></td>
-			  </tr>
-			  {% endfor %}
-			</table>
+		<div class="container">
+			<div class="row">
+				<div class="offset-lg-1 col-lg-10">
+					{% if comments %}
+						<p class="h2 text-center get-comment">Liste des commentaires</p>
+						<table id="comment-listing" class="table">
+						  <tr>
+						    <th>Voir l'article</th>
+						    <th>Date d'ajout</th>
+						    <th>Auteur</th>
+						    <th style="min-width: 50%;">Commentaire</th>
+						    <th colspan="2">Rendre visible ?</th>
+						  </tr>
+						  {% for comment in comments %}
+						  <tr class="{% if comment.validated == 1 %}validated{% elseif comment.validated == 0 %}not-validated{% endif %}">
+						  	<td class="align-middle text-center"><a href="http://localhost/P5/Blog/blog/{{ comment.id_post }}" target="_blank"><i style="font-size:1.5em;" class="fas fa-share-square"></i></a></td>
+						  	<td class="align-middle">{{ comment.date_create | date("d/m/Y à H\\hi") }}</td>
+						  	<td class="align-middle">{{ comment.author }}</td>
+						    <td class="align-middle">{{ comment.content }}</td>
+						    <td class="align-middle text-center">
+						    	<form>
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="comment_validation" id="CommentVisibilityOn{{ comment.id }}" {% if comment.validated == 1 %}checked{% elseif comment.validated == 0 %}onclick="validation('comment',{{ comment.id }},1)"{% endif %}>
+										<label class="form-check-label" for="CommentVisibilityOn{{ comment.id }}">Oui</label>
+									</div>
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="comment_validation" id="CommentVisibilityOff{{ comment.id }}" {% if comment.validated == 0 %}checked{% elseif comment.validated == 1 %}onclick="validation('comment',{{ comment.id }},0)"{% endif %}>
+										<label class="form-check-label" for="CommentVisibilityOff{{ comment.id }}">Non</label>
+									</div>
+								</form>
+							</td> 
+						  </tr>
+						  {% endfor %}
+						</table>
 
-		{% endif %}
+					{% endif %}
+				</div>
+			</div>
+		</div>
 
-		{% if members %}
-			<p class="h2 text-center get-comment">Liste des membres</p>
-			<table id="comment-listing" class="table">
-			  <tr>
-			    <th>Date</th>
-			    <th>Pseudo</th>
-			    <th>Type</th>
-			    <th>Rendre visible</th>
-			    <th></th> 
-			  </tr>
-			  {% for member in members %}
-			  	
-			  <tr class="{% if member.validated == 1 %}validated{% elseif member.validated == 0 %}not-validated{% endif %}">
-			  	<td>{{ member.date_create | date("d/m/Y à h\\hm") }}</td>
-			  	<td>{{ member.login }}</td>
-			  	<td>{{ member.id_type }}</td>
-			    <td>
-			    	<form action="check.php" method="post" enctype="multipart/form-data">
-						<div class="form-check">
-							<input class="form-check-input" type="radio" name="exampleRadios" id="visibilityOn" value="on" checked>
-							<label class="form-check-label" for="visibilityOn">Oui</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="radio" name="exampleRadios" id="visibilityOff" value="off">
-							<label class="form-check-label" for="visibilityOff">Non</label>
-						</div>
-					</form>
-				</td> 
-			    <td><a href="" role="button" class="btn btn-delete btn-sm"><i class="far fa-trash-alt"></i> Supprimer</a></td>
-			  </tr>
-			  {% endfor %}
-			</table>
-		{% endif %}
-
-{# 		<div class="col-md-12 text-center">
-			 <button style="width: 100px;" type="submit" class="btn btn-add btn-sm"><i class="fas fa-check"></i> Valider</button>
-		</div> #}
-
+		<div class="container">
+			<div class="row">
+				<div class="offset-lg-3 col-lg-6">
+					{% if members %}
+						<p class="h2 text-center get-comment">Liste des membres</p>
+						<table id="comment-listing" class="table">
+						  <tr>
+						    <th>Date d'inscription</th>
+						    <th>Pseudo</th>
+						    <th>Type</th>
+						    <th class="text-center">Autorise les validations</th>
+						    <th></th> 
+						  </tr>
+						  {% for member in members %}
+						  	
+						  <tr class="{% if member.validated == 1 %}validated{% elseif member.validated == 0 %}not-validated{% endif %}">
+						  	<td class="align-middle">{{ member.date_create | date("d/m/Y") }}</td>
+						  	<td class="align-middle">{{ member.login }}</td>
+						  	<td class="align-middle text-center">{{ member.id_type }}</td>
+						    <td class="text-center">
+						    	<form>
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="exampleRadios" id="MemberVisibilityOn{{ member.id }}" {% if member.validated == 1 %}checked{% elseif member.validated == 0 %}onclick="validation('member',{{ member.id }},1)"{% endif %}>
+										<label class="form-check-label" for="MemberVisibilityOn{{ member.id }}">Oui</label>
+									</div>
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="exampleRadios" id="MemberVisibilityOff{{ member.id }}" {% if member.validated == 0 %}checked{% elseif member.validated == 1 %}onclick="validation('member',{{ member.id }},0)"{% endif %}>
+										<label class="form-check-label" for="MemberVisibilityOff{{ member.id }}">Non</label>
+									</div>
+								</form>
+							</td> 
+						  </tr>
+						  {% endfor %}
+						</table>
+					{% endif %}
+				</div>
+			</div>
+		</div>
 	</section>
+	<script>
+		// onclick on the radio input (validation page)
+		function validation (table, id, validation){
+			$.post(window.location.href, 'table='+table+'&id='+id+'&validation='+validation, location.reload(true), "text");
+		}
+	</script>
 {% endblock %}

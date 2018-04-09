@@ -3,7 +3,11 @@
 {% block main_title %}{{post.title}} - Blog{% endblock %}
 
 {% block content %}
-    <header class="masthead masthead-post text-center text-white d-flex" style="background-image: url(http://localhost/P5/Blog/Public/img/{{post.img}});">
+  {% if post.img %}
+    <header class="masthead masthead-post text-center text-white d-flex" style="background-image: url(http://localhost/P5/Blog/Public/img/Fullsize/{{post.img}});">
+  {% else %}
+  <header class="masthead masthead-post text-center text-white d-flex">
+  {% endif %}
 		<div class="cover">
 	      <div class="container my-auto">
 	        <div class="row">
@@ -26,7 +30,7 @@
           <div class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2 mx-auto">
             <a href="http://localhost/P5/Blog/blog/" class="btn btn-back"><i class="fas fa-undo"></i> Retour</a>
             <p class="post-text"> {{ post.content }} </p>
-            <p class="text-right infos"><strong>Par {{ post.login }}, le {{post.date_create|date('d-m-Y à h\\hm')}}</strong></p>
+            <p class="text-right infos"><strong>Par {{ post.login }}, le {{post.date_create|localizeddate('none', 'none', 'fr', null, 'EEEE d MMMM Y')}}</strong></p>
           </div>
         </div>
       </div>
@@ -43,14 +47,14 @@
                 {% if comment.validated == 1 %}
                   <div class="comment-content">
                     <p class="comment">{{ comment.content }}</p>
-                    <p class="text-right infos"><strong>Par {{ comment.author }}, le {{ comment.date_create|date('d-m-Y à H\\hm') }}</strong></p>
+                    <p class="text-right infos"><strong>Par <span class="text-white">{{ comment.author }}</span>,  le <span class="text-white">{{ comment.date_create|localizeddate('none', 'none', 'fr', null, 'd MMMM Y à H:mm') }}</span></strong></p>
                   </div>
                 {% endif %}
               {% endfor %}
-            <form action="#" method="post" class="form-inline">
+            <form action="" method="post" class="form-inline">
                 <div class="form-group">
-                  <input type="text" placeholder="Votre nom" class="form-control col-3" required>
-                  <textarea class="form-control col-7" rows="1" placeholder="Écrire un commentaire..." required></textarea>
+                  <input type="text" name="author" class="form-control col-3" placeholder="Votre nom" required>
+                  <textarea name="content" class="form-control col-7" placeholder="Écrire un commentaire..." rows="1" required></textarea>
                   <button type="submit" class="btn btn-primary col-2">Poster</button>
                 </div>
             </form>

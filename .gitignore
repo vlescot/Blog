@@ -1,6 +1,9 @@
 /vendor/
 /App/Controller/
-/App/Services/
+/App/Services/connect.html
+/App/Services/connection.php
+/App/Model/Entity/
 /App/Model/DBAccess.json
+/App/View/Error/
 try.php
 /try/

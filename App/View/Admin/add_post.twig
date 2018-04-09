@@ -1,8 +1,8 @@
 {% extends 'layout.twig' %}
 
-{% block main_title %}Ajouter un Article - Administration{% endblock %}
+{% block main_title %}{% if update %}Modifier l'Article - Administration{% else %}Ajouter un Article - Administration{% endif %}{% endblock %}
 	
-{% block page_title %}Ajouter un Article{% endblock %}
+{% block page_title %}{% if update %}Modifier l'Article</br><h2>{{ update.title }}</h2>{% else %}Ajouter un Article{% endif %}{% endblock %}
 
 {% block content %}
 
@@ -14,7 +14,7 @@
 	</section>
 
 	<section class="container">
-		<form action="http://localhost/P5/Blog/admin/article/{% if not update %}creer{% endif %}{% if update %}{{update.id}}{% endif %}" method="post" enctype="multipart/form-data">
+		<form action="http://localhost/P5/Blog/admin/article/{% if not update %}creer{% endif %}{% if update %}{{update.id}}{% endif %}" method="POST" enctype="multipart/form-data">
 
 			<div class="form-row">
 				<div class="col-md-12">
@@ -26,38 +26,48 @@
 									<input type="text" class="form-control" name="title" id="title"
 									{% if update.title %}
 										placeholder="{{ update.title }}"
-									{% endif %} required>
+									{% else %} required{% endif %}>
 								</div>
 								<div class="col-md-12 form-group">
 									<label for="lede">Châpo</label>
 									<input type="text" class="form-control" name="lede" id="lede" 
 									{% if update.lede %}
 										placeholder="{{ update.lede }}"
-									{% endif %} required>
+									{% else %} required{% endif %}>
 								</div>
 								<div class="col-md-12 form-group">
 									<label for="content">Contenu</label>
-									<textarea class="form-control" name="content" id="content" rows="5" {% if update.content %}placeholder="{{ update.content }}"{% endif %}></textarea>	
+									<textarea class="form-control" name="content" id="content" rows="5" {% if update.content %}placeholder="{{ update.content }}"{% else %} required{% endif %}></textarea>	
 								</div>
 
 							</div>
 						</div>
 						<aside class="offset-md-1 col-md-3">
-							<div class="form-group">
 							{% if update.img %}
-									<label for="file">Image :
-										<img class="rounded img-fluid" src="http://localhost/P5/Blog/Public/img/{{ update.img }}" alt={{ update.img }}>
-									</label>
-							{% endif %}
-	                            <label name="file" for="file" class="label-file">
-	                            	Choisir une {% if update.img %}nouvelle {% endif %}image d'en-tête <small>(format : jpg ou png)</small> :
+							<div class="form-group">
+								<label name="file" for="file" class="label-file">
+									<img class="rounded img-fluid" src="http://localhost/P5/Blog/Public/img/Input_File/{{ update.img }}" alt="IMAGE:{{ update.title }}">
 								</label>
-								<input type="file" class="btn btn-light input-file" id="file" accept=".jpg, .jpeg, .png">
+	                            <label name="file" for="file" class="label-file">
+	                            	<small>Format : jpg, jpeg ou png</small></br></small>Changer d'image d'en-tête
+								</label>
+								<input type="file" class="btn btn-light input-file" id="file" name="file" accept=".jpg, .jpeg, .png">
+							</div>
+							<div class="form-check">
+							    <input type="checkbox" class="form-check-input" id="img-remove" name="img-remove">
+							    <label class="form-check-label" for="img-remove">Ou supprimer l'image</label>
                         	</div>
-								<div class="form-group">
-									<label for="tag">??? Tags ???</label>
-									<input type="text" class="form-control" name="tag" id="tag" placeholder="">
-								</div>
+							{% else %}
+							<div class="form-group">
+								<label name="file" for="file" class="label-file">
+									<img class="rounded img-fluid" src="http://localhost/P5/Blog/Public/img/Input_File/no-image.png" alt="no-image">
+								</label>								
+	                            <label name="file" for="file" class="label-file">
+	                            	<small>Format : jpg, jpeg ou png</small></br></small>Choisir une image d'en-tête
+								</label>
+								<input type="file" class="btn btn-light input-file" id="file" name="file" accept=".jpg, .jpeg, .png">
+                        	</div>
+							{% endif %}
 						</aside>
 					</div>
 				</div>

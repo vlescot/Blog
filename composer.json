@@ -3,7 +3,8 @@
     "description": "Blog - Project 5 Dev PHP/Sf OpenClassrooms",
     "require": {
         "twig/twig": "^2.4",
-        "swiftmailer/swiftmailer": "^6.0"
+        "swiftmailer/swiftmailer": "^6.0",
+        "twig/extensions": "^1.5"
     },
     "autoload": {
     "psr-4": {
