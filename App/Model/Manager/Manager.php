@@ -19,7 +19,7 @@ use PDO;
 class Manager
 {
 	private static $dbEncode =	"utf8";
-	protected static $connection	=	null; 
+	protected static $connection	=	null;
 
 	function __construct ()
 	{
@@ -29,7 +29,7 @@ class Manager
 
 			try
 			{
-				$connection = new PDO("mysql:host=" . $DBAccess['Host'] . "; dbname=" . $DBAccess['Name'] . "; charset=" . self::$dbEncode, $DBAccess['Login'], $DBAccess['Psw']);
+				$connection = new PDO("mysql:host=" . $DBAccess['Host'] . "; dbname=" . $DBAccess['Name'] . "; charset=" . self::$dbEncode, $DBAccess['Login'], $DBAccess['Password']);
 				$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 				$connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE , PDO::FETCH_ASSOC );
 				$connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);

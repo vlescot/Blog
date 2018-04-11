@@ -18,6 +18,13 @@
  * **
  */
 
+.alert{
+    position: block !important;
+    float: left !important;
+    top: 0 !important;
+    z-index: 1000 !important;
+    width:100% !important;
+}
 
 #back-app{
     background-color: #f4f4f4;
@@ -122,6 +129,10 @@
     .navbar-perso .navbar-nav  .dropdown-menu > li > a:focus {
           color: #fff;
     }
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
 }
 
 

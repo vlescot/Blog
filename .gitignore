@@ -4,6 +4,7 @@
 /App/Services/connection.php
 /App/Model/Entity/
 /App/Model/DBAccess.json
+/App/Service/MailAccess.json
 /App/View/Error/
 try.php
 /try/

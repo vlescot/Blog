@@ -54,7 +54,6 @@
 	</section>
 
 	<section class="container get-comment">
-		
 		<div class="container">
 			<div class="row">
 				<div class="offset-lg-1 col-lg-10">
@@ -95,17 +94,19 @@
 			</div>
 		</div>
 
+		{% if session.member_type == 1 %}
 		<div class="container">
 			<div class="row">
 				<div class="offset-lg-3 col-lg-6">
 					{% if members %}
 						<p class="h2 text-center get-comment">Liste des membres</p>
+						<p class="text-center"><small><em>Seul les utilisateurs de type 1 peuvent valider les autres membres</em></small></p>
 						<table id="comment-listing" class="table">
 						  <tr>
 						    <th>Date d'inscription</th>
 						    <th>Pseudo</th>
 						    <th>Type</th>
-						    <th class="text-center">Autorise les validations</th>
+						    <th class="text-center">Autorise l'accès</th>
 						    <th></th> 
 						  </tr>
 						  {% for member in members %}
@@ -133,6 +134,7 @@
 				</div>
 			</div>
 		</div>
+		{% endif %}
 	</section>
 	<script>
 		// onclick on the radio input (validation page)
