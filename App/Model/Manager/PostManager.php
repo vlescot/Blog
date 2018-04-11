@@ -1,7 +1,7 @@
 <?php
 namespace Manager;
 
-// require_once './../../vendor/autoload.php';
+// require_once $_SERVER['DOCUMENT_ROOT'] . '/P5/Blog/vendor/autoload.php';
 use Manager\Manager;
 
 // -------------------------------------------------------------------
@@ -49,7 +49,11 @@ class PostManager extends Manager
  		return $sql->fetchAll();
 	}
 
+<<<<<<< HEAD
+	function getPostFilter (string $date_begin='2018-01-01', string $date_ending ='', $validated=2)
+=======
 	function getValidatedPost (string $date_begin='2018-01-01', string $date_ending ='', $validated=2)
+>>>>>>> a774084bf9a96120514c02c668c6d7ff1c62bb1f
 	{
 		return parent::getValidated('post', $date_begin, $date_ending, $validated);
 	}
@@ -95,7 +99,10 @@ class PostManager extends Manager
 
 	function deletePost (int $id)
 	{
-		return parent::delete('post', $id);
+		$query = "DELETE FROM post WHERE id = :id";
+		$sql = self::$connection->prepare($query);
+		$sql->bindvalue(':id', (int) $id, \PDO::PARAM_INT);
+		$sql->execute();
 	}
 }
 
@@ -105,11 +112,11 @@ class PostManager extends Manager
  * Test for createPost(array $vars)
  * ****************************/
 // $vars = array(
-	// 'title'     => 'Un titre d\'article,
-	// 'lede'      => 'Un chapô d\'article,
-	// 'content'   => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-	// 'img'  => 'img.png',
-	// 'id_member' => 1);
+// 	'title'     => 'Un titre d\'article',
+// 	'lede'      => 'Un chapô d\'article',
+// 	'content'   => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
+// 	'img'  => 'img.png',
+// 	'id_member' => 1);
 // $PostManager->createPost($vars);
 
 
@@ -153,6 +160,6 @@ class PostManager extends Manager
 
 
 /*******************************
- * Test for delete(int $id)
+ * Test for deletePost(int $id)
  * ****************************/
- // $PostManager->delete(11);
+ // $PostManager->deletePost(11);

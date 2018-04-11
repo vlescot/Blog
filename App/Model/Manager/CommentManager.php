@@ -1,7 +1,7 @@
 <?php
 namespace Manager;
 
-// require_once './../../vendor/autoload.php';
+// require_once $_SERVER['DOCUMENT_ROOT'] . '/P5/Blog/vendor/autoload.php';
 use Manager\Manager;
 
 // -------------------------------------------------------------------
@@ -13,13 +13,8 @@ use Manager\Manager;
 // -------------------------------------------------------------------
 // 							FUNCTION LISTING
 // -------------------------------------------------------------------
-// 							createComment (array $vars)
-// 							getCommentList (int $id_post)
-// 							updateComment (array $vars)
-// 							deleteComment (int $id)
-// 							getvalidatedComment (int $date_begin, int $date_ending, int $validated)
-// 							setvalidatedComment  (int $id, bool $set)
-							
+
+
 class CommentManager extends Manager
 {	
 	function createComment(array $vars)
@@ -34,21 +29,24 @@ class CommentManager extends Manager
 	function getCommentList(int $id)
 	{
 		$sql = self::$connection->prepare('	
-			SELECT comment.content, comment.date_create, comment.author, comment.validated
+			SELECT comment.content, comment.date_create, comment.author, comment.validated, post.title
 			FROM comment 
 			RIGHT JOIN post 
 			ON comment.id_post = post.id
 			WHERE post.id      = :id
-			ORDER BY comment.date_create DESC');
+			ORDER BY comment.date_create ASC');
 		$sql->bindvalue(':id', (int) $id, \PDO::PARAM_INT);
 		$sql->execute();
  		return $sql->fetchAll();
 	}
 
 
-	function deleteComment ($table, $id)
+	function deleteComment (int $id_post)
 	{
-		return parent::delete('comment', $id);
+		$query = "DELETE FROM comment WHERE id_post = :id_post";
+		$sql = self::$connection->prepare($query);
+		$sql->bindvalue(':id_post', (int) $id_post, \PDO::PARAM_INT);
+		$sql->execute();
 	}
 
 
@@ -60,12 +58,16 @@ class CommentManager extends Manager
 
 	function setValidatedComment (int $id, bool $validated)
 	{
+<<<<<<< HEAD
+		return parent::setValidated('comment', $id, $validated);
+=======
 		return parent::getValidated('comment', $id, $validated);
+>>>>>>> a774084bf9a96120514c02c668c6d7ff1c62bb1f
 	}
 }
 
 
-// $CommentManager = new Manager;
+// $CommentManager = new CommentManager;
 
 
 /*******************************
@@ -105,4 +107,8 @@ class CommentManager extends Manager
 /*******************************
  * Test for setvalidatedComment(int $id, bool $validated)
  * ****************************/
+<<<<<<< HEAD
+ // $CommentManager->setValidatedComment(5, true);
+=======
  // $CommentManager->setvalidated(5, false);
+>>>>>>> a774084bf9a96120514c02c668c6d7ff1c62bb1f

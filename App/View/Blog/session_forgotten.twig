@@ -1,0 +1,30 @@
+{% extends 'layout.twig' %}
+
+{% block main_title %}Inscription{% endblock %}
+  
+
+{% block content %}
+
+  <section>
+    <div class="container auth">
+      <div class="text-center">
+        <h2>Mot de passe oublié</h2>
+        <div>
+          <small  class="text-muted"><a href="http://localhost/P5/Blog/connexion">Connectez vous</a></small>
+        </div></br>
+        <div class="row">
+          <div class="col-xs-12 offset-sm-1 col-sm-10 offset-md-2 col-md-8 offset-lg-4 col-lg-4">
+            <form action="http://localhost/P5/Blog/inscription" method="post">
+              <div class="form-group form-control-sm">
+                <label for="login">Saisissez votre nom d'utilisateur</label>
+                <input class="form-control form-control-sm" name="login" id="login" type="login" required>
+              </div>
+              <input class="btn btn-primary" type="submit" value="Réinitialiser">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

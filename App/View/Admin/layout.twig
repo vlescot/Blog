@@ -1,6 +1,6 @@
+{# {% if app.session %} #}
 <!DOCTYPE html>
 <html lang="fr">
-
   <head>
   
     <meta charset="utf-8">
@@ -47,13 +47,16 @@
             <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="http://localhost/P5/Blog/">Le Blog</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="http://localhost/P5/Blog/admin/disconnect">Deconnexion</a>
+            </li>
           </ul>
         </div>
       </div>
     </nav>
 
-    <header>
-      <h1 class="text-center">{% block page_title %}{% endblock %}</h1>
+    <header class="text-center">
+      <h1>{% block page_title %}{% endblock %}</h1>
     </header>
 
     {% block content %}{% endblock %}
@@ -74,18 +77,39 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script>
-        $( document ).ready(function() {
-            var bodyHeight = Math.round($("body").height());
-            var windowHeight = Math.round($(window).height());
-            
-            if (windowHeight - bodyHeight > 0) {
-                $("footer").css("margin-top", windowHeight - bodyHeight - 5)
-            }
+      // Adjust the window height by adjust margin-top and margin-bottom to fill the window 
+      $( document ).ready(function() {
+        var bodyHeight = Math.round($("body").height());
+        var windowHeight = Math.round($(window).height());
+        var navbarHeight = Math.round($(".navbar").height());
+        if (windowHeight - bodyHeight > 0) {
+          var space = (windowHeight - bodyHeight - navbarHeight) / 2;
+            $("#dashboard").css("margin-top", space);
+            $("#dashboard").css("margin-bottom", space);
+        }
 
-          $("#filter").click(function(){
-              $("#date_filter").slideToggle();
-          });
+        // filter field 
+        $("#filter").click(function(){
+            $("#date_filter").slideToggle();
         });
+      });
     </script>
-  </body>
+    <script>
+/*      var file = $("#file");
+      file.change(function(){
+        var imgLabel = $("form label img");
+console.log(file[0]);
+        file = file[0];
+
+        imgLabel.file = file;
+        // imgLabel.appendChild(imgLabel);
+        
+        var reader = new FileReader();
+        reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(imgLabel);
+        reader.readAsDataURL(file);
+      });*/
+    </script>
+
+</body>
 </html>
+{# {% endif %} #}

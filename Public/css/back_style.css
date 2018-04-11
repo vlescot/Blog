@@ -18,6 +18,13 @@
  * **
  */
 
+.alert{
+    position: block !important;
+    float: left !important;
+    top: 0 !important;
+    z-index: 1000 !important;
+    width:100% !important;
+}
 
 #back-app{
     background-color: #f4f4f4;
@@ -25,7 +32,6 @@
 #back-app header {
     background-color: #133549;
     color: #fff;
-    height: 70px;
     padding: 10px 0px 5px 0px;
     margin-top: 52px;
     margin-bottom: 30px;
@@ -111,7 +117,7 @@
 .navbar-perso .navbar-toggle .icon-bar {
     background-color: #e5e8ea;
 }
-@media (max-width: 767px) {
+@media (max-width: 992px) {
     .navbar-toggler-icon {
       background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(229,232,234, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
     }
@@ -123,6 +129,10 @@
     .navbar-perso .navbar-nav  .dropdown-menu > li > a:focus {
           color: #fff;
     }
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
 }
 
 
@@ -184,7 +194,12 @@ td a:hover {
     border-color: #2e845c !important;
     box-shadow : 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19) !important;
 }
-
+.btn-update, .btn-delete{
+    width: 100px;
+}
+.btn-delete {
+    margin-top: 10px;
+}
 .btn-update, .btn-update:visited {
     background-color: #E9725C;
     border-color: #E9725C !important;
@@ -232,9 +247,8 @@ form input[type="file"] {
  ***
  */
 #back-app h2 {
-    margin-top: 30px;
-    margin-bottom: 30px;
-    font-size: 1.5rem;
+    font-weight: 400;
+    font-size: 1.8rem;
 }
 #back-app td form {
     margin: 0px;
@@ -262,7 +276,7 @@ form input[type="file"] {
     display: none;
 }
 #date_filter form {
-    margin: 20px 0px 20px 0px;
+    margin: 0px 0px 20px 0px !important;
 }
 
 /**
@@ -270,10 +284,10 @@ form input[type="file"] {
  ***
  */
 
-#back-app .validated {
+#back-app .validated, #back-app .validated a {
     color:#236847;
 }
-#back-app .not-validated {
+#back-app .not-validated, #back-app .not-validated a {
     color: #C5283D;
 }
 

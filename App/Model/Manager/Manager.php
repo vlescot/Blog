@@ -13,14 +13,12 @@ use PDO;
 // 							FUNCTION LISTING
 // -------------------------------------------------------------------
 // 							__contruct ()
-// 							delete (int $id)
-// 							getvalidated (string $table, int $date_begin, int $date_ending, int $validated)
-// 							setvalidated  (string $table, int $id, bool $set)
+
 							
 class Manager
 {
 	private static $dbEncode =	"utf8";
-	protected static $connection	=	null; 
+	protected static $connection	=	null;
 
 	function __construct ()
 	{
@@ -30,7 +28,7 @@ class Manager
 
 			try
 			{
-				$connection = new PDO("mysql:host=" . $DBAccess['Host'] . "; dbname=" . $DBAccess['Name'] . "; charset=" . self::$dbEncode, $DBAccess['Login'], $DBAccess['Psw']);
+				$connection = new PDO("mysql:host=" . $DBAccess['Host'] . "; dbname=" . $DBAccess['Name'] . "; charset=" . self::$dbEncode, $DBAccess['Login'], $DBAccess['Password']);
 				$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 				$connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE , PDO::FETCH_ASSOC );
 				$connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
@@ -42,15 +40,6 @@ class Manager
 				die ($e->getMessage());
 			}
 		}
-	}
-
-
-	function delete (string $table, int $id)
-	{
-		$query = "DELETE * FROM " . $table . " WHERE id = :id";
-		$sql = self::$connection->prepare($query);
-		$sql->bindvalue(':id', (int) $id, \PDO::PARAM_INT);
-		$sql->execute();
 	}
 
 

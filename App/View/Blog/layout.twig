@@ -52,7 +52,7 @@
               <a class="nav-link js-scroll-trigger" href="http://localhost/P5/Blog/accueil#contact-form">Contact</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="http://localhost/P5/Blog/admin">ADMIN</a>
+              <a class="nav-link js-scroll-trigger" href="http://localhost/P5/Blog/connexion">ADMIN</a>
             </li>
           </ul>
         </div>
@@ -70,7 +70,7 @@
         </div>
         <div id="copyright" class='text-center'>© 2018 - Réalisé par Vincent Lescot</div>
     </footer>
-    
+    <!-- Font Awesome -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 
     <!-- Bootstrap core JavaScript -->
@@ -86,7 +86,6 @@
     <script src="http://localhost/P5/Blog/Public/js/creative.js"></script>
     <script>
         $(document).ready(function(){
-            console.log($('title').text());
             if ($('title').text() === "Connexion" || $('title').text() === "Inscription") {//navbar-shrink
                 $('nav').addClass('navbar-shrink');
             }
