@@ -13,8 +13,7 @@ use PDO;
 // 							FUNCTION LISTING
 // -------------------------------------------------------------------
 // 							__contruct ()
-// 							getvalidated (string $table, int $date_begin, int $date_ending, int $validated)
-// 							setvalidated  (string $table, int $id, bool $set)
+
 							
 class Manager
 {

@@ -61,7 +61,11 @@ class MemberManager extends Manager
 
 	function setValidatedMember (int $id, bool $validated)
 	{
+<<<<<<< HEAD
 		return parent::setValidated('member', $id, $validated);
+=======
+		return parent::getValidated('member', $id, $validated);
+>>>>>>> a774084bf9a96120514c02c668c6d7ff1c62bb1f
 	}
 }
 
@@ -107,4 +111,8 @@ class MemberManager extends Manager
 /*******************************
  * Test for setValidatedMember (int $id, bool $Validated)
  * ****************************/
+<<<<<<< HEAD
  // $MemberManager->setValidatedMember(5, false);
+=======
+ // $MemberManager->setValidated(5, false);
+>>>>>>> a774084bf9a96120514c02c668c6d7ff1c62bb1f

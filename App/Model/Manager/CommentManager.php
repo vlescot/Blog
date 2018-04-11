@@ -13,13 +13,8 @@ use Manager\Manager;
 // -------------------------------------------------------------------
 // 							FUNCTION LISTING
 // -------------------------------------------------------------------
-// 							createComment (array $vars)
-// 							getCommentList (int $id_post)
-// 							updateComment (array $vars)
-// 							deleteComment (int $id_post) => Foreign key from post
-// 							getvalidatedComment (int $date_begin, int $date_ending, int $validated)
-// 							setvalidatedComment  (int $id, bool $set)
-							
+
+
 class CommentManager extends Manager
 {	
 	function createComment(array $vars)
@@ -63,7 +58,11 @@ class CommentManager extends Manager
 
 	function setValidatedComment (int $id, bool $validated)
 	{
+<<<<<<< HEAD
 		return parent::setValidated('comment', $id, $validated);
+=======
+		return parent::getValidated('comment', $id, $validated);
+>>>>>>> a774084bf9a96120514c02c668c6d7ff1c62bb1f
 	}
 }
 
@@ -108,4 +107,8 @@ class CommentManager extends Manager
 /*******************************
  * Test for setvalidatedComment(int $id, bool $validated)
  * ****************************/
+<<<<<<< HEAD
  // $CommentManager->setValidatedComment(5, true);
+=======
+ // $CommentManager->setvalidated(5, false);
+>>>>>>> a774084bf9a96120514c02c668c6d7ff1c62bb1f

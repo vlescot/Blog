@@ -49,7 +49,11 @@ class PostManager extends Manager
  		return $sql->fetchAll();
 	}
 
+<<<<<<< HEAD
 	function getPostFilter (string $date_begin='2018-01-01', string $date_ending ='', $validated=2)
+=======
+	function getValidatedPost (string $date_begin='2018-01-01', string $date_ending ='', $validated=2)
+>>>>>>> a774084bf9a96120514c02c668c6d7ff1c62bb1f
 	{
 		return parent::getValidated('post', $date_begin, $date_ending, $validated);
 	}
