@@ -1,7 +1,6 @@
 <?php
 namespace Manager;
 
-// require_once $_SERVER['DOCUMENT_ROOT'] . '/P5/Blog/vendor/autoload.php';
 use Manager\Manager;
 
 // -------------------------------------------------------------------
@@ -27,6 +26,7 @@ class PostManager extends Manager
 		$sql = self::$connection->prepare("
 			INSERT INTO post (title, lede, content, img, id_member, date_create, date_update)
 			VALUES (?, ?, ?, ?, ?, NOW(), NOW())");
+		
 		$sql->execute(array($vars['title'], $vars['lede'], $vars['content'], $vars['img'], $vars['id_member']));
 	}
 
@@ -49,11 +49,8 @@ class PostManager extends Manager
  		return $sql->fetchAll();
 	}
 
-<<<<<<< HEAD
 	function getPostFilter (string $date_begin='2018-01-01', string $date_ending ='', $validated=2)
-=======
-	function getValidatedPost (string $date_begin='2018-01-01', string $date_ending ='', $validated=2)
->>>>>>> a774084bf9a96120514c02c668c6d7ff1c62bb1f
+	// function getValidatedPost (string $date_begin='2018-01-01', string $date_ending ='', $validated=2)
 	{
 		return parent::getValidated('post', $date_begin, $date_ending, $validated);
 	}
@@ -93,6 +90,7 @@ class PostManager extends Manager
 	function countPosts ()
 	{
 		$sql = self::$connection ->query("SELECT COUNT(*) AS nb FROM post");
+		
 		$nb = $sql->fetch();
 		return $nb['nb'];
 	}
@@ -101,65 +99,8 @@ class PostManager extends Manager
 	{
 		$query = "DELETE FROM post WHERE id = :id";
 		$sql = self::$connection->prepare($query);
+		
 		$sql->bindvalue(':id', (int) $id, \PDO::PARAM_INT);
 		$sql->execute();
 	}
 }
-
-// $PostManager = new PostManager;
-
-/*******************************
- * Test for createPost(array $vars)
- * ****************************/
-// $vars = array(
-// 	'title'     => 'Un titre d\'article',
-// 	'lede'      => 'Un chapô d\'article',
-// 	'content'   => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-// 	'img'  => 'img.png',
-// 	'id_member' => 1);
-// $PostManager->createPost($vars);
-
-
-
-/*******************************
- * Test for getPostsList(int $begin [optional], int $limit [optional])
- * ****************************/
-// $posts_list = $PostManager->getPostsList(1, 3);
-// var_dump($posts_list);
-
-
-
-/*******************************
- * Test for getPost(int $id)
- * ****************************/
-// $post = $PostManager->getPost(2);
-// var_dump($post);
-
-
-
-/*******************************
- * Test for updatePost(array $vars)
- * ****************************/
-// $vars = array(
-// 	'id'        => 1,
-// 	'title'     => 'Un autre titre ici',
-// 	'lede'      => 'Le lede là aussi',
-// 	'content'   => 'Un autre Lorem ipsum dolor sit amet, consectetur adipisicing elit. Si si vous avez vus',
-// 	'img'  => 'image.jpg',
-// 	'id_member' => 1);
-// $PostManager->updatePost($vars);
-
-
-
-/*******************************
- * Test for countPosts()
- * ****************************/
-// $nb = $PostManager->countPosts();
-// echo $nb;
-
-
-
-/*******************************
- * Test for deletePost(int $id)
- * ****************************/
- // $PostManager->deletePost(11);

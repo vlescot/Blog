@@ -13,6 +13,11 @@ use Manager\Manager;
 // -------------------------------------------------------------------
 // 							FUNCTION LISTING
 // -------------------------------------------------------------------
+// 							createComment (arary vars)
+// 							getCommentList (int $id)
+// 							deleteComment (int $id_post)
+// 							getValidatedComment (string $date_begin='2018-01-01', string $date_ending='', $validated=2)
+// 							setValidatedComment (int $id, bool $validated)
 
 
 class CommentManager extends Manager
@@ -20,8 +25,9 @@ class CommentManager extends Manager
 	function createComment(array $vars)
 	{
 		$sql = self::$connection->prepare('
-			INSERT INTO comment (content, author, id_post, likes, dislikes, validated, date_create)
-			VALUES (?, ?, ?, 0, 0, 0, NOW())');
+			INSERT INTO comment (content, author, id_post, validated, date_create)
+			VALUES (?, ?, ?, 0, NOW())');
+		
 		$sql->execute(array($vars['content'], $vars['author'], $vars['id_post']));
 	}
 
@@ -35,6 +41,7 @@ class CommentManager extends Manager
 			ON comment.id_post = post.id
 			WHERE post.id      = :id
 			ORDER BY comment.date_create ASC');
+		
 		$sql->bindvalue(':id', (int) $id, \PDO::PARAM_INT);
 		$sql->execute();
  		return $sql->fetchAll();
@@ -45,6 +52,7 @@ class CommentManager extends Manager
 	{
 		$query = "DELETE FROM comment WHERE id_post = :id_post";
 		$sql = self::$connection->prepare($query);
+		
 		$sql->bindvalue(':id_post', (int) $id_post, \PDO::PARAM_INT);
 		$sql->execute();
 	}
@@ -58,57 +66,6 @@ class CommentManager extends Manager
 
 	function setValidatedComment (int $id, bool $validated)
 	{
-<<<<<<< HEAD
 		return parent::setValidated('comment', $id, $validated);
-=======
-		return parent::getValidated('comment', $id, $validated);
->>>>>>> a774084bf9a96120514c02c668c6d7ff1c62bb1f
 	}
 }
-
-
-// $CommentManager = new CommentManager;
-
-
-/*******************************
- * Test for createComment(array $vars)
- * ****************************/
-// $vars = array(
-// 'content' => 'Il est super ce blog !',
-// 'author'  => 'Pumba',
-// 'id_post' => 10);
-// $CommentManager->createComment($vars);
-
-
-
-/*******************************
- * Test for getCommentList(int $id)
- * ****************************/
-// $comments = $CommentManager->getCommentList(1);
-// var_dump($comments);
-
-
-
-/*******************************
- * Test for deleteComment(int $id)
- * ****************************/
- // $CommentManager->delete(11);
-
-
-
-/*******************************
- * Test for getvalidatedComment(int $date_begin, int $date_ending)
- * ****************************/
-// $validated = $CommentManager->getvalidated($date_begin='', $date_ending='', 1);
-// var_dump($validated);
-
-
-
-/*******************************
- * Test for setvalidatedComment(int $id, bool $validated)
- * ****************************/
-<<<<<<< HEAD
- // $CommentManager->setValidatedComment(5, true);
-=======
- // $CommentManager->setvalidated(5, false);
->>>>>>> a774084bf9a96120514c02c668c6d7ff1c62bb1f

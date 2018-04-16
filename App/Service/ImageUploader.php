@@ -3,20 +3,38 @@ namespace Service;
 
 /**
  *		Upload and resize the images
+ *		Put the images into the named directory (see $_img_params)
+ *		Remove images into the named directory (see $_img_params)
  */
 class ImageUploader
 {
-	private $extensions_valid = ['jpg', 'jpeg', 'png'];
-	//Values are widths pixels. Keys are the destination folders used in the respective URL : /blog/article/$id/, /blog/, /admin/article/, /admin/article/$article_id/
-	private $img_params = ['FullSize' => null ,'Jumbotron' => 540, 'Table' => 100, 'Input_File' => 270];
-	private $images_folder = '';
+	/**
+	 * Values are widths pixels.
+	 * Keys are the destination folders into /Public/img/$_img_params[$key]
+	 */
+	private $_img_params = [
+		'FullSize' 	=> null ,
+		'Jumbotron' => 540, 
+		'Table' 	=> 100, 
+		'Input_File' => 270
+	];
+	private $_extensions_valid = ['jpg', 'jpeg', 'png'];
+	private $_images_folder = '';
 
-
+	
 	function __construct ()
 	{
-		$this->images_folder = $_SERVER['DOCUMENT_ROOT'] . 'P5/Blog/Public/img/';
+		$this->_images_folder = $_SERVER['DOCUMENT_ROOT'] . 'P5/Blog/Public/img/';
 	}
 
+	// Called in error case
+	private function error ($message)
+	{
+		new Notification ($message);
+		header('Location :' . $_SERVER['REQUEST_URI']);
+		exit;
+	}
+	
 
 	/**
 	 * Check if this image is jpg, jpeg, png. 
@@ -26,37 +44,30 @@ class ImageUploader
 	function upload ()
 	{
 		$extension_upload = strtolower(substr(strrchr($_FILES['file']['name'],'.'),1));
-		if (!in_array($extension_upload , $this->extensions_valid)) {
-			/**
-			 * Exception => Format de fichier non pris en compte
-			 */
-			die;
+		if (!in_array($extension_upload , $this->_extensions_valid)) {
+			$this->error('Le fichier doit avoir l\'extension jpg, jpeg, ou png');
 		}
 		$img_name = md5(uniqid(rand(), true)); // Set a random name
 		$img_fullname = $img_name . "." . $extension_upload;
-		$destination_path = $this->images_folder . key($this->img_params) . "/" . $img_fullname;
+		$destination_path = $this->_images_folder . key($this->_img_params) . "/" . $img_fullname;
 		move_uploaded_file($_FILES['file']['tmp_name'], $destination_path);
 
-		if (!$this->resize($img_fullname, $destination_path, $extension_upload)) {
-			/**
-			 * Exception => Nous avons rencontrés un problème lors du chargement
-			 */
-			die;
+		if ($this->resize($img_fullname, $destination_path, $extension_upload) === false) {
+			$this->error('Nous avons rencontré un problème lors du redimensionnement de l\'image. Veuillez réessayer ou prendre contact avec nous');
 		}
 		return $img_fullname;
 	}
 
 
 	/**
-	 * Format the image with anothers dimensions
+	 * Format the image to optimize the loading page
 	 * @return true on success or an array with the names of the failed images 
 	 */
 	private function resize ($img_fullname, $path_source, $extension_upload)
 	{
-		$error = [];
-		foreach ($this->img_params as $folder => $width) {
+		foreach ($this->_img_params as $folder => $width) {
 			if ($width !== null) {
-				$path_destination = $this->images_folder . $folder . "/" . $img_fullname;
+				$path_destination = $this->_images_folder . $folder . "/" . $img_fullname;
 				// set dimensions of the image
 				$imageSize 	= getimagesize($path_source);// [0]=>width (Original), [1]=>height (Original)
 				$ratio 		= $imageSize[1]/$imageSize[0];
@@ -67,32 +78,23 @@ class ImageUploader
 				$img_destination = imagecreatetruecolor($width, $height); // creates an empty miniature
 
 				imagecopyresampled($img_destination, $imageRessource, 0, 0, 0, 0, $width, $height, $imageSize[0], $imageSize[1]);
-				($extension_upload === 'png') ? $result = imagepng($img_destination, $path_destination) : $result = imagejpeg($img_destination, $path_destination);
 
-				if ($result === false) $error[] = $img_fullname;
+				($extension_upload === 'png') ? $result = imagepng($img_destination, $path_destination) : $result = imagejpeg($img_destination, $path_destination);
+				if ($result === false) return false;
 			}
 		}
-
-		if (!empty($error)) {
-			// Exception
-		}
-		else return true;
 	}
 
 
 	/**
-	 * Revome the images inside folders
+	 * Revome the images inside folders when updating the image of a post
 	 * @return true on success or an array with the names of the failed images 
 	 */
 	function remove ($img_name){
-		$error = [];
-		foreach ($this->img_params as $folder => $v) {
-			$result = unlink($this->images_folder . $folder . "/" . $img_name);
-			if ($result === false) $error[] = $img_name;
+		foreach ($this->_img_params as $folder => $v) {
+			$result = unlink($this->_images_folder . $folder . "/" . $img_name);
+			if ($result === false) $this->error('L\'image ' . $img_name . ' n\'as pas pu être supprimé du serveur');
 		}
-		if (!empty($error)) {
-			// Exception
-		}
-		else return true;		
+		return true;
 	}
 }

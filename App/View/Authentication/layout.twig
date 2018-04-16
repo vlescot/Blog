@@ -1,56 +1,60 @@
 <!DOCTYPE html>
 <html lang="fr">
+
   <head>
+  
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
-
+  
     <title>{% block main_title %}{% endblock %}</title>
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="http://localhost/P5/Blog/Public/img/favicon.ico">
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="http://localhost/P5/Blog/Public/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom fonts for this template -->
+    <link href="http://localhost/P5/Blog/Public/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+    <!-- Plugin CSS -->
+    <link href="http://localhost/P5/Blog/Public/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="http://localhost/P5/Blog/Public/css/creative.css" rel="stylesheet">
     <!-- My styles -->
-    <link href="http://localhost/P5/Blog/Public/css/back_style.css" rel="stylesheet">
+    <link href="http://localhost/P5/Blog/Public/css/front_style.css" rel="stylesheet">
   </head>
 
-  <body id="back-app">
-    <nav class="navbar navbar-expand-lg navbar-perso fixed-top" id="mainNav">
+  <body id="front-app">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg" id="mainNav">
       <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="http://localhost/P5/Blog/">Blog</a>
+        <a class="navbar-brand js-scroll-trigger" href="http://localhost/P5/Blog/accueil">Vincent Lescot</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="http://localhost/P5/Blog/admin/accueil">Accueil</a>
+              <a class="nav-link js-scroll-trigger" href="http://localhost/P5/Blog/accueil">Accueil</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="http://localhost/P5/Blog/admin/article">Article</a>
+              <a class="nav-link js-scroll-trigger" href="http://localhost/P5/Blog/blog/">Blog</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="http://localhost/P5/Blog/admin/validation">Validation</a>
+              <a class="nav-link js-scroll-trigger" href="http://localhost/P5/Blog/accueil#contact-form">Contact</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="http://localhost/P5/Blog/authentification/disconnect">Se déconnecter</a>
+              <a class="nav-link js-scroll-trigger" href="http://localhost/P5/Blog/authentification">ADMIN</a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
-
-    <header class="text-center">
-      <h1>{% block page_title %}{% endblock %}</h1>
-    </header>
-
     <div id="alert-container"></div>
 
-    {% block content %}{% endblock %}
+{% block content %}{% endblock %}
 
     <footer>
         <div class="row" id="my-links">
@@ -64,15 +68,24 @@
     <!-- Bootstrap core JavaScript -->
     <script src="http://localhost/P5/Blog/Public/vendor/jquery/jquery.min.js"></script>
     <script src="http://localhost/P5/Blog/Public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('nav').addClass('navbar-shrink');
+
+            $(window).scroll(function() {
+                $('nav').addClass('navbar-shrink');
+            });
+        });
+    </script>
     <!-- Notification function -->
     <script src="http://localhost/P5/Blog/Public/js/notification.js"></script>
-    <!-- MyFunctions -->
-    <script src="http://localhost/P5/Blog/Public/js/Back_MyFunctions.js"></script>
     <!-- Font Awesome -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-    <!-- TinyMCE -->
-    <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=rfyt3lfzb2t41gqdu0kihk7w3ibxoe6jinnspmt3r9y7pjgf"></script>
-    <script src="http://localhost/P5/Blog/Public/js/TinyMCE_placeholder_pluggin.js"></script>
-    <script src="http://localhost/P5/Blog/Public/js/TinyMCE_config.js"></script>
-</body>
+    <!-- Plugin JavaScript -->
+    <script src="http://localhost/P5/Blog/Public/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="http://localhost/P5/Blog/Public/vendor/scrollreveal/scrollreveal.min.js"></script>
+    <script src="http://localhost/P5/Blog/Public/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+    <!-- Custom scripts for this template -->
+    <script src="http://localhost/P5/Blog/Public/js/creative.js"></script>
+  </body>
 </html>

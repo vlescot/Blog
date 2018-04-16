@@ -30,34 +30,49 @@
 		"method": "POST"
 	},
 	{
-		"path":"\/connexion",
-		"callable":"Blog#connection",
+		"path":"\/Authentification",
+		"callable":"Authentication#connection",
 		"method": "GET"
 	},
 	{
-		"path":"\/connexion",
-		"callable":"Blog#connection",
+		"path":"\/Authentification",
+		"callable":"Authentication#connection",
 		"method": "POST"
 	},
 	{
-		"path":"\/inscription",
-		"callable":"Blog#registration",
+		"path":"\/Authentification\/inscription",
+		"callable":"Authentication#registration",
 		"method": "GET"
 	},
 	{
-		"path":"\/inscription",
-		"callable":"Blog#registration",
+		"path":"\/Authentification\/inscription",
+		"callable":"Authentication#registration",
 		"method": "POST"
 	},
 	{
-		"path":"\/reinitialiser",
-		"callable":"Blog#resetPassword",
+		"path":"\/Authentification\/reinitialiser",
+		"callable":"Authentication#askingResetEmail",
 		"method": "GET"
 	},
 	{
-		"path":"\/reinitialiser",
-		"callable":"Blog#resetPassword",
+		"path":"\/Authentification\/reinitialiser",
+		"callable":"Authentication#askingResetEmail",
 		"method": "POST"
+	},
+	{
+		"path":"\/Authentification\/resetpassword",
+		"callable":"Authentication#checkMember",
+		"method": "GET"
+	},
+	{
+		"path":"\/Authentification\/changePassword",
+		"callable":"Authentication#changePassword",
+		"method": "POST"
+	},
+	{
+		"path":"\/Authentification\/disconnect",
+		"callable":"Authentication#disconnect",
+		"method":"GET"
 	},
 	{
 		"path":"\/admin\/accueil",
@@ -75,14 +90,29 @@
 		"method": "GET"
 	},
 	{
+		"path":"\/admin\/article",
+		"callable":"Admin#deletePost",
+		"method": "POST"
+	},
+	{
 		"path":"\/admin\/article\/creer",
 		"callable":"Admin#addPost",
 		"method": "GET"
 	},
 	{
+		"path":"\/admin\/article\/creer",
+		"callable":"Admin#addPost",
+		"method": "POST"
+	},
+	{
 		"path":"\/admin\/article\/:id",
-		"callable":"Admin#update",
+		"callable":"Admin#updatePost",
 		"method": "GET"
+	},
+	{
+		"path":"\/admin\/article\/:id",
+		"callable":"Admin#updatePost",
+		"method": "POST"
 	},
 	{
 		"path":"\/admin\/validation",
@@ -95,23 +125,8 @@
 		"method": "POST"
 	},
 	{
-		"path":"\/admin\/article\/creer",
-		"callable":"Admin#createPost",
-		"method": "POST"
-	},
-	{
-		"path":"\/admin\/article\/:id",
-		"callable":"Admin#updatePost",
-		"method": "POST"
-	},
-	{
-		"path":"\/admin\/article",
-		"callable":"Admin#deletePost",
-		"method": "POST"
-	},
-	{
-		"path":"\/admin\/disconnect",
-		"callable":"Admin#disconnect",
-		"method":"GET"
+		"path":"\/404",
+		"callable":"Blog#NoRoute",
+		"method": "GET"
 	}
 ]

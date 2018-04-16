@@ -1,3 +1,14 @@
+body {
+	font-family: Source sans pro !important;
+}
+
+#alert-container {
+    position: absolute; !important;
+    float: left;
+    z-index: 1000 !important;
+    width:100% !important;
+}
+
 #self-photo {
 	border-radius: 50%;
 	padding: .1rem;
@@ -24,7 +35,7 @@
 
 /*Blog - List of Posts*/
 #post-list {
-	padding: 2rem !important;
+	padding: 5rem 0 5rem 0 !important;
 }
 #post-list h1 {
 	font-size: 4rem;
@@ -101,6 +112,7 @@
 	border: 1px solid #004b7c;
 }
 #post {
+	margin-top: 30px;
 	padding: 50px 0 0px;
 }
 #post .infos {

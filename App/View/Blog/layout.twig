@@ -11,24 +11,18 @@
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="http://localhost/P5/Blog/Public/img/favicon.ico">
-  
     <!-- Bootstrap core CSS -->
     <link href="http://localhost/P5/Blog/Public/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  
     <!-- Custom fonts for this template -->
     <link href="http://localhost/P5/Blog/Public/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
-  
     <!-- Plugin CSS -->
     <link href="http://localhost/P5/Blog/Public/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
-  
     <!-- Custom styles for this template -->
     <link href="http://localhost/P5/Blog/Public/css/creative.css" rel="stylesheet">
-
     <!-- My styles -->
     <link href="http://localhost/P5/Blog/Public/css/front_style.css" rel="stylesheet">
-  
   </head>
 
   <body id="front-app">
@@ -52,12 +46,16 @@
               <a class="nav-link js-scroll-trigger" href="http://localhost/P5/Blog/accueil#contact-form">Contact</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="http://localhost/P5/Blog/connexion">ADMIN</a>
+              <a class="nav-link js-scroll-trigger" href="http://localhost/P5/Blog/authentification">ADMIN</a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
+
+{% block header %}{% endblock %}
+
+    <div id="alert-container"></div>
 
 {% block content %}{% endblock %}
 
@@ -70,24 +68,26 @@
         </div>
         <div id="copyright" class='text-center'>© 2018 - Réalisé par Vincent Lescot</div>
     </footer>
-    <!-- Font Awesome -->
-    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
 
     <!-- Bootstrap core JavaScript -->
     <script src="http://localhost/P5/Blog/Public/vendor/jquery/jquery.min.js"></script>
     <script src="http://localhost/P5/Blog/Public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+    <!-- Notification function -->
+    <script src="http://localhost/P5/Blog/Public/js/notification.js"></script>
+    <!-- Font Awesome -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
     <!-- Plugin JavaScript -->
     <script src="http://localhost/P5/Blog/Public/vendor/jquery-easing/jquery.easing.min.js"></script>
     <script src="http://localhost/P5/Blog/Public/vendor/scrollreveal/scrollreveal.min.js"></script>
     <script src="http://localhost/P5/Blog/Public/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
-
     <!-- Custom scripts for this template -->
     <script src="http://localhost/P5/Blog/Public/js/creative.js"></script>
     <script>
         $(document).ready(function(){
-            if ($('title').text() === "Connexion" || $('title').text() === "Inscription") {//navbar-shrink
+            if ($("title").html() === '404 - Page non trouvé') {
                 $('nav').addClass('navbar-shrink');
+                $('section').css('height', $(window).height() - $('footer').height());
             }
         });
     </script>

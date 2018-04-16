@@ -7,7 +7,7 @@
 {% block content %}
 
 	<section>
-		<div class="container">
+		<div class="container links">
 			<div class="row">
 				<div class="col-12">
 					<a href="http://localhost/P5/Blog/admin/accueil" role="button" class="btn btn-outline-dark btn-sm">
@@ -18,7 +18,6 @@
 					</a>
 				</div>
 			</div>
-<<<<<<< HEAD
 			<div class="row">
 				<div class="col-11">
 					<div id="date_filter" class="text-center">
@@ -39,25 +38,6 @@
 				</div>
 				<div class="col-1">
 					<button style="width:100px;" class="btn btn-outline-secondary btn-sm float-right" id="filter">Filtrer</button>
-
-=======
-			<button style="width:100px;" class="btn btn-outline-secondary btn-sm float-right" id="filter">Filtrer</button>
-	    	<div class="text-center">
-				<div id="date_filter">
-					<form action="http://localhost/P5/Blog/admin/article" method="post">
-						<label for="date_begin">Date début :</label>
-			            <div class="form-check form-check-inline">
-							<input id="date_begin" name="date_begin" min="2018-02-01" type='date' class="form-control"/>
-						</div>
-			            <label for="date_ending">Date fin :</label>
-			            <div class="form-check form-check-inline">
-							<input id="date_ending" name="date_ending" min="2018-02-01" type='date' class="form-control"/>
-			            </div>
-			            <div class="form-check form-check-inline">
-							<button style="width: 50px;" type="submit" class="btn btn-outline-secondary btn-sm">Ok</button>
-			            </div>
-					</form>
->>>>>>> a774084bf9a96120514c02c668c6d7ff1c62bb1f
 				</div>
 			</div>
 		</div>
@@ -105,12 +85,4 @@
 			</table>
 		</div>
 	</section>
-<script>
-    // onclick on the button delete 
-	function deletePost(id){
-		if (confirm("Êtes vous certain(e) de vouloir supprimer cet article ?")) {
-			$.post(window.location.href, 'id='+id, location.reload(true), "text");
-		}
-	}
-</script>
 {% endblock %}

@@ -3,15 +3,15 @@ namespace Router;
 
 class Route
 {
-	private $path,
-			$callable,
-			$matches = [],
-			$params = [];
+	private $_path,
+			$_callable,
+			$_matches = [],
+			$_params = [];
 
 	function __construct ($path, $callable)
 	{
-		$this->path = trim($path, '/');
-		$this->callable = $callable;
+		$this->_path = trim($path, '/');
+		$this->_callable = $callable;
 	}
 
 	/**
@@ -22,14 +22,13 @@ class Route
 	function match ($url)
 	{
 		$url = trim($url, '/'); // Removes "/" at the beginning and ending URL's string
-		$this->url = $url;
-		$path = preg_replace('#:([\w]+)#', '([0-9]+)', $this->path); // Replaces variable (after :) into the URL to allow regex
+		$path = preg_replace('#:([\w]+)#', '([0-9]+)', $this->_path); // Replaces variable (after :) into the URL to allow regex
 		$regex = "#^$path$#i"; 
 		if (!preg_match($regex, $url, $matches)) {// Checks if the URL is matching with the path
 			return false;
 		}
 		array_shift($matches);
-		$this->matches = $matches;
+		$this->_matches = $matches;
 		return true;
 	}
 
@@ -39,9 +38,9 @@ class Route
 	 */
 	function call ()
 	{
-		$params = explode('#', $this->callable);
+		$params = explode('#', $this->_callable);
 		$controller = "Controller\\" . $params[0] . "Controller";
 		$controller = new $controller($params[0]);
-		return call_user_func_array([$controller, $params[1]], $this->matches);
+		return call_user_func_array([$controller, $params[1]], $this->_matches);
 	}
 }
