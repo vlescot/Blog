@@ -1,5 +1,8 @@
+/Conf/
+
+/theme/
+/view2/
 /vendor/
 /App/Model/Entity/
-/App/Model/DBAccess.json
 /App/Service/MailAccess.json
 try.php

@@ -1,13 +1,11 @@
 <?php
 namespace Manager;
 
-// require_once $_SERVER['DOCUMENT_ROOT'] . '/P5/Blog/vendor/autoload.php';
-use Manager\Manager;
-
+use Entity\Comment;
 // -------------------------------------------------------------------
 // 
 // 							Class CommentManager	=> Database Queries
-// 							Extends of Manager 		=> Connection with database
+// 							Extends to Manager 		=> Connection with database
 // 							
 // -------------------------------------------------------------------
 // -------------------------------------------------------------------
@@ -16,23 +14,22 @@ use Manager\Manager;
 // 							createComment (arary vars)
 // 							getCommentList (int $id)
 // 							deleteComment (int $id_post)
-// 							getValidatedComment (string $date_begin='2018-01-01', string $date_ending='', $validated=2)
+// 							getFilteredComment (string $date_begin='2018-01-01', string $date_ending='', $validated=2)
 // 							setValidatedComment (int $id, bool $validated)
 
 
 class CommentManager extends Manager
 {	
-	function createComment(array $vars)
+	function createComment(Comment $Comment)
 	{
 		$sql = self::$connection->prepare('
 			INSERT INTO comment (content, author, id_post, validated, date_create)
 			VALUES (?, ?, ?, 0, NOW())');
 		
-		$sql->execute(array($vars['content'], $vars['author'], $vars['id_post']));
+		$sql->execute([$Comment->content(), $Comment->author(), $Comment->id_post()]);
 	}
 
-
-	function getCommentList(int $id)
+	function getCommentList(Comment $Comment)
 	{
 		$sql = self::$connection->prepare('	
 			SELECT comment.content, comment.date_create, comment.author, comment.validated, post.title
@@ -42,30 +39,51 @@ class CommentManager extends Manager
 			WHERE post.id      = :id
 			ORDER BY comment.date_create ASC');
 		
-		$sql->bindvalue(':id', (int) $id, \PDO::PARAM_INT);
+		$sql->bindvalue(':id', (int) $Comment->id_post(), \PDO::PARAM_INT);
 		$sql->execute();
  		return $sql->fetchAll();
 	}
 
 
-	function deleteComment (int $id_post)
+	function deleteComment (Comment $Comment)
 	{
-		$query = "DELETE FROM comment WHERE id_post = :id_post";
-		$sql = self::$connection->prepare($query);
+		$sql = self::$connection->prepare('DELETE FROM comment WHERE id_post = :id_post');
 		
-		$sql->bindvalue(':id_post', (int) $id_post, \PDO::PARAM_INT);
+		$sql->bindvalue(':id_post', (int) $Comment->id_post(), \PDO::PARAM_INT);
 		$sql->execute();
 	}
 
 
-	function getValidatedComment (string $date_begin='2018-01-01', string $date_ending='', $validated=2)
+	function getFilteredComment ($date_begin, $date_ending, $validated)
 	{
-		return parent::getValidated('comment', $date_begin, $date_ending, $validated);
+		
+		if ($validated === 2) {
+			$query = 'SELECT * FROM comment 
+			WHERE date_create BETWEEN :date_begin 
+			AND :date_ending
+			ORDER BY date_create DESC';
+		}else $query = 'SELECT * FROM comment 
+			WHERE date_create BETWEEN :date_begin 
+			AND :date_ending
+			AND validated=' . $validated . '
+			ORDER BY date_create DESC';
+			
+		$sql = self::$connection->prepare($query);
+		
+		$sql->bindvalue(':date_begin', (string) $date_begin, \PDO::PARAM_STR);
+		$sql->bindvalue(':date_ending', (string) $date_ending, \PDO::PARAM_STR);
+
+		$sql->execute();
+		return $sql->fetchAll();
 	}
 
 
-	function setValidatedComment (int $id, bool $validated)
+	function setValidatedComment (Comment $Comment)
 	{
-		return parent::setValidated('comment', $id, $validated);
+		$sql = self::$connection->prepare('UPDATE comment SET validated= :validated WHERE id = :id');
+
+		$sql->bindvalue(':id', (int) $Comment->id(), \PDO::PARAM_INT);
+		$sql->bindvalue(':validated', (int) $Comment->validated(), \PDO::PARAM_INT);
+		$sql->execute();
 	}
 }

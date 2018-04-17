@@ -15,6 +15,7 @@ class Controller
 			));
 		$this->twig->addExtension(new \Twig_Extensions_Extension_Intl());
 		$this->twig->addExtension(new \Twig_Extension_Debug());
+		$this->twig->addGlobal('session', $_SESSION);
 
 		$this->displayNotification();
 	}

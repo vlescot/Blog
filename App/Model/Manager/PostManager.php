@@ -1,8 +1,7 @@
 <?php
 namespace Manager;
 
-use Manager\Manager;
-
+use Entity\Post;
 // -------------------------------------------------------------------
 // 
 // 							Class PostManager       => Database Queries
@@ -15,19 +14,19 @@ use Manager\Manager;
 // 							createPost (array $vars)
 // 							getPostsList (int $begin [optional], int $limit [optional])
 // 							getPost (int $id)
+// 							getFilteredPosts (string $date_begin, string $date_ending)
 // 							updatePost (array $vars)
-// 							countPosts ()
 // 							deletePost (int $id)
 
 class PostManager extends Manager
 {
-	function createPost(array $vars)
+	function createPost(Post $Post)
 	{
 		$sql = self::$connection->prepare("
 			INSERT INTO post (title, lede, content, img, id_member, date_create, date_update)
 			VALUES (?, ?, ?, ?, ?, NOW(), NOW())");
 		
-		$sql->execute(array($vars['title'], $vars['lede'], $vars['content'], $vars['img'], $vars['id_member']));
+		$sql->execute(array($Post->title(), $Post->lede(), $Post->content(), $Post->img(), $Post->id_member()));
 	}
 
 	
@@ -49,58 +48,55 @@ class PostManager extends Manager
  		return $sql->fetchAll();
 	}
 
-	function getPostFilter (string $date_begin='2018-01-01', string $date_ending ='', $validated=2)
-	// function getValidatedPost (string $date_begin='2018-01-01', string $date_ending ='', $validated=2)
+	function getFilteredPosts ($date_begin, $date_ending)
 	{
-		return parent::getValidated('post', $date_begin, $date_ending, $validated);
+		$sql = self::$connection->prepare('SELECT * FROM post WHERE date_create BETWEEN :date_begin AND :date_ending
+											ORDER BY date_create DESC');
+		
+		if ($date_begin !== '' && $date_ending !== '') {
+			$sql->bindvalue(':date_begin', (string) $date_begin, \PDO::PARAM_STR);
+			$sql->bindvalue(':date_ending', (string) $date_ending, \PDO::PARAM_STR);
+		}
+		$sql->execute();
+		return $sql->fetchAll();
 	}
 
-	function getPost($id)
+	function getPost(Post $Post)
 	{
 		$sql = self::$connection->prepare('		
 			SELECT post.id, post.title, post.lede,member.login, post.content, post.date_create, post.date_update, post.img
-			FROM post 
-			JOIN member 
+			FROM post
+			JOIN member
 			ON post.id_member = member.id
 			WHERE post.id=:id');
 
-		$sql->bindvalue(':id', (int) $id,\PDO::PARAM_INT);
+		$sql->bindvalue(':id', (int) $Post->id(),\PDO::PARAM_INT);
 		$sql->execute();
 		return $sql->fetch();
 	}
 
 
-	function updatePost(array $vars)
+	function updatePost(Post $Post)
 	{
 		$sql = self::$connection->prepare('
 			UPDATE post
-			SET title = :title, lede = :lede, content = :content, date_update = NOW(), img = :img, id_member = :id_member
+			SET title = :title, lede = :lede, content = :content, date_update = NOW(), img = :img
 			WHERE id = :id');
 
-		$sql->bindvalue(':id', $vars['id'], \PDO::PARAM_INT);
-		$sql->bindvalue(':title', $vars['title'], \PDO::PARAM_STR);
-		$sql->bindvalue(':lede', $vars['lede'], \PDO::PARAM_STR);
-		$sql->bindvalue(':content', $vars['content'], \PDO::PARAM_STR);
-		$sql->bindvalue(':img', $vars['img'], \PDO::PARAM_STR);
-		$sql->bindvalue(':id_member', $vars['id_member'], \PDO::PARAM_INT);
+		$sql->bindvalue(':id', $Post->id(), \PDO::PARAM_INT);
+		$sql->bindvalue(':title', $Post->title(), \PDO::PARAM_STR);
+		$sql->bindvalue(':lede', $Post->lede(), \PDO::PARAM_STR);
+		$sql->bindvalue(':content', $Post->content(), \PDO::PARAM_STR);
+		$sql->bindvalue(':img', $Post->img(), \PDO::PARAM_STR);
 		$sql->execute();
 	}
 
 
-	function countPosts ()
+	function deletePost (Post $Post)
 	{
-		$sql = self::$connection ->query("SELECT COUNT(*) AS nb FROM post");
+		$sql = self::$connection->prepare('DELETE FROM post WHERE id = :id');
 		
-		$nb = $sql->fetch();
-		return $nb['nb'];
-	}
-
-	function deletePost (int $id)
-	{
-		$query = "DELETE FROM post WHERE id = :id";
-		$sql = self::$connection->prepare($query);
-		
-		$sql->bindvalue(':id', (int) $id, \PDO::PARAM_INT);
+		$sql->bindvalue(':id', (int) $Post->id(), \PDO::PARAM_INT);
 		$sql->execute();
 	}
 }

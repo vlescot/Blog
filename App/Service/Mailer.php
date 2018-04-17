@@ -7,12 +7,18 @@ class Mailer
 {
 	private $_username,
 			$_password,
+			$_host,
+			$_SMTPSecure,
+			$_port,
 			$_mail;
 
 	function __construct ($email_to, $subject, $content){
-		$MailAccess = json_decode( file_get_contents(__DIR__ . "\MailAccess.json"), true);	// Private file to protect confidenfial data (Json)
+		$MailAccess = json_decode( file_get_contents($_SERVER['DOCUMENT_ROOT'] . "P5/Blog/Conf/MailAccess.json"), true);	// Private file to protect confidenfial data (Json)
 		$this->_username = $MailAccess['Username'];
 		$this->_password = $MailAccess['Password'];
+		$this->_host 	 = $MailAccess['Host'];
+		$this->_SMTPSecure = $MailAccess['SMTPSecure'];
+		$this->_port 	= $MailAccess['Port'];
 
 		$this->Mailer($email_to, $subject, $content);
 	}
@@ -20,12 +26,12 @@ class Mailer
 	private function Mailer ($email_to, $subject, $content){
 	    $mail = new PHPMailer;
 	    $mail->isSMTP();                        // Set mailer to use SMTP
-	    $mail->Host = 'smtp.gmail.com';         // Specify main and backup SMTP servers
+	    $mail->Host = $this->_host;         // Specify main and backup SMTP servers
 	    $mail->SMTPAuth = true;                 // Enable SMTP authentication
 	    $mail->Username = $this->_username;  	// SMTP username
 	    $mail->Password = $this->_password;      // SMTP password
-	    $mail->SMTPSecure = 'ssl';              // Enable TLS encryption, `ssl` also accepted
-	    $mail->Port = 465;                      // TCP port to connect to
+	    $mail->SMTPSecure = $this->_SMTPSecure;              // Enable TLS encryption, `ssl` also accepted
+	    $mail->Port = $this->_port;                      // TCP port to connect to
 	    $mail->SMTPOptions = array(
 	     	 	'ssl' => array(
 				'verify_peer' => false,

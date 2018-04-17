@@ -4,6 +4,10 @@ namespace Controller;
 use Manager\PostManager;
 use Manager\CommentManager;
 use Manager\MemberManager;
+use Entity\Post;
+use Entity\Member;
+use Entity\Comment;
+use Entity\Mail;
 use Service\ImageUploader;
 use Service\Notification;
 use Service\Mailer;
@@ -50,7 +54,7 @@ class AdminController extends Controller
 		echo $this->twig->render('dashboard.twig');
 	}
 
-	function posts ()
+	function postsList ()
 	{
 		$PostManager = new PostManager();
 		$MemberManager = new MemberManager();
@@ -65,15 +69,15 @@ class AdminController extends Controller
 		(!isset($_GET['date_begin']) || $_GET['date_begin'] == '') 		?	$date_begin = "2018-01-01" 		: $date_begin = $_GET['date_begin'];
 
 		// Get Posts List in database
-		$all_posts = $PostManager->getPostFilter($date_begin, $date_ending, 2);
+		$filtered_post = $PostManager->getFilteredPosts($date_begin, $date_ending);
 
 		// Set the login of member to inject it into the view
 		$member_list = $MemberManager->getMemberList();
 		$authors = [];
 		foreach ($member_list as $key => $v) $authors[$member_list[$key]['id']] = $member_list[$key]['login']; // Formats an array such datas are $authors = ['id' => 'login'] 
-		foreach ($all_posts as $key => $v) $all_posts[$key]['author'] = $authors[$all_posts[$key]['id_member']]; // Use the id_member to get the login into $authors and set it as 'author' into $all_posts
+		foreach ($filtered_post as $key => $v) $filtered_post[$key]['author'] = $authors[$filtered_post[$key]['id_member']]; // Use the id_member to get the login into $authors and set it as 'author' into $filtered_post
 
-		echo $this->twig->render('posts.twig', ['posts' => $all_posts]); 
+		echo $this->twig->render('posts.twig', ['posts' => $filtered_post]); 
 	}
 
 	function validation ()
@@ -88,13 +92,14 @@ class AdminController extends Controller
 			date_add($date, date_interval_create_from_date_string('1 days'));
 			$date_ending =  date_format($date, 'Y-m-d');
 		}	else $date_ending = $_GET['date_ending'];
+
 		(!isset($_GET['date_begin']) || $_GET['date_begin'] == '') 	?	$date_begin = "2018-01-01" 		: $date_begin = $_GET['date_begin'];
 		(!isset($_GET['validated']) || $_GET['validated'] == '') 	?	$validated = 2 /*both*/			: $validated = intval($_GET['validated']);
 
 		echo $this->twig->render('validation.twig', [
-			'comments' => $CommentManager->getvalidatedComment($date_begin, $date_ending, $validated),
-			'members' => $MemberManager->getvalidatedMember($date_begin, $date_ending, $validated),
-			'session' => $_SESSION
+			'comments' => $CommentManager->getFilteredComment($date_begin, $date_ending, $validated),
+			'members' => $MemberManager->getFilteredMember($date_begin, $date_ending, $validated),
+			'session' => $_SESSION['member_type']
 		]);
 	}
 
@@ -119,29 +124,32 @@ class AdminController extends Controller
 			$img_name = $ImgUpload->upload();
 		}else $img_name = '';
 
-		$datas = [	'title' 	=> $_POST ['title'],
-					'lede' 		=> $_POST ['lede'],
-					'content' 	=> $_POST ['content'],
-					'img' 		=> $img_name,	
-					'id_member' => $_SESSION['id_member']
-		];
+		$Post = new Post([	
+			'title' 	=> $_POST ['title'],
+			'lede' 		=> $_POST ['lede'],
+			'content' 	=> $_POST ['content'],
+			'img' 		=> $img_name,	
+			'id_member' => $_SESSION['id_member']
+		]);
 		// Writes the informations into the database
 		$PostManager = new PostManager();
-		$PostManager->createPost($datas);
+		$PostManager->createPost($Post);
 
 		new Notification ('Votre article a bien été créé', 'success');
 		header('Location: http://localhost/P5/Blog/admin/article');
 	}
 
 	function updatePost ($id){
+		$Post = new Post(['id' => intval($id)]);
+		
 		if (empty($_POST))	{
 			$PostManager = new PostManager();
-			echo $this->twig->render('add_post.twig', array('update' => $PostManager->getPost($id)));
+			echo $this->twig->render('add_post.twig', array('update' => $PostManager->getPost($Post)));
 			exit;
 		}
 
 		$PostManager = new PostManager();
-		$old_post = $PostManager->getPost($id);
+		$old_post = $PostManager->getPost($Post);
 
 		if (isset($_POST['img-remove']) && $_POST['img-remove'] == 'on' && (empty($_FILES) || $_FILES['file']['error'] === 4) ) {
 			$ImgUpload = new ImageUploader();
@@ -155,19 +163,21 @@ class AdminController extends Controller
 			}
 			$ImgUpload = new ImageUploader();
 			$img_name = $ImgUpload->upload();
-			if ($old_post['img'] !== '') $ImgUpload->remove($old_post['img']);
+			if ($old_post['img'] !== '' && $_POST['img-remove'] !== 'on') $ImgUpload->remove($old_post['img']);
 		}
-		
-		$datas = [];
-		if (isset($_POST ['title']) && $_POST ['title'] !== '') 	$datas['title'] 	= $_POST ['title'];
-		if (isset($_POST ['lede']) && $_POST ['lede'] !== '') 		$datas['lede'] 		= $_POST ['lede'];
-		if (isset($_POST ['content']) && $_POST ['content'] !== '') $datas['content'] 	= $_POST ['content'];
-		if (isset($img_name))		 								$datas['img'] 		= $img_name;
-		$datas['id_member'] = $_SESSION['id_member'];
-		$datas['id'] 		= $id;
 
+		// Takes the values of the changed attributes and keeps the values of the initial post if unchanged
+		$datas = [];
+		foreach ($_POST as $key => $value) if ($value !== '') $datas[$key] = $value;
+		if (isset($img_name)) $datas['img']	= $img_name;
+		$datas['id'] 		= $id;
 		$datas = array_replace($old_post, $datas);
-		$PostManager->updatePost($datas);
+
+		foreach ($datas as $key => $value) {
+			$method = 'set' . $key;
+			if (is_callable([$Post, $method])) $Post->$method($value);
+		}
+		$PostManager->updatePost($Post);
 
 		new Notification ('L\'article a bien été mis à jour', 'success');
 		header('Location: http://localhost/P5/Blog/admin/article');
@@ -175,14 +185,20 @@ class AdminController extends Controller
 
 	function deletePost ()
 	{
-		$CommentManager = new CommentManager();
 		$PostManager 	= new PostManager();
-		$CommentManager->deleteComment($_POST['id']);
-		$PostManager->deletePost($_POST['id']);
+		$CommentManager = new CommentManager();
+
+		$id = intval($_POST['id']);
+		$Comment = new Comment (['id_post' => $id]);
+		$Post = new Post(['id' => $id]);
+
+		$CommentManager->deleteComment($Comment); // Comments have to be deleted first because of foreign key 'id_post'
+		$PostManager->deletePost($Post);
+
 		new Notification ('L\'article a bien été supprimé', 'success');
 	}
 
-	function setValidation ()
+	function updateValidation ()
 	{
 		$table 		= $_POST['table'];
 		$validation = intval($_POST['validation']);
@@ -190,14 +206,19 @@ class AdminController extends Controller
 
 		switch ($table) {
 			case 'comment':
-				$CommentManager = new CommentManager;
-				$CommentManager->setValidatedComment($id, $validation);
+				$Comment = new Comment (['id' => $id, 'validated' => $validation]);
+				$CommentManager = new CommentManager();
+				$CommentManager->setValidatedComment($Comment);
+
 				if ($validation === 0) new Notification ('Ce commentaire n\'est plus visible', 'info');
 				if ($validation === 1) new Notification ('Ce commentaire est maintenant visible', 'success');
 				break;
+
 			case 'member':
-				$MemberManager = new MemberManager;
-				$MemberManager->setValidatedMember($id, $validation);
+				$Member = new Member (['id' => $id, 'validated' => $validation]);
+				$MemberManager = new MemberManager();
+				$MemberManager->setValidatedMember($Member);
+			
 				if ($validation === 0) new Notification ('Ce membre n\'a plus accés à l\'espace administratif', 'info');
 				if ($validation === 1) new Notification ('Ce membre a maintenant accés à l\'espace administratif', 'success');
 				break;
@@ -205,7 +226,7 @@ class AdminController extends Controller
 
 		// Sending an e-mail to the validated member
 		if ($table === 'member' && $validation === 1) {
-			$member = $MemberManager->getMemberbyId($id);
+			$member = $MemberManager->getMemberbyId(new Member (['id' => intval($id)]));
 			require ($_SERVER['DOCUMENT_ROOT'] . 'P5/Blog/App/Service/Email_model/mail_member_validation.php');
 			$mail = new Mailer ($member['email'], $subject, $message);
 			$mail->send();

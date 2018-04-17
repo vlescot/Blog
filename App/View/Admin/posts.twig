@@ -49,8 +49,8 @@
 			    <th>Voir</th>
 			    <th>Image</th>
 			    <th>Titre</th> 
-			    <th>Dernière Modification</th>
 			    <th>Auteur</th>
+			    <th>Date Création</th>
 			    <th class="text-center">Action</th>
 			  </tr>
 
@@ -73,8 +73,8 @@
 				{% endif %}
 			    </td>
 			    <td>{{ post.title }}<small class="form-text text-muted">{{ post.lede }}</small></td> 
-			    <td>{{ post.date_update | date ('d/m/Y à H\\hi') }}</td>
 			    <td>{{ post.author }}</td>
+			    <td>{{ post.date_create | date ('d/m/Y à H\\hi') }}</td>
 			    <td class="text-center">
 			    	<a href="http://localhost/P5/Blog/admin/article/{{ post.id }}" role="button" class="btn btn-update btn-sm"><i class="far fa-edit"></i> Modifier</a><br>
 			    	<button class="btn btn-delete btn-sm" onclick="deletePost({{ post.id }})"><i class="far fa-trash-alt"></i> Supprimer</button>

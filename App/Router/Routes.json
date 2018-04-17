@@ -16,17 +16,17 @@
 	},
 	{
 		"path":"\/blog",
-		"callable":"Blog#article",
+		"callable":"Blog#showPost",
 		"method": "GET"
 	},
 	{
 		"path":"\/blog\/:id",
-		"callable":"Blog#article",
+		"callable":"Blog#showPost",
 		"method": "GET"
 	},
 	{
 		"path":"\/blog\/:id",
-		"callable":"Blog#comment",
+		"callable":"Blog#addComment",
 		"method": "POST"
 	},
 	{
@@ -86,7 +86,7 @@
 	},
 	{
 		"path":"\/admin\/article",
-		"callable":"Admin#posts",
+		"callable":"Admin#postsList",
 		"method": "GET"
 	},
 	{
@@ -121,7 +121,7 @@
 	},
 	{
 		"path":"\/admin\/validation",
-		"callable":"Admin#setValidation",
+		"callable":"Admin#updateValidation",
 		"method": "POST"
 	},
 	{
