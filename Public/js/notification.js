@@ -6,4 +6,12 @@ if ($("#alert")){
 	$(this).remove();
 	    });
 	}, 4000);
+
+	// Adjusts margin when url contains 'authentification'
+	var url = $(location).attr('href');
+	var result = url.search('authentification');
+	if (result > -1) {
+		var height = ($('nav').height()  + parseInt($('nav').css('padding-top')) + parseInt($('nav').css('padding-bottom')));
+		$("#alert-container").css('top', height);
+	}
 }

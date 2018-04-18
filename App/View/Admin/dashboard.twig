@@ -35,3 +35,14 @@
 	</section>
 
 {% endblock %}
+
+{% block add_js %}
+    <script>
+        $(document).ready(function(){
+            var marginHeight = ($(window).height() - $('footer').height() - $('nav').height() - $('section').height() - $('header').height()) /2;
+            console.log(marginHeight);
+            $('#dashboard').css('margin-top', marginHeight);
+            $('#dashboard').css('margin-bottom', marginHeight);
+        });
+    </script>
+{% endblock %}

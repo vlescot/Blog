@@ -4,8 +4,19 @@
 
 {% block content %}
 
-<section style="background-color:#133549;color:white;">
-	<p style="margin-top:100px;" class="h3 text-center">Erreur 404 - La page demandée est introuvable</p>
+<section>
+	<p class="h3 text-center">Erreur 404 - La page demandée est introuvable</p>
 </section>
 
+{% endblock %}
+
+{% block add_js %}
+    <script>
+        $(document).ready(function(){
+            $('nav').addClass('bg-dark');
+            var marginHeight = ($(window).height() - $('footer').height() - $('nav').height())/2;
+            $('section').css('margin-top', marginHeight);
+            $('section').css('margin-bottom', marginHeight);
+        });
+    </script>
 {% endblock %}

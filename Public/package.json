@@ -1,8 +1,8 @@
 {
-    "title": "Creative",
-    "name": "startbootstrap-creative",
+    "title": "Clean Blog",
+    "name": "startbootstrap-clean-blog",
     "version": "4.0.0",
-    "description": "Creative is a stylish one page HTML theme for Bootstrap.",
+    "description": "Clean Blog is a Medium inspired blog theme for Bootstrap.",
     "keywords": [
         "css",
         "sass",
@@ -11,9 +11,9 @@
         "theme",
         "template"
     ],
-    "homepage": "https://startbootstrap.com/template-overviews/creative",
+    "homepage": "https://startbootstrap.com/template-overviews/clean-blog",
     "bugs": {
-        "url": "https://github.com/BlackrockDigital/startbootstrap-creative/issues",
+        "url": "https://github.com/BlackrockDigital/startbootstrap-clean-blog/issues",
         "email": "feedback@startbootstrap.com"
     },
     "license": "MIT",
@@ -23,15 +23,12 @@
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/BlackrockDigital/startbootstrap-creative.git"
+        "url": "https://github.com/BlackrockDigital/startbootstrap-clean-blog.git"
     },
     "dependencies": {
         "bootstrap": "4.0.0",
         "font-awesome": "4.7.0",
-        "jquery": "3.3.1",
-        "jquery.easing": "^1.4.1",
-        "magnific-popup": "^1.1.0",
-        "scrollreveal": "3.3.6"
+        "jquery": "3.3.1"
     },
     "devDependencies": {
         "browser-sync": "2.23.6",
