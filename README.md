@@ -1,6 +1,6 @@
 # Blog
 
-This blog was build during my web develpment learning path with [OpenClassrooms](https://openclassrooms.com/).
+This blog was build during my web develpment learning path with [OpenClassrooms](https://openclassrooms.com/paths/developpeur-se-d-application-php-symfony).
 
 The goals was to apprehend PHP, OOP, MVC architectural pattern, and to learn more about dependencies, and GitHub.
 
