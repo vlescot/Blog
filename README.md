@@ -29,8 +29,8 @@ https://github.com/vlescot/Blog.git
 Create the file named **DBAccess.json** 
 ```json
 {
-    "Host":"Your DB Host", // e.g. localhost
-    "Name":"Database_name", // e.g blog
+    "Host":"Your DB Host",
+    "Name":"Database_name",
     "Login":"Your_Login",
     "Password":"Your_Password"
 }
@@ -43,8 +43,8 @@ Create the file named **MailAccess.json**
     "Username":"Your_Email_Username",
     "Password":"Your_Password",
     "Host": "STMP_Host",
-    "SMTPSecure": "SMTP_Secure_type", // e.g ssl
-    "Port": "Port_Num"  // e.g 465
+    "SMTPSecure": "SMTP_Secure_type", 
+    "Port": "Port_Num" 
 }
 
 ```
