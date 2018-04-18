@@ -1,9 +1,7 @@
 <?php
 namespace Manager;
 
-// require_once './../../../vendor/autoload.php';
-use Manager\Manager;
-
+use Entity\Member;
 // -------------------------------------------------------------------
 // 
 // 							Class MemberManager     => Database Queries
@@ -15,27 +13,44 @@ use Manager\Manager;
 // -------------------------------------------------------------------
 // 							createMember (array $vars)
 // 							getMember (string $login)
-// 							deleteMember (int $id)
-// 							getValidatedMember (int $date_begin, int $date_ending, int $validated)
+// 							getMemberById (int $id)
+// 							getMemberByResetPassword (string $reset_password)
+// 							getFilteredMember (int $date_begin, int $date_ending, int $validated)
 // 							setValidatedMember  (int $id, bool $set)
+// 							deleteMember (int $id)
+// 							updateResetPassword ($hash, $login)
+// 							changePassword ($password, $login)
 							
 class MemberManager extends Manager
 {
-	function createMember (array $vars)
+	function createMember (Member $Member)
 	{
 		$sql = self::$connection->prepare('
-			INSERT INTO member (login, password, validated, id_type, date_create)
-			VALUES (?, ?, ?, ?, NOW())');
-		$sql->execute(array($vars['login'], $vars['password'], 0, 2));
+			INSERT INTO member (login, password, reset_password, email, validated, id_type, date_create)
+			VALUES (?, ?, ?, ?, ?, ?, NOW())');
+		
+		$sql->execute([$Member->login(), $Member->password(), '', $Member->email(), 0, 2]);
 	}
 
 
-	function getMember ($login)
+	function getMember (Member $Member)
 	{
 		$sql = self::$connection->prepare('
 			SELECT * FROM member
 			WHERE BINARY login=:login');
-		$sql->bindvalue(':login', (string) $login, \PDO::PARAM_STR);
+
+		$sql->bindvalue(':login', (string) $Member->login(), \PDO::PARAM_STR);
+		$sql->execute();
+		return $sql->fetch();
+	}
+
+	function getMemberbyId (Member $Member)
+	{
+		$sql = self::$connection->prepare('
+			SELECT * FROM member
+			WHERE BINARY id=:id');
+
+		$sql->bindvalue(':id', (int) $Member->id(), \PDO::PARAM_INT);
 		$sql->execute();
 		return $sql->fetch();
 	}
@@ -46,73 +61,73 @@ class MemberManager extends Manager
 		return $sql->fetchAll();
 	}
 
-
-	function deleteMember ($table, $id)
+	function getMemberbyResetPassword (Member $Member)
 	{
-		return parent::delete('member', $id);
+		$sql = self::$connection->prepare('
+			SELECT * FROM member
+			WHERE BINARY reset_password=:reset_password');
+		$sql->bindvalue(':reset_password', (string) $Member->reset_password(), \PDO::PARAM_STR);
+		$sql->execute();
+		return $sql->fetch();		
+	}
+
+	function getFilteredMember ($date_begin, $date_ending, $validated)
+	{
+		if ($validated === 2) {
+			$query = 'SELECT * FROM member 
+			WHERE date_create 
+			BETWEEN :date_begin AND :date_ending
+			ORDER BY date_create DESC';
+		}else $query = 'SELECT * FROM member 
+			WHERE date_create 
+			BETWEEN :date_begin AND :date_ending
+			AND validated=' . $validated . '
+			ORDER BY date_create DESC';
+
+		$sql = self::$connection->prepare($query);
+		
+		$sql->bindvalue(':date_begin', (string) $date_begin, \PDO::PARAM_STR);
+		$sql->bindvalue(':date_ending', (string) $date_ending, \PDO::PARAM_STR);
+
+		$sql->execute();
+		return $sql->fetchAll();
 	}
 
 
-	function getValidatedMember (string $date_begin='2018-01-01', string $date_ending='', $validated=2)
+	function setValidatedMember (Member $Member)
 	{
-		return parent::getValidated('member', $date_begin, $date_ending, $validated);
+		$sql = self::$connection->prepare('UPDATE member SET validated= :validated WHERE id = :id');
+
+		$sql->bindvalue(':id', (int) $Member->id(), \PDO::PARAM_INT);
+		$sql->bindvalue(':validated', (int) $Member->validated(), \PDO::PARAM_INT);
+		$sql->execute();	
 	}
 
 
-	function setValidatedMember (int $id, bool $validated)
+	function updateResetPassword (Member $Member)
 	{
-<<<<<<< HEAD
-		return parent::setValidated('member', $id, $validated);
-=======
-		return parent::getValidated('member', $id, $validated);
->>>>>>> a774084bf9a96120514c02c668c6d7ff1c62bb1f
+
+		$sql = self::$connection->prepare('
+			UPDATE member
+			SET reset_password = :reset_password
+			WHERE login = :login'
+		);
+
+		$sql->bindvalue(':reset_password', $Member->reset_password(), \PDO::PARAM_INT);
+		$sql->bindvalue(':login', $Member->login(), \PDO::PARAM_INT);
+		$sql->execute();
+	}
+
+	function changePassword (Member $Member)
+	{
+		$sql = self::$connection->prepare('
+			UPDATE member
+			SET password=:password
+			WHERE login=:login'
+		);
+
+		$sql->bindvalue(':password', $Member->password(), \PDO::PARAM_INT);
+		$sql->bindvalue(':login', $Member->login(), \PDO::PARAM_INT);
+		$sql->execute();
 	}
 }
-
-
-// $MemberManager = new MemberManager;
-
-
-/*******************************
- * Test for createMember(array $vars)
- * ****************************/
-// $vars = array(
-// 	'login' => 'Visitor',
-// 	'password'  => 'OpenClassromms',
-// 	'validated' => 0,
-// 	'id_type' => 1);
-// $MemberManager->createMember($vars);
-
-
-
-/*******************************
- * Test for getMember(string $login)
- * ****************************/
-// $member = $MemberManager->getMember('Visitor');
-// var_dump($member);
-
-
-
-/*******************************
- * Test for deleteMember (int $id)
- * ****************************/
- // $MemberManager->delete(11);
-
-
-
-/*******************************
- * Test for getValidatedMember (int $date_begin, int $date_ending)
- * ****************************/
-// $Validated = $MemberManager->getValidated($date_begin='', $date_ending='', 1);
-// var_dump($Validated);
-
-
-
-/*******************************
- * Test for setValidatedMember (int $id, bool $Validated)
- * ****************************/
-<<<<<<< HEAD
- // $MemberManager->setValidatedMember(5, false);
-=======
- // $MemberManager->setValidated(5, false);
->>>>>>> a774084bf9a96120514c02c668c6d7ff1c62bb1f

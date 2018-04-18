@@ -7,12 +7,10 @@
 {% block content %}
 
 	<section>
-		<div class="container">
-			
+		<div class="container links">
 			<a href="http://localhost/P5/Blog/admin/accueil" role="button" class="btn btn-outline-dark btn-sm">
 				<i class="fas fa-undo"></i> Retour
 			</a>
-
 			<button style="width:100px;" class="btn btn-outline-secondary btn-sm float-right" id="filter">Filtrer</button>
 	    	<div class="text-center">
 				<div id="date_filter">
@@ -59,7 +57,7 @@
 				<div class="offset-lg-1 col-lg-10">
 					{% if comments %}
 						<p class="h2 text-center get-comment">Liste des commentaires</p>
-						<table id="comment-listing" class="table">
+						<table id="comment-listing" class="table table-sm">
 						  <tr>
 						    <th>Voir l'article</th>
 						    <th>Date d'ajout</th>
@@ -94,14 +92,14 @@
 			</div>
 		</div>
 
-		{% if session.member_type == 1 %}
+		{% if session == 1 %}
 		<div class="container">
 			<div class="row">
 				<div class="offset-lg-3 col-lg-6">
 					{% if members %}
 						<p class="h2 text-center get-comment">Liste des membres</p>
 						<p class="text-center"><small><em>Seul les utilisateurs de type 1 peuvent valider les autres membres</em></small></p>
-						<table id="comment-listing" class="table">
+						<table id="comment-listing" class="table table-sm">
 						  <tr>
 						    <th>Date d'inscription</th>
 						    <th>Pseudo</th>
@@ -136,10 +134,4 @@
 		</div>
 		{% endif %}
 	</section>
-	<script>
-		// onclick on the radio input (validation page)
-		function validation (table, id, validation){
-			$.post(window.location.href, 'table='+table+'&id='+id+'&validation='+validation, location.reload(true), "text");
-		}
-	</script>
 {% endblock %}

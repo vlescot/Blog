@@ -18,10 +18,9 @@
  * **
  */
 
-.alert{
-    position: block !important;
-    float: left !important;
-    top: 0 !important;
+#alert-container {
+    position: absolute; !important;
+    float: left;
     z-index: 1000 !important;
     width:100% !important;
 }
@@ -34,7 +33,6 @@
     color: #fff;
     padding: 10px 0px 5px 0px;
     margin-top: 52px;
-    margin-bottom: 30px;
 }
 
 #back-app footer {
@@ -131,11 +129,9 @@
     }
 }
 
-.dropdown:hover .dropdown-menu {
-    display: block;
+.links {
+    margin-top: 70px;
 }
-
-
 
 
 /**
@@ -143,10 +139,13 @@
  * **
  */
 
+#dashboard {
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
 
 
 .jumbotron {
-    margin-bottom: 60px;
     background-color: white;
     padding: 1rem 0.5rem !important;
     -webkit-box-shadow: inset 0px 0px 5px 0px #481D24;
@@ -165,7 +164,6 @@
     border-color: #C5283D !important;
     box-shadow : 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19) !important;
 }
- 
 
 /**
  * ***      Posts Listing    ***
@@ -246,6 +244,13 @@ form input[type="file"] {
  ****       List of comments   ***
  ***
  */
+
+form label img {
+    width: 200px;
+    height: auto;
+}
+
+
 #back-app h2 {
     font-weight: 400;
     font-size: 1.8rem;

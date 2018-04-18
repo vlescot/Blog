@@ -2,94 +2,87 @@
 <html lang="fr">
 
   <head>
-  
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
-  
+
     <title>{% block main_title %}{% endblock %}</title>
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="http://localhost/P5/Blog/Public/img/favicon.ico">
-  
     <!-- Bootstrap core CSS -->
     <link href="http://localhost/P5/Blog/Public/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  
+
     <!-- Custom fonts for this template -->
     <link href="http://localhost/P5/Blog/Public/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
-  
-    <!-- Plugin CSS -->
-    <link href="http://localhost/P5/Blog/Public/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
-  
-    <!-- Custom styles for this template -->
-    <link href="http://localhost/P5/Blog/Public/css/creative.css" rel="stylesheet">
 
+    <!-- Custom styles for this template -->
+    <link href="http://localhost/P5/Blog/Public/css/clean-blog.min.css" rel="stylesheet">
+    
     <!-- My styles -->
     <link href="http://localhost/P5/Blog/Public/css/front_style.css" rel="stylesheet">
-  
   </head>
 
-  <body id="front-app">
+  <body>
 
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top py-1" id="mainNav">
       <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="http://localhost/P5/Blog/accueil">Vincent Lescot</a>
+        <a class="navbar-brand" href="http://localhost/P5/Blog/accueil">Vincent Lescot</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+          <i class="fa fa-bars"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="http://localhost/P5/Blog/accueil">Accueil</a>
+              <a class="nav-link" href="http://localhost/P5/Blog/accueil">Accueil</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="http://localhost/P5/Blog/blog/">Blog</a>
+              <a class="nav-link" href="http://localhost/P5/Blog/blog">Blog</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="http://localhost/P5/Blog/accueil#contact-form">Contact</a>
+              <a class="nav-link" href="http://localhost/P5/Blog/accueil#contact">Contact</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="http://localhost/P5/Blog/connexion">ADMIN</a>
+              <a class="nav-link" href="http://localhost/P5/Blog/authentification">ADMIN</a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
 
+{% block header %}{% endblock %}
+
+    <div id="alert-container"></div>
+
 {% block content %}{% endblock %}
 
+    <hr>
+
+    <!-- Footer -->
     <footer>
         <div class="row" id="my-links">
-            <a class="offset-4 col-1" href="https://github.com/vlescot" target="_blank"><i class="fab fa-github fa-lg"></i></a>
-            <a class="col-1" href="https://www.linkedin.com/in/vincent-lescot-70916959/" target="_blank"><i class="fab fa-linkedin-in fa-lg"></i></a>
-            <a class="col-1" href="https://twitter.com/VinceLesc" target="_blank"><i class="fab fa-twitter fa-lg"></i></a>
-            <a class="col-1" href="mailto:vincent.lescot@gmail.com" target="_blank"><i class="far fa-envelope fa-lg"></i></a>
+            <a class="offset-md-2 offset-lg-4 col-lg-1 col-md-2 col-3" href="https://github.com/vlescot" target="_blank"><i class="fab fa-github fa-lg"></i></a>
+            <a class="col-lg-1 col-md-2 col-3" href="https://www.linkedin.com/in/vincent-lescot-70916959/" target="_blank"><i class="fab fa-linkedin-in fa-lg"></i></a>
+            <a class=" offset-md-0 col-lg-1 col-md-2 col-3" href="https://twitter.com/VinceLesc" target="_blank"><i class="fab fa-twitter fa-lg"></i></a>
+            <a class="col-lg-1 col-md-2 col-3" href="mailto:vincent.lescot@gmail.com" target="_blank"><i class="far fa-envelope fa-lg"></i></a>
         </div>
-        <div id="copyright" class='text-center'>© 2018 - Réalisé par Vincent Lescot</div>
+        <div id="copyright" class='text-center'>&copy; 2018 - Réalisé par Vincent Lescot</div>
     </footer>
-    <!-- Font Awesome -->
-    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 
     <!-- Bootstrap core JavaScript -->
     <script src="http://localhost/P5/Blog/Public/vendor/jquery/jquery.min.js"></script>
     <script src="http://localhost/P5/Blog/Public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Plugin JavaScript -->
-    <script src="http://localhost/P5/Blog/Public/vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="http://localhost/P5/Blog/Public/vendor/scrollreveal/scrollreveal.min.js"></script>
-    <script src="http://localhost/P5/Blog/Public/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
-
+    <!-- Notification function -->
+    <script src="http://localhost/P5/Blog/Public/js/notification.js"></script>
+{% block add_js %}{% endblock %}
+    <!-- Font Awesome -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
     <!-- Custom scripts for this template -->
-    <script src="http://localhost/P5/Blog/Public/js/creative.js"></script>
-    <script>
-        $(document).ready(function(){
-            if ($('title').text() === "Connexion" || $('title').text() === "Inscription") {//navbar-shrink
-                $('nav').addClass('navbar-shrink');
-            }
-        });
-    </script>
+    <script src="js/clean-blog.min.js"></script>
   </body>
+
 </html>

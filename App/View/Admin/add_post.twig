@@ -7,15 +7,16 @@
 {% block content %}
 
 
-	<section class="container">
-		<a href="http://localhost/P5/Blog/admin/article" role="button" class="btn btn-outline-dark btn-sm">
-			<i class="fas fa-undo"></i> Retour
-		</a>
+	<section>
+		<div class="container links">
+			<a href="http://localhost/P5/Blog/admin/article" role="button" class="btn btn-outline-dark btn-sm">
+				<i class="fas fa-undo"></i> Retour
+			</a>
+		</div>
 	</section>
 
 	<section class="container">
 		<form action="http://localhost/P5/Blog/admin/article/{% if not update %}creer{% endif %}{% if update %}{{update.id}}{% endif %}" method="POST" enctype="multipart/form-data">
-
 			<div class="form-row">
 				<div class="col-md-12">
 					<div class="form-row">
@@ -37,45 +38,42 @@
 								</div>
 								<div class="col-md-12 form-group">
 									<label for="content">Contenu</label>
-<<<<<<< HEAD
-									<textarea class="form-control" name="content" id="content" rows="5" {% if update.content %}placeholder="{{ update.content }}"{% else %} required{% endif %}></textarea>	
-=======
-									<textarea class="form-control" name="content" id="content" rows="5" {% if update.content %}placeholder="{{ update.content }}"{% endif %} required></textarea>	
->>>>>>> a774084bf9a96120514c02c668c6d7ff1c62bb1f
+									<textarea class="form-control" name="content" id="editor" rows="5" placeholder="Rédiger le corps de votre article..."{% if not update.content %} {% endif %}></textarea>
 								</div>
-
 							</div>
 						</div>
 						<aside class="offset-md-1 col-md-3">
 							{% if update.img %}
-							<div class="form-group">
-								<label name="file" for="file" class="label-file">
-									<img class="rounded img-fluid" src="http://localhost/P5/Blog/Public/img/Input_File/{{ update.img }}" alt="IMAGE:{{ update.title }}">
-								</label>
-	                            <label name="file" for="file" class="label-file">
-	                            	<small>Format : jpg, jpeg ou png</small></br></small>Changer d'image d'en-tête
-								</label>
-								<input type="file" class="btn btn-light input-file" id="file" name="file" accept=".jpg, .jpeg, .png">
-<<<<<<< HEAD
-							</div>
-							<div class="form-check">
-							    <input type="checkbox" class="form-check-input" id="img-remove" name="img-remove">
-							    <label class="form-check-label" for="img-remove">Ou supprimer l'image</label>
-                        	</div>
+								<div class="form-group">
+									<label for="file">Choisir une image d'en-tête</label>
+								</div>
+								<div class="form-group">
+									<label name="file" for="file" class="label-file">
+										<img class="rounded img-fluid" src="http://localhost/P5/Blog/Public/img/Input_File/{{ update.img }}" alt="IMAGE:{{ update.title }}">
+									</label>
+		                            <label name="file" for="file" class="label-file">
+		                            	<small>Format : jpg, jpeg ou png</small></br></small>
+									</label>
+									<input type="file" class="btn btn-light input-file" id="file" name="file" accept=".jpg, .jpeg, .png">
+								</div>
+								<div class="form-check">
+								    <input type="checkbox" class="form-check-input" id="img-remove" name="img-remove">
+								    <label class="form-check-label" for="img-remove">Ou supprimer l'image</label>
+	                        	</div>
 							{% else %}
-							<div class="form-group">
-								<label name="file" for="file" class="label-file">
-									<img class="rounded img-fluid" src="http://localhost/P5/Blog/Public/img/Input_File/no-image.png" alt="no-image">
-								</label>								
-	                            <label name="file" for="file" class="label-file">
-	                            	<small>Format : jpg, jpeg ou png</small></br></small>Choisir une image d'en-tête
-								</label>
-								<input type="file" class="btn btn-light input-file" id="file" name="file" accept=".jpg, .jpeg, .png">
-                        	</div>
+								<div class="form-group">
+									<label for="file">Choisir une image d'en-tête</label>
+								</div>
+								<div class="form-group">
+									<label name="file" for="file" class="label-file">
+										<img class="rounded img-fluid" src="http://localhost/P5/Blog/Public/img/Input_File/no-image.png" alt="no-image">
+									</label>								
+		                            <label name="file" for="file" class="label-file">
+		                            	<small>Format : jpg, jpeg ou png</small></br></small>
+									</label>
+									<input type="file" class="btn btn-light input-file" id="file" name="file" accept=".jpg, .jpeg, .png">
+	                        	</div>
 							{% endif %}
-=======
-                        	</div>
->>>>>>> a774084bf9a96120514c02c668c6d7ff1c62bb1f
 						</aside>
 					</div>
 				</div>

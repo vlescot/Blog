@@ -2,52 +2,58 @@
 
 {% block main_title %}{{post.title}} - Blog{% endblock %}
 
-{% block content %}
-  {% if post.img %}
-    <header class="masthead masthead-post text-center text-white d-flex" style="background-image: url(http://localhost/P5/Blog/Public/img/Fullsize/{{post.img}});">
-  {% else %}
-  <header class="masthead masthead-post text-center text-white d-flex">
-  {% endif %}
-		<div class="cover">
-	      <div class="container my-auto">
-	        <div class="row">
-	          <div class="col-lg-10 mx-auto">
-	            <h1 class="text-uppercase">
-	              <strong>{{ post.title }}</strong>
-	            </h1>
-	            <hr>
-	          </div>
-	          <div class="col-lg-8 mx-auto">
-	            <p><strong>{{ post.lede }}</strong></p>
-	          </div>
-	        </div>
-	      </div>
-		</div>
+{% block header %}   
+	{% if post.img %}
+	<header class="masthead" style="background-image: url('http://localhost/P5/Blog/Public/img/Fullsize/{{post.img}}')">
+	{% else %}
+	<header class="masthead">
+	{% endif %} 
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="post-heading">
+              <h1>{{ post.title }}</h1>
+              <h2 class="subheading">{{ post.lede }}</h2>
+              <span class="meta">Écrit par {{ post.login }}, le {{post.date_create|localizeddate('none', 'none', 'fr', null, 'EEEE d MMMM Y')}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </header>
-    <section id="post">
+{% endblock %}
+
+{% block content %}
+    <section>
       <div class="container">
         <div class="row">
           <div class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2 mx-auto">
-            <a href="http://localhost/P5/Blog/blog/" class="btn btn-back"><i class="fas fa-undo"></i> Retour</a>
-            <p class="post-text"> {{ post.content }} </p>
-            <p class="text-right infos"><strong>Par {{ post.login }}, le {{post.date_create|localizeddate('none', 'none', 'fr', null, 'EEEE d MMMM Y')}}</strong></p>
+            <a href="http://localhost/P5/Blog/blog/" class="btn btn-primary float-left"><i class="fas fa-undo"></i> Retour</a>
           </div>
         </div>
       </div>
     </section>
-    
-    <hr class="break-post">
+
+    <article>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+          	{{ post.content|raw }}
+          </div>
+        </div>
+      </div>
+    </article>
 
     <section id="comments">
       <div class="container">
         <div class="row">
           <div class="col-md-8 offset-md-4 col-lg-6 offset-lg-6 mx-auto">
-            <p class="h5">Commentaires pour cet article :</p>
+            <h3>Commentaires :</h3>
               {% for comment in comments %}
                 {% if comment.validated == 1 %}
                   <div class="comment-content">
                     <p class="comment">{{ comment.content }}</p>
-                    <p class="text-right infos"><strong>Par <span class="text-white">{{ comment.author }}</span>,  le <span class="text-white">{{ comment.date_create|localizeddate('none', 'none', 'fr', null, 'd MMMM Y à H:mm') }}</span></strong></p>
+                    <p class="text-right infos"><strong>Par {{ comment.author }},  le {{ comment.date_create|localizeddate('none', 'none', 'fr', null, 'd MMMM Y à H:mm') }}</strong></p>
                   </div>
                 {% endif %}
               {% endfor %}

@@ -6,7 +6,6 @@
 
 {% block content %}
 
-	<div style="height: 40px;"></div>
 	<!-- Dashboard -->
 	<section id="dashboard" class="container text-center">
 		<div class="row justify-content-center">
@@ -35,4 +34,15 @@
 		</div>		
 	</section>
 
+{% endblock %}
+
+{% block add_js %}
+    <script>
+        $(document).ready(function(){
+            var marginHeight = ($(window).height() - $('footer').height() - $('nav').height() - $('section').height() - $('header').height()) /2;
+            console.log(marginHeight);
+            $('#dashboard').css('margin-top', marginHeight);
+            $('#dashboard').css('margin-bottom', marginHeight);
+        });
+    </script>
 {% endblock %}
