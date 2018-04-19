@@ -42,4 +42,21 @@
 	 	{% endfor %}
      </div>
     </div>
+      <section class="container" id="pagination-container">
+        <nav>
+          <ul class="pagination justify-content-center">
+            <li class="page-item{% if page.current == 1 %} disabled{% endif %}">
+              <a class="page-link" href="http://localhost/P5/Blog/blog?p={{ page.current - 1 }}" tabindex="-1"><<</a>
+            </li>
+            {% for i in 1..page.nb %}
+            <li class="page-item{% if page.current == i %} disabled{% endif %}">
+              <a class="page-link" href="http://localhost/P5/Blog/blog?p={{ i }}">{{ i }}</a>
+            </li>
+            {% endfor %}
+            <li class="page-item{% if page.current == page.nb %} disabled{% endif %}">
+              <a class="page-link" href="http://localhost/P5/Blog/blog?p={{ page.nb + 1 }}">>></a>
+            </li>
+          </ul>
+        </nav>
+      </section>
 {% endblock %}

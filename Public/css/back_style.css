@@ -17,7 +17,20 @@
  * ***      Layout     ***
  * **
  */
-
+table {
+    overflow-x:auto
+}
+/* @media screen and (max-width: 640px) {
+  table,
+  tbody,
+  tr,
+  td {
+    display: block;
+    width: auto!important;
+    text-align : center;
+    parceque tu as mis des style inline grrr
+  }
+} */
 #alert-container {
     position: absolute; !important;
     float: left;
@@ -32,7 +45,6 @@
     background-color: #133549;
     color: #fff;
     padding: 10px 0px 5px 0px;
-    margin-top: 52px;
 }
 
 #back-app footer {

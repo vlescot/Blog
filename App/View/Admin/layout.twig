@@ -3,7 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
+    <meta name="description" content="This administrable blog is my first web project and writes with PHP and MVC architectural pattern. Included following features : - Administration of posts - Upload images and resize - Complete member session system - Send e-mail - New member and comment validation - User notifications.">
+    <meta name="author" content="Vincent Lescot">
+    <meta name="keywords" content="OpenClassrooms,Vincent Lescot,Blog,Projet,Web,Development,PHP,Symfony">
 
     <title>{% block main_title %}{% endblock %}</title>
     
@@ -16,6 +18,10 @@
     <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
     <!-- My styles -->
     <link href="http://localhost/P5/Blog/Public/css/back_style.css" rel="stylesheet">
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="http://localhost/P5/Blog/Public/vendor/jquery/jquery.min.js"></script>
+    <script src="http://localhost/P5/Blog/Public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   </head>
 
   <body id="back-app">
@@ -61,9 +67,6 @@
         </div>
         <div id="copyright" class='text-center'>© 2018 - Réalisé par Vincent Lescot</div>
     </footer>
-    <!-- Bootstrap core JavaScript -->
-    <script src="http://localhost/P5/Blog/Public/vendor/jquery/jquery.min.js"></script>
-    <script src="http://localhost/P5/Blog/Public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Notification function -->
     <script src="http://localhost/P5/Blog/Public/js/notification.js"></script>
     {% block add_js %}{% endblock %}

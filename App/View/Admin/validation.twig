@@ -63,7 +63,8 @@
 						    <th>Date d'ajout</th>
 						    <th>Auteur</th>
 						    <th style="min-width: 50%;">Commentaire</th>
-						    <th colspan="2">Rendre visible ?</th>
+						    <th>Rendre visible ?</th>
+						    <th>Action</th>
 						  </tr>
 						  {% for comment in comments %}
 						  <tr class="{% if comment.validated == 1 %}validated{% elseif comment.validated == 0 %}not-validated{% endif %}">
@@ -83,6 +84,9 @@
 									</div>
 								</form>
 							</td> 
+							<td>
+			  				  	<button class="btn btn-delete btn-sm" onclick="deleteComment({{ comment.id }})"><i class="far fa-trash-alt"></i> Supprimer</button>
+							</td>
 						  </tr>
 						  {% endfor %}
 						</table>

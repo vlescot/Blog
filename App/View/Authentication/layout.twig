@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="fr">
-
   <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-
+    <meta name="description" content="This administrable blog is my first web project and writes with PHP and MVC architectural pattern. Included following features : - Administration of posts - Upload images and resize - Complete member session system - Send e-mail - New member and comment validation - User notifications.">
+    <meta name="author" content="Vincent Lescot">
+    <meta name="keywords" content="OpenClassrooms,Vincent Lescot,Blog,Projet,Web,Development,PHP,Symfony">
+    
     <title>{% block main_title %}{% endblock %}</title>
 
     <!-- Favicon -->
@@ -24,6 +24,10 @@
     
     <!-- My styles -->
     <link href="http://localhost/P5/Blog/Public/css/front_style.css" rel="stylesheet">
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="http://localhost/P5/Blog/Public/vendor/jquery/jquery.min.js"></script>
+    <script src="http://localhost/P5/Blog/Public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   </head>
 
   <body>
@@ -74,15 +78,20 @@
         <div id="copyright" class='text-center'>&copy; 2018 - Réalisé par Vincent Lescot</div>
     </footer>
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="http://localhost/P5/Blog/Public/vendor/jquery/jquery.min.js"></script>
-    <script src="http://localhost/P5/Blog/Public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Notification function -->
     <script src="http://localhost/P5/Blog/Public/js/notification.js"></script>
-{% block add_js %}{% endblock %}
     <script>
-        $('section').css('margin-top', '150px');
+        $(document).ready(function(){
+            var marginHeight = ($(window).height() - $('footer').height() - $('nav').height() - $('section').height())/2;
+            if (marginHeight > 120) {
+              $('section').css('margin-top', marginHeight);
+              $('section').css('margin-bottom', marginHeight);
+            }else {
+                $('section').css('margin-top', '120px');
+            }
+        });
     </script>
+{% block add_js %}{% endblock %}
     <!-- Font Awesome -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
     <!-- Custom scripts for this template -->
