@@ -1,5 +1,4 @@
-<?php 
-ob_start(); ?>
+<?php ob_start(); ?>
 <body style="background-color: #eaebef;">
 	<h2 style="color: #255F85; text-align: center; padding: 10px 0 10px 0;margin:0,0,20px,0;">Bonjour Vincent,</h2>
 	<div style="text-align: center;margin:0;">

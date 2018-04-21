@@ -20,7 +20,7 @@ class Mailer
      */
     public function __construct($email_to, $subject, $content)
     {
-        $MailAccess = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'] . "P5/Blog/Conf/MailAccess.json"), true);	// Private file to protect confidenfial data (Json)
+        $MailAccess = json_decode(file_get_contents(ROOT . 'Conf/MailAccess.json'), true);	// Private file to protect confidenfial data (Json)
         $this->_username = $MailAccess['Username'];
         $this->_password = $MailAccess['Password'];
         $this->_host 	 = $MailAccess['Host'];

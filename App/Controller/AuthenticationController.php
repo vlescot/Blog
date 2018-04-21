@@ -32,7 +32,7 @@ class AuthenticationController extends Controller
     {
         // Check if the user is already connected
         if (isset($_SESSION['ip']) && $_SESSION['ip'] === $_SERVER['REMOTE_ADDR']) {
-            header('Location: http://localhost/P5/Blog/admin');
+            header('Location: ' . URL . 'admin');
             exit;
         }
         if (empty($_POST['login']) || empty($_POST['psw'])) {
@@ -50,7 +50,7 @@ class AuthenticationController extends Controller
         } /*exit*/
 
         new Notification('Bonjour ' . $_POST['login'], 'success');
-        header("Location: http://localhost/P5/Blog/admin");
+        header('Location: ' . URL . 'admin');
     }
 
 
@@ -85,15 +85,15 @@ class AuthenticationController extends Controller
         ]);
         $MemberManager->createMember($Member);
         // Redirecting user to the espace admin
-        new Notification('Bienvenue ' . $Member->login(), 'info');
-        header("Location: http://localhost/P5/Blog/admin/");
+        new Notification('Bienvenue ' . $Member->login() . ' ! Vous pourrez bientôt accéder au site, une fois validé par un administrateur', 'info');
+        header('Location: ' . URL);
 
         // Sending an e-mail to the new member
-        require($_SERVER['DOCUMENT_ROOT'] . 'P5/Blog/App/Service/Email_model/mail_member_registration_notification.php');
+        require(ROOT . 'App/Service/Email_model/mail_member_registration_notification.php');
         $mail = new Mailer($Member->email(), $subject, $message);
         $mail->send();
         // Sending an e-mail to administration member asking validation's member
-        require($_SERVER['DOCUMENT_ROOT'] . 'P5/Blog/App/Service/Email_model/mail_admin_registration_notification.php');
+        require(ROOT . 'App/Service/Email_model/mail_admin_registration_notification.php');
         $mail = new Mailer('vincent.lescot@gmail.com', $subject, $message);
         $mail->send();
     }
@@ -126,7 +126,7 @@ class AuthenticationController extends Controller
         $MemberManager->updateResetPassword($Member);
 
         // Send an e-mail to the member with an authentificate link
-        require($_SERVER['DOCUMENT_ROOT'] . 'P5/Blog/App/Service/Email_model/mail_member_reset_password.php');
+        require(ROOT . 'App/Service/Email_model/mail_member_reset_password.php');
         $mail = new Mailer($member['email'], $subject, $message);
         $mail->send();
 
@@ -141,7 +141,7 @@ class AuthenticationController extends Controller
     {
         if (empty($_GET['p'])) {
             new Notification('o/O Un intru...');
-            header('Location: http://localhost/P5/Blog/');
+            header('Location: ' . URL . '');
             exit;
         }
 
@@ -150,7 +150,7 @@ class AuthenticationController extends Controller
         $member = $MemberManager->getMemberbyResetPassword($Member);
         if ($member === false) {
             new Notification('Nous n\'avons pas put vous reconnaitre');
-            header('Location: http://localhost/P5/Blog/authentication/');
+            header('Location: ' . URL . 'authentication/');
             exit;
         }
 
@@ -181,8 +181,8 @@ class AuthenticationController extends Controller
 
         // In error case $hashedPassword is explanation string and long different than 128
         if (strlen($hashedPassword) !== 128) {
-            $this->Alert($hashedPassword);
-        } //exit
+            $this->Alert($hashedPassword);//exit
+        } 
         
         // If, the new password is correct, then save it into the database
         $Member->setPassword($hashedPassword);
@@ -192,7 +192,7 @@ class AuthenticationController extends Controller
         $MemberManager->updateResetPassword($Member);
 
         new Notification('Votre mot de passe a bien été changé', 'success');
-        header("Location: http://localhost/P5/Blog/admin/");
+        header('Location: ' . URL . 'admin/');
     }
 
 
@@ -204,7 +204,7 @@ class AuthenticationController extends Controller
         session_destroy();
         session_start();
         new Notification('À bientôt !', 'info');
-        header('Location: http://localhost/P5/Blog/');
+        header('Location: ' . URL . '');
         exit;
     }
 }

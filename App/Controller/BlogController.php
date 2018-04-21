@@ -32,7 +32,7 @@ class BlogController extends Controller
      * if no route was matched by the class \Router\Router
      * @Route("/404")
      */
-    public function NoRoute()
+    public function noRoute()
     {
         echo $this->twig->render('404.twig');
     }
@@ -131,7 +131,7 @@ class BlogController extends Controller
             'contact_subject' => $_POST['subject'],
             'contact_content' => $_POST['message']
         ]);
-        require($_SERVER['DOCUMENT_ROOT'] . 'P5/Blog/App/Service/Email_model/mail_admin_contact.php');
+        require(ROOT . 'App/Service/Email_model/mail_admin_contact.php');
 
         $Mail->setMail_to('vincent.lescot@gmail.com');
         $Mail->setSubject($subject);

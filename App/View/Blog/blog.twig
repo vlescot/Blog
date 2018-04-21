@@ -3,7 +3,7 @@
 {% block main_title %}Les Articles - Blog{% endblock %}
 
 {% block header %}
-    <header class="masthead" style="background-image: url('http://localhost/P5/Blog/Public/img/Fullsize/1963e066871d3372246772150d3915d7.jpg')">
+    <header class="masthead" style="background-image: url('{{ base_url }}Public/img/Fullsize/newspaper.jpg')">
       <div class="overlay"></div>
       <div class="container">
         <div class="row">
@@ -27,15 +27,15 @@
           <div class="row">
             <div class="col-8">
               <div class="post-preview">
-                <a href="http://localhost/P5/Blog/blog/{{ post.id }}">
+                <a href="{{ base_url }}blog/{{ post.id }}">
                   <h2 class="post-title">{{ post.title }}</h2>
                   <h3 class="post-subtitle">{{ post.lede }}</h3>
                 </a>
-                <p class="post-meta">Par {{ post.login }}, le {{ post.date_create | localizeddate('none', 'none', null, null, 'EEEE d MMMM Y') }}</p>
+                <p class="post-meta">Par {{ post.login }}, le {{ post.date_create | localizeddate('none', 'none', 'fr', null, 'EEEE d MMMM Y') }}</p>
               </div>
             </div>
             <div class="col-4 vertical-center">
-              <img class="rounded img-fluid " src="http://localhost/P5/Blog/Public/img/Jumbotron/{{ post.img }}" alt="image {{ post.title }}">
+              <img class="rounded img-fluid " src="{{ base_url }}Public/img/Jumbotron/{{ post.img }}" alt="image {{ post.title }}">
             </div>
           </div>
         </div>
@@ -46,15 +46,15 @@
         <nav>
           <ul class="pagination justify-content-center">
             <li class="page-item{% if page.current == 1 %} disabled{% endif %}">
-              <a class="page-link" href="http://localhost/P5/Blog/blog?p={{ page.current - 1 }}" tabindex="-1"><<</a>
+              <a class="page-link" href="{{ base_url }}blog?p={{ page.current - 1 }}" tabindex="-1"><<</a>
             </li>
             {% for i in 1..page.nb %}
             <li class="page-item{% if page.current == i %} disabled{% endif %}">
-              <a class="page-link" href="http://localhost/P5/Blog/blog?p={{ i }}">{{ i }}</a>
+              <a class="page-link" href="{{ base_url }}blog?p={{ i }}">{{ i }}</a>
             </li>
             {% endfor %}
             <li class="page-item{% if page.current == page.nb %} disabled{% endif %}">
-              <a class="page-link" href="http://localhost/P5/Blog/blog?p={{ page.nb + 1 }}">>></a>
+              <a class="page-link" href="{{ base_url }}blog?p={{ page.nb + 1 }}">>></a>
             </li>
           </ul>
         </nav>

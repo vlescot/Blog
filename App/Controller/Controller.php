@@ -15,7 +15,7 @@ class Controller
      */
     public function __construct(string $view)
     {
-        $loader = new \Twig_Loader_Filesystem($_SERVER['DOCUMENT_ROOT'] .'P5/Blog/App/View/' . $view);
+        $loader = new \Twig_Loader_Filesystem(ROOT . 'App/View/' . $view);
         $this->twig = new \Twig_Environment($loader, array(
             'debug' => true,
             'cache' => false // __dir__ . './../tmp'
@@ -23,6 +23,7 @@ class Controller
         $this->twig->addExtension(new \Twig_Extensions_Extension_Intl());
         $this->twig->addExtension(new \Twig_Extension_Debug());
         $this->twig->addGlobal('session', $_SESSION);
+        $this->twig->addGlobal('base_url', URL);
 
         $this->displayNotification();
     }

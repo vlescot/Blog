@@ -26,12 +26,12 @@ class AdminController extends Controller
         // Disallow access if the member is not connected
         if (!isset($_SESSION['ip']) || $_SESSION['ip'] !== $_SERVER['REMOTE_ADDR']) {
             new Notification('Vous devez vous connecter pour accéder à cette page');
-            header('Location: http://localhost/P5/Blog/authentification');
+            header('Location: ' . URL . 'authentification');
             exit;
         // Disallow access if the member is not validated
         } elseif (!isset($_SESSION['validated']) || $_SESSION['validated'] === 0) {
-            new Notification('Votre accès n\'as pas encore été validé');
-            header('Location: http://localhost/P5/Blog');
+            new Notification('Votre accès n\'as pas encore été validé', 'info');
+            header('Location: ' . URL);
             exit;
         }
 
@@ -84,7 +84,7 @@ class AdminController extends Controller
         if (!isset($_GET['date_ending']) || $_GET['date_ending'] == '') {
             // Set a consistant date if empty
             $date = date_create(date('Y-m-d'));
-            date_add($date, date_interval_create_from_date_string('1 days'));
+            date_add($date, date_interval_create_from_date_string('2 days'));
             $date_ending =  date_format($date, 'Y-m-d');
         } else {
             $date_ending = $_GET['date_ending'];
@@ -120,7 +120,7 @@ class AdminController extends Controller
         if (!isset($_GET['date_ending']) || $_GET['date_ending'] == '') {
             // Set a consistant date if empty
             $date = date_create(date('Y-m-d'));
-            date_add($date, date_interval_create_from_date_string('1 days'));
+            date_add($date, date_interval_create_from_date_string('2 days'));
             $date_ending =  date_format($date, 'Y-m-d');
         } else {
             $date_ending = $_GET['date_ending'];
@@ -148,7 +148,7 @@ class AdminController extends Controller
         
         if (!isset($_POST['title']) && !isset($_POST['lede']) && !isset($_POST['content']) && $_POST['title'] === '' && $_POST['content'] === '' && $_POST['lede'] === '') {
             new Notification('Les champs "Titre", "Châpo", et "Contenu" sont obligatoires');
-            header('Location: ' . $_SERVER['DOCUMENT_ROOT']);
+            header('Location: ' . $_SERVER['REMOTE_ADDR']);
         }
 
         if (!empty($_FILES) && $_FILES['file']['error'] !== 4) {
@@ -173,8 +173,8 @@ class AdminController extends Controller
         $PostManager = new PostManager();
         $PostManager->createPost($Post);
 
-        // new Notification('Votre article a bien été créé', 'success');
-        // header('Location: http://localhost/P5/Blog/admin/article');
+        new Notification('Votre article a bien été créé', 'success');
+        header('Location: ' . URL . 'admin/article');
     }
 
 
@@ -234,7 +234,7 @@ class AdminController extends Controller
         $PostManager->updatePost($Post);
 
         new Notification('L\'article a bien été mis à jour', 'success');
-        header('Location: http://localhost/P5/Blog/admin/article');
+        header('Location: ' . URL . 'admin/article');
     }
 
 
@@ -311,7 +311,7 @@ class AdminController extends Controller
         // Sending an e-mail to the validated member
         if ($table === 'member' && $validation === 1) {
             $member = $MemberManager->getMemberbyId(new Member(['id' => intval($id)]));
-            require($_SERVER['DOCUMENT_ROOT'] . 'P5/Blog/App/Service/Email_model/mail_member_validation.php');
+            require(ROOT . 'App/Service/Email_model/mail_member_validation.php');
             $mail = new Mailer($member['email'], $subject, $message);
             $mail->send();
         }

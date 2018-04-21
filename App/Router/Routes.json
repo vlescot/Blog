@@ -131,7 +131,7 @@
 	},
 	{
 		"path":"\/404",
-		"callable":"Blog#NoRoute",
+		"callable":"Blog#noRoute",
 		"method": "GET"
 	}
 ]

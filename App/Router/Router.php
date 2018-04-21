@@ -14,7 +14,7 @@ class Router
     public function __construct($url)
     {
         $this->_url = $url;
-        $routes = json_decode(file_get_contents(__DIR__ . '\routes.json'), true);
+        $routes = json_decode(file_get_contents(ROOT . 'App/Router/Routes.json'), true);
         foreach ($routes as $key => $value) {
             $this->addRoute($value['path'], $value['callable'], $value['method']);
         }
@@ -49,6 +49,6 @@ class Router
             }
         }
         // If no route matches
-        header('Location: http://localhost/P5/Blog/404');
+        header('Location: ' . URL . '404');
     }
 }

@@ -19,11 +19,12 @@ class ImageUploader
     ];
     private static $extensions_valid = ['jpg', 'jpeg', 'png'];
     private $_images_folder = '';
+    private $_max_size = 3;
 
     
     public function __construct()
     {
-        $this->_images_folder = $_SERVER['DOCUMENT_ROOT'] . 'P5/Blog/Public/img/';
+        $this->_images_folder = ROOT . 'Public/img/';
     }
 
     /**
@@ -45,11 +46,17 @@ class ImageUploader
      */
     public function upload()
     {
+        // Checks the size of the file
+        if ($_FILES['file']['size'] / 1048576 > $this->_max_size){
+            $this->error('Le fichier ne doit pas dépasser un poid de ' . $this->_max_size . ' Mo');
+        }
+        // Check the extension of the file
         $extension_upload = strtolower(substr(strrchr($_FILES['file']['name'], '.'), 1));
         if (!in_array($extension_upload, self::$extensions_valid)) {
             $this->error('Le fichier doit avoir l\'extension jpg, jpeg, ou png');
         }
-        $img_name = md5(uniqid(rand(), true)); // Set a random name
+        // Set a ransom name to the file
+        $img_name = md5(uniqid(rand(), true));
         $img_fullname = $img_name . "." . $extension_upload;
         $destination_path = $this->_images_folder . key(self::$img_params) . "/" . $img_fullname;
         move_uploaded_file($_FILES['file']['tmp_name'], $destination_path);

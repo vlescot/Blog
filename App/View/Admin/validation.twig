@@ -8,13 +8,13 @@
 
 	<section>
 		<div class="container links">
-			<a href="http://localhost/P5/Blog/admin/accueil" role="button" class="btn btn-outline-dark btn-sm">
+			<a href="{{ base_url }}admin/accueil" role="button" class="btn btn-outline-dark btn-sm">
 				<i class="fas fa-undo"></i> Retour
 			</a>
 			<button style="width:100px;" class="btn btn-outline-secondary btn-sm float-right" id="filter">Filtrer</button>
 	    	<div class="text-center">
 				<div id="date_filter">
-					<form action="http://localhost/P5/Blog/admin/validation" method="get">
+					<form action="{{ base_url }}admin/validation" method="get">
 						<label for="date_begin">Date début :</label>
 			            <div class="form-check form-check-inline">
 							<input id="date_begin" name="date_begin" min="2018-02-01" type='date' class="form-control"/>
@@ -68,7 +68,7 @@
 						  </tr>
 						  {% for comment in comments %}
 						  <tr class="{% if comment.validated == 1 %}validated{% elseif comment.validated == 0 %}not-validated{% endif %}">
-						  	<td class="align-middle text-center"><a href="http://localhost/P5/Blog/blog/{{ comment.id_post }}" target="_blank"><i style="font-size:1.5em;" class="fas fa-share-square"></i></a></td>
+						  	<td class="align-middle text-center"><a href="{{ base_url }}blog/{{ comment.id_post }}" target="_blank"><i style="font-size:1.5em;" class="fas fa-share-square"></i></a></td>
 						  	<td class="align-middle">{{ comment.date_create | date("d/m/Y à H\\hi") }}</td>
 						  	<td class="align-middle">{{ comment.author }}</td>
 						    <td class="align-middle">{{ comment.content }}</td>

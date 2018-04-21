@@ -8,42 +8,44 @@
     <meta name="keywords" content="OpenClassrooms,Vincent Lescot,Blog,Projet,Web,Development,PHP,Symfony">
 
     <title>{% block main_title %}{% endblock %}</title>
+    <!-- Bootstrap core JavaScript -->
+    <script src="{{ base_url }}Public/vendor/jquery/jquery.min.js"></script>
+    <script src="{{ base_url }}Public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- MyFunctions -->
+    <script src="{{ base_url }}Public/js/Back_MyFunctions.js"></script>
     
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="http://localhost/P5/Blog/Public/img/favicon.ico">
+    <link rel="icon" type="image/png" href="{{ base_url }}Public/img/favicon.ico">
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- Custom fonts for this template -->
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
     <!-- My styles -->
-    <link href="http://localhost/P5/Blog/Public/css/back_style.css" rel="stylesheet">
+    <link href="{{ base_url }}Public/css/back_style.css" rel="stylesheet">
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="http://localhost/P5/Blog/Public/vendor/jquery/jquery.min.js"></script>
-    <script src="http://localhost/P5/Blog/Public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   </head>
 
   <body id="back-app">
     <nav class="navbar navbar-expand-lg navbar-perso fixed-top" id="mainNav">
       <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="http://localhost/P5/Blog/">Blog</a>
+        <a class="navbar-brand js-scroll-trigger" href="{{ base_url }}">Blog</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="http://localhost/P5/Blog/admin/accueil">Accueil</a>
+              <a class="nav-link js-scroll-trigger" href="{{ base_url }}admin/accueil">Accueil</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="http://localhost/P5/Blog/admin/article">Article</a>
+              <a class="nav-link js-scroll-trigger" href="{{ base_url }}admin/article">Article</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="http://localhost/P5/Blog/admin/validation">Validation</a>
+              <a class="nav-link js-scroll-trigger" href="{{ base_url }}admin/validation">Validation</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="http://localhost/P5/Blog/authentification/disconnect">Se déconnecter</a>
+              <a class="nav-link js-scroll-trigger" href="{{ base_url }}authentification/disconnect">Se déconnecter</a>
             </li>
           </ul>
         </div>
@@ -68,15 +70,13 @@
         <div id="copyright" class='text-center'>© 2018 - Réalisé par Vincent Lescot</div>
     </footer>
     <!-- Notification function -->
-    <script src="http://localhost/P5/Blog/Public/js/notification.js"></script>
+    <script src="{{ base_url }}Public/js/notification.js"></script>
     {% block add_js %}{% endblock %}
-    <!-- MyFunctions -->
-    <script src="http://localhost/P5/Blog/Public/js/Back_MyFunctions.js"></script>
     <!-- Font Awesome -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
     <!-- TinyMCE -->
     <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=rfyt3lfzb2t41gqdu0kihk7w3ibxoe6jinnspmt3r9y7pjgf"></script>
-    <script src="http://localhost/P5/Blog/Public/js/TinyMCE_placeholder_pluggin.js"></script>
-    <script src="http://localhost/P5/Blog/Public/js/TinyMCE_config.js"></script>
+    <script src="{{ base_url }}Public/js/TinyMCE_placeholder_pluggin.js"></script>
+    <script src="{{ base_url }}Public/js/TinyMCE_config.js"></script>
 </body>
 </html>

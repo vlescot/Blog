@@ -15,7 +15,6 @@ header {
 	margin-bottom: 0px !important;
 }
 
-
 #self-photo {
 	border-radius: 50%;
 	padding: .1rem;
@@ -27,6 +26,10 @@ header {
     flex-wrap: wrap;
     justify-content: center;
     margin-bottom: 30px;
+}
+
+#contact {
+	margin-top: 150px;
 }
 
 
