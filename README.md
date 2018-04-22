@@ -30,8 +30,8 @@ https://github.com/vlescot/Blog.git
 Create the file named **Path.json** 
 ```json
 {
-    "base_url": "http://localhost/dir_name/",
-    "base_dir": "dir_name/"
+    "base_url": "http://localhost/dir_name/",
+    "base_dir": "dir_name/"
 }
  
 ```
