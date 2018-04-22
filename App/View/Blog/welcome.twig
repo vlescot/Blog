@@ -3,14 +3,13 @@
 {% block main_title %}Bienvenue - Blog{% endblock %}
 
 {% block header %}
-    <header class="masthead" style="background-image: url('http://localhost/P5/Blog/Public/img/Fullsize/photo-1489875347897-49f64b51c1f8.jpg')">
+    <header class="masthead" style="background-image: url('{{ base_url }}Public/img/Fullsize/welcome.jpg')">
       <div class="overlay"></div>
       <div class="container">
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
             <div class="site-heading">
-              <h1>Vincent Lescot</h1>
-              <span class="subheading">A Blog Theme by Vincent</span>
+              <h1 class="h2">Vincent Lescot</h1>
             </div>
           </div>
         </div>
@@ -18,16 +17,18 @@
     </header>
 {% endblock %}
 {% block content %}
-    <section>
+    <section id="presentation">
       <div class="container">
         <div class="row">
-          <div id="photo-container" class="col-lg-4">
-            <img class="img-fluid img-thumbnail text-center" id="self-photo" src="http://localhost/P5/Blog/Public/img/ma_photo.jpg" alt="Vincent">
+          <div id="photo-container" class="col-lg-3 mx-auto text-center">
+            <img class="img-fluid img-thumbnail text-center" id="self-photo" src="{{ base_url }}Public/img/ma_photo.jpg" alt="Vincent">
           </div>
-          <div class="col-lg-8 text-center">
-            <h2>We've got what you need!</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio necessitatibus voluptas suscipit, exercitationem at accusantium quae quidem fugit veniam, dicta iure consequatur eius ducimus voluptatibus labore dolor. Similique, dolores, laboriosam.</p>
-            <a class="btn btn-primary" href="http://localhost/P5/Blog/Public/files/CV.pdf">Télécharger mon CV</a>
+          <div class="col-lg-9 text-center">
+            <h2>Le dévelopement, une passion !</h2>
+            <p>Après plusieurs années dans le secteur de la logistique, j'ai décidé de me réconvertir vers le développement web par passion.</p>
+            <p> Afin de pousser plusieurs mois d'auto-formation de PHP et Javascript, j'ai choisi de me former, toujours par la pratique, avec le parcourt <em></br>« Développeuse d'application PHP/Symfony »</em> de <a href="https://openclassrooms.com/paths/developpeur-se-d-application-php-symfony" target="blank">OpenClassrooms</a>.</p>
+            {# <p><em><span style="text-decoration: underline;">Technos</span> : PHP, Symfony, API REST, JavaScript, SQL, HTML, CSS, Bootstrap, Git</em></p> #}
+            <a class="btn btn-primary" href="{{ base_url }}Public/files/CV.pdf">Voir mon CV</a>
           </div>
         </div>
       </div>
@@ -38,8 +39,8 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto text-center">
           <h2>Me contacter</h2>
-           <p>Si vous appréciez ce blog et que vous souhaitez avoir des informations sur moi. Je vous répondrai.<br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis nemo, nisi quae temporibus ad, molestiae! Dolorum laudantium perspiciatis, accusantium omnis, maiores aliquid praesentium unde, molestiae ipsa possimus vel, dolores voluptate.</p>
-          <form action="http://localhost/P5/Blog/accueil" method="post" name="sentMessage" id="contactForm" novalidate>
+           <p>N'hésitez pas à me demander plus d'informations.</p>
+          <form action="{{ base_url }}accueil" method="post" name="sentMessage" id="contactForm" novalidate>
             <div class="control-group">
               <div class="form-group floating-label-form-group controls">
                 <label>Nom</label>
@@ -82,6 +83,6 @@
 
 {% block add_js %}
     <!-- Contact Form JavaScript -->
-    <script src="http://localhost/P5/Blog/Public/js/jqBootstrapValidation.min.js"></script>
-    <script src="http://localhost/P5/Blog/Public/js/contact_me.min.js"></script>
+    <script src="{{ base_url }}Public/js/jqBootstrapValidation.min.js"></script>
+    <script src="{{ base_url }}Public/js/contact_me.min.js"></script>
 {% endblock %}

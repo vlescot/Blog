@@ -12,8 +12,8 @@
       "View\\"      :"App/View",
       "Controller\\":"App/Controller",
       "Router\\"    :"App/Router",
-      "Entity\\"    :"App/Model/Entity",
-      "Manager\\"   :"App/Model/Manager",
+      "Model\\"    :"App/Model",
+      "Manager\\"   :"App/Manager",
       "Service\\"   :"App/Service"
     }
   }

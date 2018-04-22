@@ -10,18 +10,18 @@
 		<div class="container links">
 			<div class="row">
 				<div class="col-12">
-					<a href="http://localhost/P5/Blog/admin/accueil" role="button" class="btn btn-outline-dark btn-sm">
+					<a href="{{ base_url }}admin/accueil" role="button" class="btn btn-outline-dark btn-sm">
 						<i class="fas fa-undo"></i> Retour
 					</a>
-					<a href="http://localhost/P5/Blog/admin/article/creer" role="button" class="btn btn-add float-right btn-sm">
+					<a href="{{ base_url }}admin/article/creer" role="button" class="btn btn-add float-right btn-sm">
 						<i class="fas fa-plus-circle"></i> Ajouter un Article
 					</a>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-11">
+				<div class="col-10">
 					<div id="date_filter" class="text-center">
-						<form action="http://localhost/P5/Blog/admin/article" method="get">
+						<form action="{{ base_url }}admin/article" method="get">
 							<label for="date_begin">Date début :</label>
 				            <div class="form-check form-check-inline">
 								<input id="date_begin" name="date_begin" min="2018-02-01" type='date' class="form-control"/>
@@ -36,7 +36,7 @@
 						</form>
 					</div>
 				</div>
-				<div class="col-1">
+				<div class="col-2">
 					<button style="width:100px;" class="btn btn-outline-secondary btn-sm float-right" id="filter">Filtrer</button>
 				</div>
 			</div>
@@ -57,18 +57,18 @@
 		      {% for post in posts %}
 			  <tr>
 			  	<td>
-			  		<a href="http://localhost/P5/Blog/blog/{{ post.id }}" style="font-size:2em;"  target="_blank">
+			  		<a href="{{ base_url }}blog/{{ post.id }}" style="font-size:2em;"  target="_blank">
 	  					<i class="fas fa-share-square"></i>
 					</a>
 				</td>
 			    <td>
 				{% if post.img %}
 			    	<div class="post-img">
-			    		<img src="http://localhost/P5/Blog/Public/img/Table/{{ post.img }}" alt="IMAGE:{{ post.title }}">
+			    		<img src="{{ base_url }}Public/img/Table/{{ post.img }}" alt="IMAGE:{{ post.title }}">
 			    	</div>
 			    {% else %}
 			    	<div class="post-img">
-			    		<img src="http://localhost/P5/Blog/Public/img/Table/no-image.png" alt="no-image">
+			    		<img src="{{ base_url }}Public/img/Table/no-image.png" alt="no-image">
 			    	</div>
 				{% endif %}
 			    </td>
@@ -76,7 +76,7 @@
 			    <td>{{ post.author }}</td>
 			    <td>{{ post.date_create | date ('d/m/Y à H\\hi') }}</td>
 			    <td class="text-center">
-			    	<a href="http://localhost/P5/Blog/admin/article/{{ post.id }}" role="button" class="btn btn-update btn-sm"><i class="far fa-edit"></i> Modifier</a><br>
+			    	<a href="{{ base_url }}admin/article/{{ post.id }}" role="button" class="btn btn-update btn-sm"><i class="far fa-edit"></i> Modifier</a><br>
 			    	<button class="btn btn-delete btn-sm" onclick="deletePost({{ post.id }})"><i class="far fa-trash-alt"></i> Supprimer</button>
 				</td>
 			  </tr>

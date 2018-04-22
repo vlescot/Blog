@@ -125,8 +125,13 @@
 		"method": "POST"
 	},
 	{
+		"path":"\/admin\/validation\/deleteComment",
+		"callable":"Admin#deleteComment",
+		"method": "POST"
+	},
+	{
 		"path":"\/404",
-		"callable":"Blog#NoRoute",
+		"callable":"Blog#noRoute",
 		"method": "GET"
 	}
 ]

@@ -3,14 +3,13 @@
 {% block main_title %}Les Articles - Blog{% endblock %}
 
 {% block header %}
-    <header class="masthead" style="background-image: url('http://localhost/P5/Blog/Public/img/Fullsize/1963e066871d3372246772150d3915d7.jpg')">
+    <header class="masthead" style="background-image: url('{{ base_url }}Public/img/Fullsize/newspaper.jpg')">
       <div class="overlay"></div>
       <div class="container">
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
             <div class="site-heading">
-              <h1>Blog</h1>
-              <span class="subheading">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</span>
+              <h1>Le Blog</h1>
             </div>
           </div>
         </div>
@@ -25,21 +24,38 @@
         <div class="col-lg-8 col-md-10 mx-auto">
           <hr>
           <div class="row">
-            <div class="col-8">
+            <div class="col-md-8 order-1 order-sm-0">
               <div class="post-preview">
-                <a href="http://localhost/P5/Blog/blog/{{ post.id }}">
+                <a href="{{ base_url }}blog/{{ post.id }}">
                   <h2 class="post-title">{{ post.title }}</h2>
                   <h3 class="post-subtitle">{{ post.lede }}</h3>
                 </a>
-                <p class="post-meta">Par {{ post.login }}, le {{ post.date_create | localizeddate('none', 'none', null, null, 'EEEE d MMMM Y') }}</p>
+                <p class="post-meta">Par {{ post.login }}, le {{ post.date_create | localizeddate('none', 'none', 'fr', null, 'EEEE d MMMM Y') }}</p>
               </div>
             </div>
-            <div class="col-4 vertical-center">
-              <img class="rounded img-fluid " src="http://localhost/P5/Blog/Public/img/Jumbotron/{{ post.img }}" alt="image {{ post.title }}">
+            <div class="col-md-4 order-0 order-sm-1 vertical-center">
+              <img class="rounded img-fluid " src="{{ base_url }}Public/img/Jumbotron/{{ post.img }}" alt="image {{ post.title }}">
             </div>
           </div>
         </div>
 	 	{% endfor %}
      </div>
     </div>
+      <section class="container" id="pagination-container">
+        <nav>
+          <ul class="pagination justify-content-center">
+            <li class="page-item{% if page.current == 1 %} disabled{% endif %}">
+              <a class="page-link" href="{{ base_url }}blog?p={{ page.current - 1 }}" tabindex="-1"><<</a>
+            </li>
+            {% for i in 1..page.nb %}
+            <li class="page-item{% if page.current == i %} disabled{% endif %}">
+              <a class="page-link" href="{{ base_url }}blog?p={{ i }}">{{ i }}</a>
+            </li>
+            {% endfor %}
+            <li class="page-item{% if page.current == page.nb %} disabled{% endif %}">
+              <a class="page-link" href="{{ base_url }}blog?p={{ page.nb + 1 }}">>></a>
+            </li>
+          </ul>
+        </nav>
+      </section>
 {% endblock %}

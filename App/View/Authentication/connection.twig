@@ -10,12 +10,12 @@
       <div class="text-center">
         <h2>Connexion à un compte</h2>
         <div>
-          <small class="text-muted"><a href="http://localhost/P5/blog/authentification/reinitialiser">Mot de passe oublié ?</a></small></br>
-          <small class="text-muted"><a href="http://localhost/P5/blog/authentification/inscription">Ou créer votre compte en cliquant ici.</a></small>
+          <small class="text-muted"><a href="{{ base_url }}authentification/reinitialiser">Mot de passe oublié ?</a></small></br>
+          <small class="text-muted"><a href="{{ base_url }}authentification/inscription">Ou créer votre compte en cliquant ici.</a></small>
         </div></br>
         <div class="row">
           <div class="col-xs-12 offset-sm-1 col-sm-10 offset-md-2 col-md-8 offset-lg-4 col-lg-4">
-            <form action="http://localhost/P5/blog/authentification" method="post">
+            <form action="{{ base_url }}authentification" method="post">
               <div class="form-group">
                 <label for="login">Votre identifiant :</label>
                 <input class="form-control" name="login" id="login" type="login" placeholder="Nom d'utilisateur" required>

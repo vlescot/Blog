@@ -16,7 +16,7 @@
 				  <p>Ajouter, modifier, supprimer des articles du blog.</p>
 				  <hr>
 				  <p class="lead">
-				    <a href="http://localhost/P5/Blog/admin/article" class="btn btn-outline-primary btn-sm" role="button">Administrer</a>
+				    <a href="{{ base_url }}admin/article" class="btn btn-outline-primary btn-sm" role="button">Administrer</a>
 				  </p>
 				</div>
 			</div>
@@ -27,7 +27,7 @@
 				  <p>Valider les nouveaux commentaires avant leurs publications.</p>
 				  <hr>
 				  <p class="lead">
-				    <a href="http://localhost/P5/Blog/admin/validation" class="btn btn-outline-primary btn-sm" role="button">Administrer</a>
+				    <a href="{{ base_url }}admin/validation" class="btn btn-outline-primary btn-sm" role="button">Administrer</a>
 				  </p>
 				</div>
 			</div>
@@ -39,10 +39,14 @@
 {% block add_js %}
     <script>
         $(document).ready(function(){
-            var marginHeight = ($(window).height() - $('footer').height() - $('nav').height() - $('section').height() - $('header').height()) /2;
-            console.log(marginHeight);
-            $('#dashboard').css('margin-top', marginHeight);
-            $('#dashboard').css('margin-bottom', marginHeight);
+            var marginHeight = $(window).height() - $('footer').height()*2 - $('section').height() - $('header').height();
+            if (marginHeight > 120) {
+              $('section').css('margin-top', marginHeight/3);
+              $('section').css('margin-bottom', marginHeight/3*2);
+            }else {
+                $('section').css('margin-top', '120px');
+                $('section').css('margin-bottom', '120px');
+            }
         });
     </script>
 {% endblock %}

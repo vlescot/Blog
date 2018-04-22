@@ -5,18 +5,16 @@
 {% block page_title %}{% if update %}Modifier l'Article</br><h2>{{ update.title }}</h2>{% else %}Ajouter un Article{% endif %}{% endblock %}
 
 {% block content %}
-
-
 	<section>
 		<div class="container links">
-			<a href="http://localhost/P5/Blog/admin/article" role="button" class="btn btn-outline-dark btn-sm">
+			<a href="{{ base_url }}admin/article" role="button" class="btn btn-outline-dark btn-sm">
 				<i class="fas fa-undo"></i> Retour
 			</a>
 		</div>
 	</section>
 
 	<section class="container">
-		<form action="http://localhost/P5/Blog/admin/article/{% if not update %}creer{% endif %}{% if update %}{{update.id}}{% endif %}" method="POST" enctype="multipart/form-data">
+		<form action="{{ base_url }}admin/article/{% if not update %}creer{% endif %}{% if update %}{{update.id}}{% endif %}" method="POST" enctype="multipart/form-data">
 			<div class="form-row">
 				<div class="col-md-12">
 					<div class="form-row">
@@ -49,7 +47,7 @@
 								</div>
 								<div class="form-group">
 									<label name="file" for="file" class="label-file">
-										<img class="rounded img-fluid" src="http://localhost/P5/Blog/Public/img/Input_File/{{ update.img }}" alt="IMAGE:{{ update.title }}">
+										<img class="rounded img-fluid" src="{{ base_url }}Public/img/Jumbotron/{{ update.img }}" alt="IMAGE:{{ update.title }}">
 									</label>
 		                            <label name="file" for="file" class="label-file">
 		                            	<small>Format : jpg, jpeg ou png</small></br></small>
@@ -66,7 +64,7 @@
 								</div>
 								<div class="form-group">
 									<label name="file" for="file" class="label-file">
-										<img class="rounded img-fluid" src="http://localhost/P5/Blog/Public/img/Input_File/no-image.png" alt="no-image">
+										<img class="rounded img-fluid" src="{{ base_url }}Public/img/Jumbotron/no-image.png" alt="no-image">
 									</label>								
 		                            <label name="file" for="file" class="label-file">
 		                            	<small>Format : jpg, jpeg ou png</small></br></small>
@@ -85,5 +83,4 @@
 			</div>
 		</form>
 	</section>	
-
 {% endblock %}
