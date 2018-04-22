@@ -81,7 +81,7 @@ class MemberManager extends Manager
             $query = 'SELECT * FROM member 
 			WHERE date_create 
 			BETWEEN :date_begin AND :date_ending
-			AND validated=' . $validated . '
+			AND validated=:validated 
 			ORDER BY date_create DESC';
         }
 
@@ -89,6 +89,9 @@ class MemberManager extends Manager
         
         $sql->bindvalue(':date_begin', (string) $date_begin, \PDO::PARAM_STR);
         $sql->bindvalue(':date_ending', (string) $date_ending, \PDO::PARAM_STR);
+        if ($validated !== 2) {
+            $sql->bindvalue(':validated', (string) $validated, \PDO::PARAM_STR);
+        }
 
         $sql->execute();
         return $sql->fetchAll();
