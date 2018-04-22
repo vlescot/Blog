@@ -49,6 +49,13 @@
         <div class="row">
           <div class="col-md-8 offset-md-4 col-lg-6 offset-lg-6 mx-auto">
             <h3>Commentaires :</h3>
+            <form action="" method="post" class="form-inline">
+                <div class="form-group">
+                  <input type="text" name="author" class="form-control col-3" placeholder="Votre nom" required>
+                  <textarea name="content" class="form-control col-7" placeholder="Écrire un commentaire..." rows="1" required></textarea>
+                  <button type="submit" class="btn btn-primary col-2">Poster</button>
+                </div>
+            </form>
               {% for comment in comments %}
                 {% if comment.validated == 1 %}
                   <div class="comment-content">
@@ -57,13 +64,6 @@
                   </div>
                 {% endif %}
               {% endfor %}
-            <form action="" method="post" class="form-inline">
-                <div class="form-group">
-                  <input type="text" name="author" class="form-control col-3" placeholder="Votre nom" required>
-                  <textarea name="content" class="form-control col-7" placeholder="Écrire un commentaire..." rows="1" required></textarea>
-                  <button type="submit" class="btn btn-primary col-2">Poster</button>
-                </div>
-            </form>
           </div>
         </div>
       </div>

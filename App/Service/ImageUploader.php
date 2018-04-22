@@ -13,7 +13,7 @@ class ImageUploader
      * Keys are the destination folders into /Public/img/$_img_params[$key]
      */
     private static $img_params = [
-        'FullSize' 	=> null ,
+        'Fullsize' 	=> null ,
         'Jumbotron' => 270,
         'Table' 	=> 100,
     ];
@@ -47,7 +47,7 @@ class ImageUploader
     public function upload()
     {
         // Checks the size of the file
-        if ($_FILES['file']['size'] / 1048576 > $this->_max_size){
+        if ($_FILES['file']['size'] / 1048576 > $this->_max_size) {
             $this->error('Le fichier ne doit pas dépasser un poid de ' . $this->_max_size . ' Mo');
         }
         // Check the extension of the file

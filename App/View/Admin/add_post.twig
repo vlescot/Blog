@@ -5,8 +5,6 @@
 {% block page_title %}{% if update %}Modifier l'Article</br><h2>{{ update.title }}</h2>{% else %}Ajouter un Article{% endif %}{% endblock %}
 
 {% block content %}
-
-
 	<section>
 		<div class="container links">
 			<a href="{{ base_url }}admin/article" role="button" class="btn btn-outline-dark btn-sm">
@@ -85,5 +83,4 @@
 			</div>
 		</form>
 	</section>	
-
 {% endblock %}

@@ -27,6 +27,9 @@ header {
     justify-content: center;
     margin-bottom: 30px;
 }
+#presentation {
+	margin-top: 100px;
+}
 
 #contact {
 	margin-top: 150px;

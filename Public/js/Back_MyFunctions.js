@@ -28,7 +28,7 @@ $(document).ready(function() {
   var file = $("#file");
   file.change(function(){
     var imgLabel = $("form label img");
-    imgLabel.attr('src', window.location.origin + '/P5/Public/img/uploaded-img.png');
+    imgLabel.attr('src', window.location.origin + '/P5/Blog/Public/img/uploaded-img.png');
     imgLabel.attr('alt', 'image-changed');
   });
 

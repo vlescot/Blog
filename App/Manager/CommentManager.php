@@ -34,7 +34,7 @@ class CommentManager extends Manager
 			RIGHT JOIN post 
 			ON comment.id_post = post.id
 			WHERE post.id      = :id
-			ORDER BY comment.date_create ASC');
+			ORDER BY comment.date_create DESC');
         
         $sql->bindvalue(':id', (int) $Comment->id_post(), \PDO::PARAM_INT);
         $sql->execute();
@@ -76,13 +76,21 @@ class CommentManager extends Manager
     public function getFilteredComment($date_begin, $date_ending, $validated)
     {
         if ($validated === 2) {
-            $query = 'SELECT * FROM comment 
-			WHERE date_create BETWEEN :date_begin 
+            $query = '
+            SELECT comment.id, comment.content, comment.date_create, comment.author, comment.validated, comment.id_post, post.title
+            FROM comment 
+            RIGHT JOIN post 
+            ON comment.id_post = post.id
+			WHERE comment.date_create BETWEEN :date_begin 
 			AND :date_ending
 			ORDER BY date_create DESC';
         } else {
-            $query = 'SELECT * FROM comment 
-			WHERE date_create BETWEEN :date_begin 
+            $query = '
+            SELECT comment.id, comment.content, comment.date_create, comment.author, comment.validated, comment.id_post, post.title
+            FROM comment 
+            RIGHT JOIN post 
+            ON comment.id_post = post.id
+			WHERE comment.date_create BETWEEN :date_begin 
 			AND :date_ending
 			AND validated=' . $validated . '
 			ORDER BY date_create DESC';

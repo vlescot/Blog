@@ -9,8 +9,7 @@
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
             <div class="site-heading">
-              <h1>Blog</h1>
-              <span class="subheading">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</span>
+              <h1>Le Blog</h1>
             </div>
           </div>
         </div>
@@ -25,7 +24,7 @@
         <div class="col-lg-8 col-md-10 mx-auto">
           <hr>
           <div class="row">
-            <div class="col-8">
+            <div class="col-md-8 order-1 order-sm-0">
               <div class="post-preview">
                 <a href="{{ base_url }}blog/{{ post.id }}">
                   <h2 class="post-title">{{ post.title }}</h2>
@@ -34,7 +33,7 @@
                 <p class="post-meta">Par {{ post.login }}, le {{ post.date_create | localizeddate('none', 'none', 'fr', null, 'EEEE d MMMM Y') }}</p>
               </div>
             </div>
-            <div class="col-4 vertical-center">
+            <div class="col-md-4 order-0 order-sm-1 vertical-center">
               <img class="rounded img-fluid " src="{{ base_url }}Public/img/Jumbotron/{{ post.img }}" alt="image {{ post.title }}">
             </div>
           </div>

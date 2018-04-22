@@ -1,4 +1,5 @@
-# Blog ([Have a look](http://vincentlescot.fr/P5/))
+# Blog 
+[Have a look](http://vincentlescot.fr/P5/)
 
 This blog was build during my web develpment learning path with [OpenClassrooms](https://openclassrooms.com/paths/developpeur-se-d-application-php-symfony).
 
@@ -23,8 +24,8 @@ Use Twig v2.4 (Required php 7.0), Namespaces, Bootstrap v4, jQuery v3.3.1, and P
 https://github.com/vlescot/Blog.git
 ```
 
-* Create or import a **database** with the selected files **on the folder /SQL/** 'structure.sql', 'datas.sql' or 'database.sql'.
-* Create a folder named **/Conf/ on the root folder** then create two files with following name and contents :
+* Create a **database** named **blog** and import selected files **from the folder /SQL/** 'database.sql'.
+* Create a folder named **/Conf/ on the root folder** then create two files with following names and contents :
 
 Create the file named **Path.json** 
 ```json
@@ -34,6 +35,7 @@ Create the file named **Path.json**
 }
  
 ```
+
 Create the file named **DBAccess.json** 
 ```json
 {
@@ -56,3 +58,5 @@ Create the file named **MailAccess.json**
 }
 
 ```
+
+Have fun !

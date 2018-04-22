@@ -182,7 +182,7 @@ class AuthenticationController extends Controller
         // In error case $hashedPassword is explanation string and long different than 128
         if (strlen($hashedPassword) !== 128) {
             $this->Alert($hashedPassword);//exit
-        } 
+        }
         
         // If, the new password is correct, then save it into the database
         $Member->setPassword($hashedPassword);

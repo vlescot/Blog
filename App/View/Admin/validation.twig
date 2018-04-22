@@ -54,45 +54,44 @@
 	<section class="container get-comment">
 		<div class="container">
 			<div class="row">
-				<div class="offset-lg-1 col-lg-10">
-					{% if comments %}
-						<p class="h2 text-center get-comment">Liste des commentaires</p>
-						<table id="comment-listing" class="table table-sm">
-						  <tr>
-						    <th>Voir l'article</th>
-						    <th>Date d'ajout</th>
-						    <th>Auteur</th>
-						    <th style="min-width: 50%;">Commentaire</th>
-						    <th>Rendre visible ?</th>
-						    <th>Action</th>
-						  </tr>
-						  {% for comment in comments %}
-						  <tr class="{% if comment.validated == 1 %}validated{% elseif comment.validated == 0 %}not-validated{% endif %}">
-						  	<td class="align-middle text-center"><a href="{{ base_url }}blog/{{ comment.id_post }}" target="_blank"><i style="font-size:1.5em;" class="fas fa-share-square"></i></a></td>
-						  	<td class="align-middle">{{ comment.date_create | date("d/m/Y à H\\hi") }}</td>
-						  	<td class="align-middle">{{ comment.author }}</td>
-						    <td class="align-middle">{{ comment.content }}</td>
-						    <td class="align-middle text-center">
-						    	<form>
-									<div class="form-check">
-										<input class="form-check-input" type="radio" name="comment_validation" id="CommentVisibilityOn{{ comment.id }}" {% if comment.validated == 1 %}checked{% elseif comment.validated == 0 %}onclick="validation('comment',{{ comment.id }},1)"{% endif %}>
-										<label class="form-check-label" for="CommentVisibilityOn{{ comment.id }}">Oui</label>
-									</div>
-									<div class="form-check">
-										<input class="form-check-input" type="radio" name="comment_validation" id="CommentVisibilityOff{{ comment.id }}" {% if comment.validated == 0 %}checked{% elseif comment.validated == 1 %}onclick="validation('comment',{{ comment.id }},0)"{% endif %}>
-										<label class="form-check-label" for="CommentVisibilityOff{{ comment.id }}">Non</label>
-									</div>
-								</form>
-							</td> 
-							<td>
-			  				  	<button class="btn btn-delete btn-sm" onclick="deleteComment({{ comment.id }})"><i class="far fa-trash-alt"></i> Supprimer</button>
-							</td>
-						  </tr>
-						  {% endfor %}
-						</table>
-
-					{% endif %}
-				</div>
+				{% if comments %}
+					<p class="col-12 h2 text-center get-comment">Liste des commentaires</p>
+					<table id="comment-listing" class="table table-sm">
+					  <tr>
+					    <th>Voir l'article</th>
+					    <th>Date d'ajout</th>
+					    <th>Article</th>
+					    <th>Auteur</th>
+					    <th style="min-width: 50%;">Commentaire</th>
+					    <th>Visible ?</th>
+					    <th>Action</th>
+					  </tr>
+					  {% for comment in comments %}
+					  <tr class="{% if comment.validated == 1 %}validated{% elseif comment.validated == 0 %}not-validated{% endif %}">
+					  	<td class="align-middle text-center"><a href="{{ base_url }}blog/{{ comment.id_post }}" target="_blank"><i style="font-size:1.5em;" class="fas fa-share-square"></i></a></td>
+					  	<td class="align-middle">{{ comment.date_create | date("d/m/Y à H\\hi") }}</td>
+					  	<td class="align-middle col-4">{{ comment.title }}</td>
+					  	<td class="align-middle">{{ comment.author }}</td>
+					    <td class="align-middle col-4">{{ comment.content }}</td>
+					    <td class="align-middle text-center">
+					    	<form>
+								<div class="form-check">
+									<input class="form-check-input" type="radio" name="comment_validation" id="CommentVisibilityOn{{ comment.id }}" {% if comment.validated == 1 %}checked{% elseif comment.validated == 0 %}onclick="validation('comment',{{ comment.id }},1)"{% endif %}>
+									<label class="form-check-label" for="CommentVisibilityOn{{ comment.id }}">Oui</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input" type="radio" name="comment_validation" id="CommentVisibilityOff{{ comment.id }}" {% if comment.validated == 0 %}checked{% elseif comment.validated == 1 %}onclick="validation('comment',{{ comment.id }},0)"{% endif %}>
+									<label class="form-check-label" for="CommentVisibilityOff{{ comment.id }}">Non</label>
+								</div>
+							</form>
+						</td> 
+						<td>
+		  				  	<button class="btn btn-delete btn-sm" onclick="deleteComment({{ comment.id }})"><i class="far fa-trash-alt"></i> Supprimer</button>
+						</td>
+					  </tr>
+					  {% endfor %}
+					</table>
+				{% endif %}
 			</div>
 		</div>
 
@@ -112,7 +111,7 @@
 						    <th></th> 
 						  </tr>
 						  {% for member in members %}
-						  	
+						  	{% if member.login != 'root' %}
 						  <tr class="{% if member.validated == 1 %}validated{% elseif member.validated == 0 %}not-validated{% endif %}">
 						  	<td class="align-middle">{{ member.date_create | date("d/m/Y") }}</td>
 						  	<td class="align-middle">{{ member.login }}</td>
@@ -130,6 +129,7 @@
 								</form>
 							</td> 
 						  </tr>
+						  	{% endif %}
 						  {% endfor %}
 						</table>
 					{% endif %}
