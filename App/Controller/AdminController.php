@@ -42,7 +42,7 @@ class AdminController extends Controller
             new Notification('Votre accès n\'as pas encore été validé', 'info');
             header('Location: ' . URL);
             return false;
-        }else{
+        } else {
             return true;
         }
     }
@@ -161,12 +161,11 @@ class AdminController extends Controller
             if (isset($_FILES) && $_FILES['file']['error'] !== 4) {
                 if ($_FILES['file']['error'] > 0) {
                     $error = $this->UploadingError($_FILES['file']['error']);
+                } else {
+                    $ImgUpload = new ImageUploader();
+                    $img_name = $ImgUpload->upload();
                 }
-                else{
-                   $ImgUpload = new ImageUploader();
-                   $img_name = $ImgUpload->upload();
-                }
-            } else{
+            } else {
                 $img_name = '';
             }
 
@@ -185,8 +184,7 @@ class AdminController extends Controller
                 new Notification('Votre article a bien été créé', 'success');
                 header('Location: ' . URL . 'admin/article');
             }
-        }
-        else{
+        } else {
             echo $this->twig->render('add_post.twig');
         }
     }
@@ -194,7 +192,7 @@ class AdminController extends Controller
 
     /**
      * @Route("/admin/article/:id")
-     * 
+     *
      * @param int $id id of the post
      */
     public function updatePost($id)
@@ -210,8 +208,7 @@ class AdminController extends Controller
             if (!empty($_FILES) && $_FILES['file']['error'] !== 4) {
                 if ($_FILES['file']['error'] > 0) {
                     $error = $this->UploadingError($_FILES['file']['error']);
-                }
-                else {
+                } else {
                     $ImgUpload = new ImageUploader();
                     $img_name = $ImgUpload->upload();
                     if ($old_post['img'] !== '' && $_POST['img-remove'] !== 'on') {
@@ -251,8 +248,8 @@ class AdminController extends Controller
                 new Notification('L\'article a bien été mis à jour', 'success');
                 header('Location: ' . URL . 'admin/article');
             }
-        } 
-        // No form is sending, then the user makes a request to get the updating post form 
+        }
+        // No form is sending, then the user makes a request to get the updating post form
         else {
             $PostManager = new PostManager();
             echo $this->twig->render('add_post.twig', array('update' => $PostManager->getPost($Post)));
