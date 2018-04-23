@@ -2,6 +2,7 @@
 namespace Manager;
 
 use Model\Post;
+use PDO;
 
 /**
  * Class PostManager manage queries datas in post table from db
@@ -52,8 +53,8 @@ class PostManager extends Manager
         }
         
         $sql = self::$connection->prepare($query);
-        $sql->bindvalue(':limit', (int) $limit, \PDO::PARAM_INT);
-        $sql->bindvalue(':begin', (int) $begin, \PDO::PARAM_INT);
+        $sql->bindvalue(':limit', (int) $limit, PDO::PARAM_INT);
+        $sql->bindvalue(':begin', (int) $begin, PDO::PARAM_INT);
         $sql->execute();
         return $sql->fetchAll();
     }
@@ -70,8 +71,8 @@ class PostManager extends Manager
 											ORDER BY date_create DESC');
         
         if ($date_begin !== '' && $date_ending !== '') {
-            $sql->bindvalue(':date_begin', (string) $date_begin, \PDO::PARAM_STR);
-            $sql->bindvalue(':date_ending', (string) $date_ending, \PDO::PARAM_STR);
+            $sql->bindvalue(':date_begin', (string) $date_begin, PDO::PARAM_STR);
+            $sql->bindvalue(':date_ending', (string) $date_ending, PDO::PARAM_STR);
         }
         $sql->execute();
         return $sql->fetchAll();
@@ -91,7 +92,7 @@ class PostManager extends Manager
 			ON post.id_member = member.id
 			WHERE post.id=:id');
 
-        $sql->bindvalue(':id', (int) $Post->id(), \PDO::PARAM_INT);
+        $sql->bindvalue(':id', (int) $Post->id(), PDO::PARAM_INT);
         $sql->execute();
         return $sql->fetch();
     }
@@ -107,11 +108,11 @@ class PostManager extends Manager
 			SET title = :title, lede = :lede, content = :content, date_update = NOW(), img = :img
 			WHERE id = :id');
 
-        $sql->bindvalue(':id', $Post->id(), \PDO::PARAM_INT);
-        $sql->bindvalue(':title', $Post->title(), \PDO::PARAM_STR);
-        $sql->bindvalue(':lede', $Post->lede(), \PDO::PARAM_STR);
-        $sql->bindvalue(':content', $Post->content(), \PDO::PARAM_STR);
-        $sql->bindvalue(':img', $Post->img(), \PDO::PARAM_STR);
+        $sql->bindvalue(':id', $Post->id(), PDO::PARAM_INT);
+        $sql->bindvalue(':title', $Post->title(), PDO::PARAM_STR);
+        $sql->bindvalue(':lede', $Post->lede(), PDO::PARAM_STR);
+        $sql->bindvalue(':content', $Post->content(), PDO::PARAM_STR);
+        $sql->bindvalue(':img', $Post->img(), PDO::PARAM_STR);
         $sql->execute();
     }
 
@@ -123,7 +124,7 @@ class PostManager extends Manager
     {
         $sql = self::$connection->prepare('DELETE FROM post WHERE id = :id');
         
-        $sql->bindvalue(':id', (int) $Post->id(), \PDO::PARAM_INT);
+        $sql->bindvalue(':id', (int) $Post->id(), PDO::PARAM_INT);
         $sql->execute();
     }
 }

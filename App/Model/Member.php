@@ -66,7 +66,7 @@ class Member extends Entity
 
     public function setId_type($id_type)
     {
-        if (is_int($id) && $id > 0 && $id < 9999) {
+        if (is_int($id_type) && $id_type > 0 && $id_type < 9999) {
             $this->_id_type = $id_type;
         }
     }
