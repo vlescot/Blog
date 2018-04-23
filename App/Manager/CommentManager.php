@@ -2,6 +2,7 @@
 namespace Manager;
 
 use Model\Comment;
+use PDO;
 
 /**
  * Class CommentManager manage queries datas in comment table from db
@@ -36,7 +37,7 @@ class CommentManager extends Manager
 			WHERE post.id      = :id
 			ORDER BY comment.date_create DESC');
         
-        $sql->bindvalue(':id', (int) $Comment->id_post(), \PDO::PARAM_INT);
+        $sql->bindvalue(':id', (int) $Comment->id_post(), PDO::PARAM_INT);
         $sql->execute();
         return $sql->fetchAll();
     }
@@ -49,7 +50,7 @@ class CommentManager extends Manager
     {
         $sql = self::$connection->prepare('DELETE FROM comment WHERE id_post = :id_post');
         
-        $sql->bindvalue(':id_post', (int) $Comment->id_post(), \PDO::PARAM_INT);
+        $sql->bindvalue(':id_post', (int) $Comment->id_post(), PDO::PARAM_INT);
         $sql->execute();
     }
 
@@ -61,7 +62,7 @@ class CommentManager extends Manager
     {
         $sql = self::$connection->prepare('DELETE FROM comment WHERE id=:id');
         
-        $sql->bindvalue(':id', (int) $Comment->id(), \PDO::PARAM_INT);
+        $sql->bindvalue(':id', (int) $Comment->id(), PDO::PARAM_INT);
         $sql->execute();
     }
 
@@ -98,10 +99,10 @@ class CommentManager extends Manager
             
         $sql = self::$connection->prepare($query);
         
-        $sql->bindvalue(':date_begin', (string) $date_begin, \PDO::PARAM_STR);
-        $sql->bindvalue(':date_ending', (string) $date_ending, \PDO::PARAM_STR);
+        $sql->bindvalue(':date_begin', (string) $date_begin, PDO::PARAM_STR);
+        $sql->bindvalue(':date_ending', (string) $date_ending, PDO::PARAM_STR);
         if ($validated !== 2) {
-            $sql->bindvalue(':validated', (string) $validated, \PDO::PARAM_STR);
+            $sql->bindvalue(':validated', (string) $validated, PDO::PARAM_STR);
         }
 
         $sql->execute();
@@ -116,8 +117,8 @@ class CommentManager extends Manager
     {
         $sql = self::$connection->prepare('UPDATE comment SET validated= :validated WHERE id = :id');
 
-        $sql->bindvalue(':id', (int) $Comment->id(), \PDO::PARAM_INT);
-        $sql->bindvalue(':validated', (int) $Comment->validated(), \PDO::PARAM_INT);
+        $sql->bindvalue(':id', (int) $Comment->id(), PDO::PARAM_INT);
+        $sql->bindvalue(':validated', (int) $Comment->validated(), PDO::PARAM_INT);
         $sql->execute();
     }
 }

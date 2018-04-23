@@ -2,6 +2,7 @@
 namespace Manager;
 
 use Model\Member;
+use PDO;
 
 /**
  * Class MemberManager manage queries datas in member table from db
@@ -32,7 +33,7 @@ class MemberManager extends Manager
 			SELECT * FROM member
 			WHERE BINARY login=:login');
 
-        $sql->bindvalue(':login', (string) $Member->login(), \PDO::PARAM_STR);
+        $sql->bindvalue(':login', (string) $Member->login(), PDO::PARAM_STR);
         $sql->execute();
         return $sql->fetch();
     }
@@ -57,7 +58,22 @@ class MemberManager extends Manager
         $sql = self::$connection->prepare('
 			SELECT * FROM member
 			WHERE BINARY reset_password=:reset_password');
-        $sql->bindvalue(':reset_password', (string) $Member->reset_password(), \PDO::PARAM_STR);
+        $sql->bindvalue(':reset_password', (string) $Member->reset_password(), PDO::PARAM_STR);
+        $sql->execute();
+        return $sql->fetch();
+    }
+
+    /**
+     * Get a member with its id
+     * @param  Model\Member $Member
+     * @return array of the member
+     */
+    public function getMemberbyId(Member $Member)
+    {
+        $sql = self::$connection->prepare('
+            SELECT * FROM member
+            WHERE BINARY id=:id');
+        $sql->bindvalue(':id', (int) $Member->id(), PDO::PARAM_INT);
         $sql->execute();
         return $sql->fetch();
     }
@@ -87,10 +103,10 @@ class MemberManager extends Manager
 
         $sql = self::$connection->prepare($query);
         
-        $sql->bindvalue(':date_begin', (string) $date_begin, \PDO::PARAM_STR);
-        $sql->bindvalue(':date_ending', (string) $date_ending, \PDO::PARAM_STR);
+        $sql->bindvalue(':date_begin', (string) $date_begin, PDO::PARAM_STR);
+        $sql->bindvalue(':date_ending', (string) $date_ending, PDO::PARAM_STR);
         if ($validated !== 2) {
-            $sql->bindvalue(':validated', (string) $validated, \PDO::PARAM_STR);
+            $sql->bindvalue(':validated', (string) $validated, PDO::PARAM_STR);
         }
 
         $sql->execute();
@@ -105,8 +121,8 @@ class MemberManager extends Manager
     {
         $sql = self::$connection->prepare('UPDATE member SET validated= :validated WHERE id = :id');
 
-        $sql->bindvalue(':id', (int) $Member->id(), \PDO::PARAM_INT);
-        $sql->bindvalue(':validated', (int) $Member->validated(), \PDO::PARAM_INT);
+        $sql->bindvalue(':id', (int) $Member->id(), PDO::PARAM_INT);
+        $sql->bindvalue(':validated', (int) $Member->validated(), PDO::PARAM_INT);
         $sql->execute();
     }
 
@@ -123,8 +139,8 @@ class MemberManager extends Manager
 			WHERE login = :login'
         );
 
-        $sql->bindvalue(':reset_password', $Member->reset_password(), \PDO::PARAM_INT);
-        $sql->bindvalue(':login', $Member->login(), \PDO::PARAM_INT);
+        $sql->bindvalue(':reset_password', $Member->reset_password(), PDO::PARAM_INT);
+        $sql->bindvalue(':login', $Member->login(), PDO::PARAM_INT);
         $sql->execute();
     }
 
@@ -141,8 +157,8 @@ class MemberManager extends Manager
 			WHERE login=:login'
         );
 
-        $sql->bindvalue(':password', $Member->password(), \PDO::PARAM_INT);
-        $sql->bindvalue(':login', $Member->login(), \PDO::PARAM_INT);
+        $sql->bindvalue(':password', $Member->password(), PDO::PARAM_INT);
+        $sql->bindvalue(':login', $Member->login(), PDO::PARAM_INT);
         $sql->execute();
     }
 }

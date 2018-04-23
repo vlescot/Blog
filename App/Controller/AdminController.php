@@ -42,9 +42,8 @@ class AdminController extends Controller
             new Notification('Votre accès n\'as pas encore été validé', 'info');
             header('Location: ' . URL);
             return false;
-        } else {
-            return true;
         }
+        return true;
     }
 
 
@@ -153,7 +152,7 @@ class AdminController extends Controller
      */
     public function addPost()
     {
-        if (isset($_POST) || isset($_FILES)) {
+        if (!empty($_POST) || !empty($_FILES)) {
             if (!isset($_POST['title']) && !isset($_POST['lede']) && !isset($_POST['content']) && $_POST['title'] === '' && $_POST['content'] === '' && $_POST['lede'] === '') {
                 new Notification('Les champs "Titre", "Châpo", et "Contenu" sont obligatoires');
                 header('Location: ' . $_SERVER['REMOTE_ADDR']);
@@ -269,7 +268,14 @@ class AdminController extends Controller
         $Comment = new Comment(['id_post' => $id]);
         $Post = new Post(['id' => $id]);
 
-        $CommentManager->deleteAllComments($Comment); // Comments have to be deleted first because of foreign key 'id_post'
+        // Remove the associate image
+        $old_post = $PostManager->getPost($Post);
+        if (!empty($old_post['img'])) {
+            $img = new ImageUploader();
+            $img->remove($old_post['img']);
+        }
+        // Comments have to be deleted first because of foreign key 'id_post'
+        $CommentManager->deleteAllComments($Comment);
         $PostManager->deletePost($Post);
 
         new Notification('L\'article a bien été supprimé', 'success');
@@ -329,7 +335,7 @@ class AdminController extends Controller
 
         // Sending an e-mail to the validated member
         if ($table === 'member' && $validation === 1) {
-            $member = $MemberManager->getMemberbyId(new Member(['id' => intval($id)]));
+            $member = $MemberManager->getMemberbyId(new Member(['id' => $id]));
             require(ROOT . 'App/Service/Email_model/mail_member_validation.php');
             $mail = new Mailer($member['email'], $subject, $message);
             $mail->send();

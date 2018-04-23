@@ -20,22 +20,12 @@
 table {
     overflow-x:auto
 }
-/* @media screen and (max-width: 640px) {
-  table,
-  tbody,
-  tr,
-  td {
-    display: block;
-    width: auto!important;
-    text-align : center;
-    parceque tu as mis des style inline grrr
-  }
-} */
+
 #alert-container {
-    position: absolute; !important;
+    position: absolute;
     float: left;
-    z-index: 1000 !important;
-    width:100% !important;
+    z-index: 1000;
+    width:100%;
 }
 
 #back-app{
@@ -159,22 +149,22 @@ table {
 
 .jumbotron {
     background-color: white;
-    padding: 1rem 0.5rem !important;
+    padding: 1rem 0.5rem;
     -webkit-box-shadow: inset 0px 0px 5px 0px #481D24;
     -moz-box-shadow: inset 0px 0px 5px 0px #481D24;
     box-shadow: inset 0px 0px 5px 0px #481D24;
 } 
 
 .btn-outline-primary, .btn-outline-primary:visited {
-    border-color: #C5283D !important;
-    color: #C5283D !important;
-    box-shadow : 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19) !important;
+    border-color: #C5283D;
+    color: #C5283D;
+    box-shadow : 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 .btn-outline-primary:hover, .btn-outline-primary:active {
-    color: #fff !important;
-    background-color: #C5283D !important;
-    border-color: #C5283D !important;
-    box-shadow : 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19) !important;
+    color: #fff;
+    background-color: #C5283D;
+    border-color: #C5283D;
+    box-shadow : 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
 /**
@@ -194,15 +184,15 @@ td a:hover {
 
 .btn-add, .btn-add:visited {
     background-color: #236847;
-    border-color: #236847 !important;
-    color: #fff !important;
+    border-color: #236847;
+    color: #fff;
     margin-bottom: 20px;
 }
 .btn-add:hover, .btn-add:active {
-    color: #fff !important;
-    background-color: #2e845c !important;
-    border-color: #2e845c !important;
-    box-shadow : 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19) !important;
+    color: #fff;
+    background-color: #2e845c;
+    border-color: #2e845c;
+    box-shadow : 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 .btn-update, .btn-delete{
     width: 100px;
@@ -212,26 +202,26 @@ td a:hover {
 }
 .btn-update, .btn-update:visited {
     background-color: #E9725C;
-    border-color: #E9725C !important;
-    color: #fff !important;
+    border-color: #E9725C;
+    color: #fff;
 }
 .btn-update:hover, .btn-update:active {
-    color: #fff !important;
-    background-color: #ef8a77 !important;
-    border-color: #ef8a77 !important;
-    box-shadow : 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19) !important;
+    color: #fff;
+    background-color: #ef8a77;
+    border-color: #ef8a77;
+    box-shadow : 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
 .btn-delete, .btn-delete:visited {
     background-color: #481D24;
-    border-color: #481D24 !important;
-    color: #fff !important;
+    border-color: #481D24;
+    color: #fff;
 }
 .btn-delete:hover, .btn-delete:active {
-    color: #fff !important;
-    background-color: #72353f !important;
-    border-color: #72353f !important;
-    box-shadow : 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19) !important;
+    color: #fff;
+    background-color: #72353f;
+    border-color: #72353f;
+    box-shadow : 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
 .post-img img{
@@ -293,7 +283,7 @@ form label img {
     display: none;
 }
 #date_filter form {
-    margin: 0px 0px 20px 0px !important;
+    margin: 0px 0px 20px 0px;
 }
 
 /**
