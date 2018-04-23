@@ -18,24 +18,33 @@ use Service\Mailer;
 class AdminController extends Controller
 {
     /**
-     * Checks if the user is connected and is allowing to access by validation
      * @param string $view is send to the parent
      */
     public function __construct($view)
+    {
+        if ($this->allowAccess() === true) {
+            parent::__construct($view);
+        }
+    }
+
+    /**
+     * Checks if the user is connected and is allowing to access by validation
+     */
+    private function allowAccess()
     {
         // Disallow access if the member is not connected
         if (!isset($_SESSION['ip']) || $_SESSION['ip'] !== $_SERVER['REMOTE_ADDR']) {
             new Notification('Vous devez vous connecter pour accéder à cette page');
             header('Location: ' . URL . 'authentification');
-            exit;
+            return false;
         // Disallow access if the member is not validated
         } elseif (!isset($_SESSION['validated']) || $_SESSION['validated'] === 0) {
             new Notification('Votre accès n\'as pas encore été validé', 'info');
             header('Location: ' . URL);
-            exit;
+            return false;
+        }else{
+            return true;
         }
-
-        parent::__construct($view);
     }
 
 
@@ -48,18 +57,21 @@ class AdminController extends Controller
         switch ($num_error) {
             case 1:
                 new Notification('L\'image est trop lourde pour être chargée');
+                return true;
                 break;
             case 2:
                 new Notification('L\'image est trop lourde pour être chargée');
+                return true;
                 break;
             case 3:
                 new Notification('L\'image n\'est que partiellement chargée. Cela peut venir de votre connexion...');
+                return true;
                 break;
             default:
                 new Notification('Nous avons rencontré un probléme lors du téléchargement de votre fichier');
+                return true;
         }
-        header('Location: ' . $_SERVER['REQUEST_URI']);
-        exit;
+        header('Location: ' . $_SERVER['REMOTE_ADDR']);
     }
 
 
@@ -141,100 +153,110 @@ class AdminController extends Controller
      */
     public function addPost()
     {
-        if (empty($_POST)) {
-            echo $this->twig->render('add_post.twig');
-            exit;
-        }
-        
-        if (!isset($_POST['title']) && !isset($_POST['lede']) && !isset($_POST['content']) && $_POST['title'] === '' && $_POST['content'] === '' && $_POST['lede'] === '') {
-            new Notification('Les champs "Titre", "Châpo", et "Contenu" sont obligatoires');
-            header('Location: ' . $_SERVER['REMOTE_ADDR']);
-        }
-
-        if (!empty($_FILES) && $_FILES['file']['error'] !== 4) {
-            if ($_FILES['file']['error'] > 0) {
-                $this->UploadingError($_FILES['file']['error']); // Error case
+        if (isset($_POST) || isset($_FILES)) {
+            if (!isset($_POST['title']) && !isset($_POST['lede']) && !isset($_POST['content']) && $_POST['title'] === '' && $_POST['content'] === '' && $_POST['lede'] === '') {
+                new Notification('Les champs "Titre", "Châpo", et "Contenu" sont obligatoires');
+                header('Location: ' . $_SERVER['REMOTE_ADDR']);
             }
-            // No error
-            $ImgUpload = new ImageUploader();
-            $img_name = $ImgUpload->upload();
-        } else {
-            $img_name = '';
+            if (isset($_FILES) && $_FILES['file']['error'] !== 4) {
+                if ($_FILES['file']['error'] > 0) {
+                    $error = $this->UploadingError($_FILES['file']['error']);
+                }
+                else{
+                   $ImgUpload = new ImageUploader();
+                   $img_name = $ImgUpload->upload();
+                }
+            } else{
+                $img_name = '';
+            }
+
+            if (!isset($error)) {
+                $Post = new Post([
+                    'title' 	=> $_POST ['title'],
+                    'lede' 		=> $_POST ['lede'],
+                    'content' 	=> $_POST ['content'],
+                    'img' 		=> $img_name,
+                    'id_member' => $_SESSION['id_member']
+                ]);
+                // Writes the informations into the database
+                $PostManager = new PostManager();
+                $PostManager->createPost($Post);
+
+                new Notification('Votre article a bien été créé', 'success');
+                header('Location: ' . URL . 'admin/article');
+            }
         }
-
-        $Post = new Post([
-            'title' 	=> $_POST ['title'],
-            'lede' 		=> $_POST ['lede'],
-            'content' 	=> $_POST ['content'],
-            'img' 		=> $img_name,
-            'id_member' => $_SESSION['id_member']
-        ]);
-        // Writes the informations into the database
-        $PostManager = new PostManager();
-        $PostManager->createPost($Post);
-
-        new Notification('Votre article a bien été créé', 'success');
-        header('Location: ' . URL . 'admin/article');
+        else{
+            echo $this->twig->render('add_post.twig');
+        }
     }
 
 
     /**
      * @Route("/admin/article/:id")
+     * 
      * @param int $id id of the post
      */
     public function updatePost($id)
     {
         $Post = new Post(['id' => intval($id)]);
-        
-        if (empty($_POST)) {
+
+        // If user send updating post form
+        if (!empty($_POST)) {
+            $PostManager = new PostManager();
+            $old_post = $PostManager->getPost($Post);
+
+
+            if (!empty($_FILES) && $_FILES['file']['error'] !== 4) {
+                if ($_FILES['file']['error'] > 0) {
+                    $error = $this->UploadingError($_FILES['file']['error']);
+                }
+                else {
+                    $ImgUpload = new ImageUploader();
+                    $img_name = $ImgUpload->upload();
+                    if ($old_post['img'] !== '' && $_POST['img-remove'] !== 'on') {
+                        $ImgUpload->remove($old_post['img']);
+                    }
+                }
+            }
+
+            if (!isset($error)) {
+                if (isset($_POST['img-remove']) && $_POST['img-remove'] == 'on' && (empty($_FILES) || $_FILES['file']['error'] === 4)) {
+                    $ImgUpload = new ImageUploader();
+                    $ImgUpload->remove($old_post['img']);
+                    $img_name = '';
+                }
+
+                // Takes the values of the changed attributes and keeps the values of the initial post if unchanged
+                $datas = [];
+                foreach ($_POST as $key => $value) {
+                    if ($value !== '') {
+                        $datas[$key] = $value;
+                    }
+                }
+                if (isset($img_name)) {
+                    $datas['img']   = $img_name;
+                }
+                $datas['id']        = $id;
+                $datas = array_replace($old_post, $datas);
+
+                foreach ($datas as $key => $value) {
+                    $method = 'set' . $key;
+                    if (is_callable([$Post, $method])) {
+                        $Post->$method($value);
+                    }
+                }
+                $PostManager->updatePost($Post);
+
+                new Notification('L\'article a bien été mis à jour', 'success');
+                header('Location: ' . URL . 'admin/article');
+            }
+        } 
+        // No form is sending, then the user makes a request to get the updating post form 
+        else {
             $PostManager = new PostManager();
             echo $this->twig->render('add_post.twig', array('update' => $PostManager->getPost($Post)));
-            exit;
         }
-
-        $PostManager = new PostManager();
-        $old_post = $PostManager->getPost($Post);
-
-        if (isset($_POST['img-remove']) && $_POST['img-remove'] == 'on' && (empty($_FILES) || $_FILES['file']['error'] === 4)) {
-            $ImgUpload = new ImageUploader();
-            $ImgUpload->remove($old_post['img']);
-            $img_name = '';
-        }
-
-        if (!empty($_FILES) && $_FILES['file']['error'] != 4) {
-            if ($_FILES['file']['error'] > 0) {
-                $this->UploadingError($_FILES['file']['error']);
-            }
-            $ImgUpload = new ImageUploader();
-            $img_name = $ImgUpload->upload();
-            if ($old_post['img'] !== '' && $_POST['img-remove'] !== 'on') {
-                $ImgUpload->remove($old_post['img']);
-            }
-        }
-
-        // Takes the values of the changed attributes and keeps the values of the initial post if unchanged
-        $datas = [];
-        foreach ($_POST as $key => $value) {
-            if ($value !== '') {
-                $datas[$key] = $value;
-            }
-        }
-        if (isset($img_name)) {
-            $datas['img']	= $img_name;
-        }
-        $datas['id'] 		= $id;
-        $datas = array_replace($old_post, $datas);
-
-        foreach ($datas as $key => $value) {
-            $method = 'set' . $key;
-            if (is_callable([$Post, $method])) {
-                $Post->$method($value);
-            }
-        }
-        $PostManager->updatePost($Post);
-
-        new Notification('L\'article a bien été mis à jour', 'success');
-        header('Location: ' . URL . 'admin/article');
     }
 
 
@@ -243,7 +265,7 @@ class AdminController extends Controller
      */
     public function deletePost()
     {
-        $PostManager 	= new PostManager();
+        $PostManager    = new PostManager();
         $CommentManager = new CommentManager();
 
         $id = intval($_POST['id']);

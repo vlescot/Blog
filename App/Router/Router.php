@@ -15,7 +15,7 @@ class Router
     {
         $this->_url = $url;
         $routes = json_decode(file_get_contents(ROOT . 'App/Router/Routes.json'), true);
-        foreach ($routes as $key => $value) {
+        foreach ($routes as $value) {
             $this->addRoute($value['path'], $value['callable'], $value['method']);
         }
         $this->run();

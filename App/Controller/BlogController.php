@@ -24,7 +24,6 @@ class BlogController extends Controller
     {
         new Notification($message, $type);
         header('Location: ' . $_SERVER['REQUEST_URI']);
-        exit;
     }
 
 
@@ -79,18 +78,18 @@ class BlogController extends Controller
                     'nb' => $nb_pages
                 ]
             ]);
-            exit;
         }
-
         // @Route("/blog/:id")
-        $Post = new Post(['id' => $id]);
-        $Comment = new Comment(['id_post' => $id]);
+        else {
+            $Post = new Post(['id' => $id]);
+            $Comment = new Comment(['id_post' => $id]);
 
-        $CommentManager = new CommentManager();
-        echo $this->twig->render('blogpost.twig', [
-            'post' => $PostManager->getPost($Post),
-            'comments' => $CommentManager->getCommentList($Comment)
-        ]);
+            $CommentManager = new CommentManager();
+            echo $this->twig->render('blogpost.twig', [
+                'post' => $PostManager->getPost($Post),
+                'comments' => $CommentManager->getCommentList($Comment)
+            ]);
+        }
     }
 
 
@@ -103,16 +102,17 @@ class BlogController extends Controller
         if (!isset($_POST) && !isset($_POST['author']) && !isset($_POST['content']) && $_POST['author'] ==='' && $_POST['content'] === '') {
             $this->notification('Vous devez remplir votre nom ainsi le commentaire');
         }
+        else {
+            $Comment = new Comment([
+                'content' => $_POST['content'],
+                'author' => $_POST['author'],
+                'id_post' => $id
+            ]);
 
-        $Comment = new Comment([
-            'content' => $_POST['content'],
-            'author' => $_POST['author'],
-            'id_post' => $id
-        ]);
-
-        $CommentManager = new CommentManager();
-        $CommentManager->createComment($Comment);
-        $this->notification('Votre commentaire à été ajouté, il est maintenant en attente de validation', 'success');
+            $CommentManager = new CommentManager();
+            $CommentManager->createComment($Comment);
+            $this->notification('Votre commentaire à été ajouté, il est maintenant en attente de validation', 'success');
+        }
     }
     
 
@@ -124,22 +124,24 @@ class BlogController extends Controller
         if (!isset($_POST) || (empty($_POST['name']) && empty($_POST['email']) && empty($_POST['subject']) && empty($_POST['message']))) {
             $this->notification('Une information est manquante pour l\'envoie de votre e-mail');
         }
-        // Sending e-mail from contact
-        $Mail = new Mail([
-            'contact_name' => $_POST['name'],
-            'contact_email' => $_POST['email'],
-            'contact_subject' => $_POST['subject'],
-            'contact_content' => $_POST['message']
-        ]);
-        require(ROOT . 'App/Service/Email_model/mail_admin_contact.php');
+        else {
+            // Sending e-mail from contact
+            $Mail = new Mail([
+                'contact_name' => $_POST['name'],
+                'contact_email' => $_POST['email'],
+                'contact_subject' => $_POST['subject'],
+                'contact_content' => $_POST['message']
+            ]);
+            require(ROOT . 'App/Service/Email_model/mail_admin_contact.php');
 
-        $Mail->setMail_to('vincent.lescot@gmail.com');
-        $Mail->setSubject($subject);
-        $Mail->setContent($message);
+            $Mail->setMail_to('vincent.lescot@gmail.com');
+            $Mail->setSubject($subject);
+            $Mail->setContent($message);
 
-        $mailer = new Mailer($Mail->Mail_to(), $Mail->subject(), $Mail->content());
-        $mailer->send();
+            $mailer = new Mailer($Mail->Mail_to(), $Mail->subject(), $Mail->content());
+            $mailer->send();
 
-        $this->notification('Merci pour votre intérêt ! Votre e-mail a bien été envoyé à Vincent', 'success');
+            $this->notification('Merci pour votre intérêt ! Votre e-mail a bien été envoyé à Vincent', 'success');
+        }
     }
 }
