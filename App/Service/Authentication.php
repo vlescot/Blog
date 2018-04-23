@@ -131,7 +131,7 @@ class Authentication
             $rand .= $seed[$k];
         }
 
-        return $hash = hash('whirlpool', $rand);
+        return $hashed_str = hash('whirlpool', $rand);
     }
 
     /**
@@ -140,7 +140,7 @@ class Authentication
      * @param  string $check_password the confirmation password
      * @return encrypted password or string in error case
      */
-    public function changePassword($login, $password, $check_password)
+    public function changePassword($password, $check_password)
     {
         if ($this->loginExists() === false) {
             return 'Ce nom d\'utilisateur n\'est pas reconnu';

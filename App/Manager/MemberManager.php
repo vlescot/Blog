@@ -77,7 +77,8 @@ class MemberManager extends Manager
 			WHERE date_create 
 			BETWEEN :date_begin AND :date_ending
 			ORDER BY date_create DESC';
-        } else {
+        } 
+        else {
             $query = 'SELECT * FROM member 
 			WHERE date_create 
 			BETWEEN :date_begin AND :date_ending

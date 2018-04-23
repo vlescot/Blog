@@ -35,7 +35,6 @@ class ImageUploader
     {
         new Notification($message);
         header('Location :' . $_SERVER['REQUEST_URI']);
-        exit;
     }
     
 
@@ -46,25 +45,30 @@ class ImageUploader
      */
     public function upload()
     {
-        // Checks the size of the file
-        if ($_FILES['file']['size'] / 1048576 > $this->_max_size) {
-            $this->error('Le fichier ne doit pas dépasser un poid de ' . $this->_max_size . ' Mo');
-        }
-        // Check the extension of the file
         $extension_upload = strtolower(substr(strrchr($_FILES['file']['name'], '.'), 1));
-        if (!in_array($extension_upload, self::$extensions_valid)) {
-            $this->error('Le fichier doit avoir l\'extension jpg, jpeg, ou png');
-        }
-        // Set a ransom name to the file
+
+        // Set a random name for the file
         $img_name = md5(uniqid(rand(), true));
         $img_fullname = $img_name . "." . $extension_upload;
         $destination_path = $this->_images_folder . key(self::$img_params) . "/" . $img_fullname;
         move_uploaded_file($_FILES['file']['tmp_name'], $destination_path);
 
-        if ($this->resize($img_fullname, $destination_path, $extension_upload) === false) {
+        // Checks the size of the file
+        if ($_FILES['file']['size'] / 1048576 > $this->_max_size) {
+            $this->error('Le fichier ne doit pas dépasser un poid de ' . $this->_max_size . ' Mo');
+        }
+        // Check the extension of the file
+        elseif (!in_array($extension_upload, self::$extensions_valid)) {
+            $this->error('Le fichier doit avoir l\'extension jpg, jpeg, ou png');
+        }
+        // Check if resizing returns error
+        elseif ($this->resize($img_fullname, $destination_path, $extension_upload) === false) {
             $this->error('Nous avons rencontré un problème lors du redimensionnement de l\'image. Veuillez réessayer ou prendre contact avec nous');
         }
-        return $img_fullname;
+        // No error
+        else {
+            return $img_fullname;
+        }
     }
 
 
@@ -103,12 +107,20 @@ class ImageUploader
      */
     public function remove($img_name)
     {
+        $errors = [];
         foreach (self::$img_params as $folder => $v) {
             $result = unlink($this->_images_folder . $folder . "/" . $img_name);
             if ($result === false) {
+                array_push($errors, $img_name);
+            }
+        }
+        if (!empty($errors)) {
+            foreach ($error as $img_name) {
                 $this->error('L\'image ' . $img_name . ' n\'as pas pu être supprimé du serveur');
             }
         }
-        return true;
+        else {
+            return true;
+        }
     }
 }
