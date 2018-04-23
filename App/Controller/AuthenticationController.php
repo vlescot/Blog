@@ -32,11 +32,9 @@ class AuthenticationController extends Controller
         // Check if the user is already connected
         if (isset($_SESSION['ip']) && $_SESSION['ip'] === $_SERVER['REMOTE_ADDR']) {
             header('Location: ' . URL . 'admin');
-        }
-        elseif (empty($_POST['login']) || empty($_POST['psw'])) {
+        } elseif (empty($_POST['login']) || empty($_POST['psw'])) {
             echo $this->twig->render('connection.twig');
-        }
-        else{
+        } else {
             $Member = new Member(['login' => $_POST['login']]);
             $MemberManager = new MemberManager();
             $member = $MemberManager->getMember($Member);
@@ -44,12 +42,11 @@ class AuthenticationController extends Controller
             $Authentication = new Authentication($member);
             $result = $Authentication->LogIn($_POST['psw']);
 
-            if (is_string($result)) {  /*Error case*/ 
+            if (is_string($result)) {  /*Error case*/
                 $this->Alert($result);
-            }
-            else {
-               new Notification('Bonjour ' . $_POST['login'], 'success');
-               header('Location: ' . URL . 'admin');
+            } else {
+                new Notification('Bonjour ' . $_POST['login'], 'success');
+                header('Location: ' . URL . 'admin');
             }
         }
     }
@@ -62,8 +59,7 @@ class AuthenticationController extends Controller
     {
         if (empty($_POST['login']) || empty($_POST['psw']) || empty($_POST['psw2']) || empty($_POST['email'])) {
             echo $this->twig->render('registration.twig');
-        }
-        else{
+        } else {
             $Member = new Member(['login' => $_POST['login']]);
             $MemberManager = new MemberManager();
             $member = $MemberManager->getMember($Member);
@@ -75,8 +71,7 @@ class AuthenticationController extends Controller
             // Error case
             if (is_string($result)) {
                 $this->Alert($result);
-            }
-            else {
+            } else {
                 // If not, correct $result is an array... Creating the member into the database
                 $Member = new Member([
                     'login'     => $_POST['login'],
@@ -108,8 +103,7 @@ class AuthenticationController extends Controller
     {
         if (empty($_POST['login'])) {
             echo $this->twig->render('reset_password.twig');
-        }
-        else{
+        } else {
             $Member = new Member(['login' => $_POST['login']]);
             $MemberManager = new MemberManager;
             $member = $MemberManager->getMember($Member);
@@ -120,8 +114,7 @@ class AuthenticationController extends Controller
             //  Unknown member case
             if (strlen($hashedlink) !== 128) {
                 $this->Alert($hashedlink);
-            } 
-            else{
+            } else {
                 // Save le resetPasswors link inot the database for futur verification
                 $Member->setReset_password($hashedlink);
                 $MemberManager->updateResetPassword($Member);
@@ -145,8 +138,7 @@ class AuthenticationController extends Controller
         if (empty($_GET['p'])) {
             new Notification('o/O Un intru...');
             header('Location: ' . URL . '');
-        }
-        else {
+        } else {
             $Member = new Member(['reset_password' => $_GET['p']]);
             $MemberManager = new MemberManager();
             $member = $MemberManager->getMemberbyResetPassword($Member);
@@ -154,8 +146,7 @@ class AuthenticationController extends Controller
             if ($member === false) {
                 new Notification('Nous n\'avons pas put vous reconnaitre');
                 header('Location: ' . URL . 'authentication/');
-            }
-            else {
+            } else {
                 echo $this->twig->render('change_password.twig', ['login' => $member['login']]);
             }
         }
@@ -169,8 +160,7 @@ class AuthenticationController extends Controller
     {
         if (empty($_POST['login']) && empty($_POST['psw']) && empty($_POST['psw2'])) {
             $this->Alert('Vous avez oublié de remplir une case');
-        }
-        else {
+        } else {
             $Member = new Member([
                 'login' => $_POST['login'],
                 'password' => $_POST['psw']
@@ -185,8 +175,7 @@ class AuthenticationController extends Controller
             // In error case $hashedPassword is explanation string and long different than 128
             if (strlen($hashedPassword) !== 128) {
                 $this->Alert($hashedPassword);
-            }
-            else {
+            } else {
                 // If, the new password is correct, then save it into the database
                 $Member->setPassword($hashedPassword);
                 $MemberManager->changePassword($Member);

@@ -84,8 +84,7 @@ class CommentManager extends Manager
 			WHERE comment.date_create BETWEEN :date_begin 
 			AND :date_ending
 			ORDER BY date_create DESC';
-        } 
-        else {
+        } else {
             $query = '
             SELECT comment.id, comment.content, comment.date_create, comment.author, comment.validated, comment.id_post, post.title
             FROM comment 
@@ -102,7 +101,7 @@ class CommentManager extends Manager
         $sql->bindvalue(':date_begin', (string) $date_begin, \PDO::PARAM_STR);
         $sql->bindvalue(':date_ending', (string) $date_ending, \PDO::PARAM_STR);
         if ($validated !== 2) {
-       		$sql->bindvalue(':validated', (string) $validated, \PDO::PARAM_STR);
+            $sql->bindvalue(':validated', (string) $validated, \PDO::PARAM_STR);
         }
 
         $sql->execute();

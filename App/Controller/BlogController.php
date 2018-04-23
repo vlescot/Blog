@@ -101,8 +101,7 @@ class BlogController extends Controller
     {
         if (!isset($_POST) && !isset($_POST['author']) && !isset($_POST['content']) && $_POST['author'] ==='' && $_POST['content'] === '') {
             $this->notification('Vous devez remplir votre nom ainsi le commentaire');
-        }
-        else {
+        } else {
             $Comment = new Comment([
                 'content' => $_POST['content'],
                 'author' => $_POST['author'],
@@ -123,8 +122,7 @@ class BlogController extends Controller
     {
         if (!isset($_POST) || (empty($_POST['name']) && empty($_POST['email']) && empty($_POST['subject']) && empty($_POST['message']))) {
             $this->notification('Une information est manquante pour l\'envoie de votre e-mail');
-        }
-        else {
+        } else {
             // Sending e-mail from contact
             $Mail = new Mail([
                 'contact_name' => $_POST['name'],
