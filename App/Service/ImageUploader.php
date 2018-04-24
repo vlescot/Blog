@@ -115,7 +115,7 @@ class ImageUploader
             }
         }
         if (!empty($errors)) {
-            foreach ($error as $img_name) {
+            foreach ($errors as $img_name) {
                 $this->error('L\'image ' . $img_name . ' n\'as pas pu être supprimé du serveur');
             }
         } else {

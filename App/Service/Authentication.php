@@ -114,10 +114,9 @@ class Authentication
     }
 
     /**
-     * @param  string $login
      * @return encrypted reset_password or string in error case
      */
-    public function resetPassword($login)
+    public function resetPassword()
     {
         if ($this->loginExists() === false) {
             return 'Ce nom d\'utilisateur n\'est pas reconnu';
@@ -131,11 +130,10 @@ class Authentication
             $rand .= $seed[$k];
         }
 
-        return $hashed_str = hash('whirlpool', $rand);
+        return hash('whirlpool', $rand);
     }
 
     /**
-     * @param  string $login
      * @param  string $password
      * @param  string $check_password the confirmation password
      * @return encrypted password or string in error case
