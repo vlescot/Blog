@@ -32,13 +32,21 @@ class AdminController extends Controller
      */
     private function allowAccess()
     {
+        if (isset($_SESSION['ip'])) {
+            $user_ip = $_SESSION['ip'];
+        }
+        if (isset($_SESSION['validated'])) {
+            $validated = $_SESSION['validated'];
+        }
+        $current_ip = $_SERVER['REMOTE_ADDR'];
+
         // Disallow access if the member is not connected
-        if (!isset($_SESSION['ip']) || $_SESSION['ip'] !== $_SERVER['REMOTE_ADDR']) {
+        if (!isset($user_ip) || $user_ip !== $current_ip) {
             new Notification('Vous devez vous connecter pour accéder à cette page');
             header('Location: ' . URL . 'authentification');
             return false;
         // Disallow access if the member is not validated
-        } elseif (!isset($_SESSION['validated']) || $_SESSION['validated'] === 0) {
+        } elseif (!isset($validated) || $validated === 0) {
             new Notification('Votre accès n\'as pas encore été validé', 'info');
             header('Location: ' . URL);
             return false;
@@ -70,7 +78,36 @@ class AdminController extends Controller
                 new Notification('Nous avons rencontré un probléme lors du téléchargement de votre fichier');
                 return true;
         }
-        header('Location: ' . $_SERVER['REMOTE_ADDR']);
+        header('Location: ' . $_SERVER['REQUEST_URI']);
+    }
+
+
+    /**
+     * Set consistants dates for firters
+     * @return array with the two dates
+     */
+    private function setDate (){
+        // Set end_date
+        if (isset($_GET['date_ending']) && $_GET['date_ending'] !== '') {
+            $end_date = $_GET['date_ending'];
+        }
+        else {
+            $date = date_create(date('Y-m-d'));
+            date_add($date, date_interval_create_from_date_string('2 days'));
+            $end_date = date_format($date, 'Y-m-d');
+        } 
+        // Set start_date
+        if (isset($_GET['date_begin']) && $_GET['date_begin'] !== '') {
+            $start_date = $_GET['date_begin'];
+        }
+        else {
+            $start_date = "2018-01-01";
+        }
+
+        return $dates = [
+            'end_date' => $end_date,
+            'start_date' => $start_date
+        ];
     }
 
 
@@ -91,19 +128,11 @@ class AdminController extends Controller
         $PostManager = new PostManager();
         $MemberManager = new MemberManager();
 
-        // Setting of filters
-        if (!isset($_GET['date_ending']) || $_GET['date_ending'] == '') {
-            // Set a consistant date if empty
-            $date = date_create(date('Y-m-d'));
-            date_add($date, date_interval_create_from_date_string('2 days'));
-            $date_ending =  date_format($date, 'Y-m-d');
-        } else {
-            $date_ending = $_GET['date_ending'];
-        }
-        (!isset($_GET['date_begin']) || $_GET['date_begin'] == '') 		?	$date_begin = "2018-01-01" 		: $date_begin = $_GET['date_begin'];
+        // Setting of dates
+        $dates = $this->setDate();
 
         // Get Posts List in database
-        $filtered_post = $PostManager->getFilteredPosts($date_begin, $date_ending);
+        $filtered_post = $PostManager->getFilteredPosts($dates['start_date'], $dates['end_date']);
 
         // Set the login of member to inject it into the view
         $member_list = $MemberManager->getMemberList();
@@ -127,22 +156,19 @@ class AdminController extends Controller
         $MemberManager = new MemberManager();
         $CommentManager = new CommentManager();
 
-        // Assigns consistents values if doesn't already done into the filter form
-        if (!isset($_GET['date_ending']) || $_GET['date_ending'] == '') {
-            // Set a consistant date if empty
-            $date = date_create(date('Y-m-d'));
-            date_add($date, date_interval_create_from_date_string('2 days'));
-            $date_ending =  date_format($date, 'Y-m-d');
-        } else {
-            $date_ending = $_GET['date_ending'];
+        // Setting of filter parameters
+        $dates = $this->setDate();
+
+        if (isset($_GET['validated'])) {
+            $validated = $_GET['validated'];
+        }
+        else {
+            $validated = 2; // 2 mains Both, validated and not validated
         }
 
-        (!isset($_GET['date_begin']) || $_GET['date_begin'] == '') 	?	$date_begin = "2018-01-01" 		: $date_begin = $_GET['date_begin'];
-        (!isset($_GET['validated']) || $_GET['validated'] == '') 	?	$validated = 2 /*both*/			: $validated = intval($_GET['validated']);
-
         echo $this->twig->render('validation.twig', [
-            'comments' => $CommentManager->getFilteredComment($date_begin, $date_ending, $validated),
-            'members' => $MemberManager->getFilteredMember($date_begin, $date_ending, $validated),
+            'comments' => $CommentManager->getFilteredComment($dates['start_date'], $dates['end_date'], $validated),
+            'members' => $MemberManager->getFilteredMember($dates['start_date'], $dates['end_date'], $validated),
             'session' => $_SESSION['member_type']
         ]);
     }
@@ -170,10 +196,10 @@ class AdminController extends Controller
 
             if (!isset($error)) {
                 $Post = new Post([
-                    'title' 	=> $_POST ['title'],
-                    'lede' 		=> $_POST ['lede'],
-                    'content' 	=> $_POST ['content'],
-                    'img' 		=> $img_name,
+                    'title'     => $_POST ['title'],
+                    'lede'      => $_POST ['lede'],
+                    'content'   => $_POST ['content'],
+                    'img'       => $img_name,
                     'id_member' => $_SESSION['id_member']
                 ]);
                 // Writes the informations into the database
